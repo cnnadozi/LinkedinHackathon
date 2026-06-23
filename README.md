@@ -14,3 +14,6 @@ While LinkedIn already hosts events, discovering them currently relies heavily o
 * **Smart Networking Suggestions:** The platform analyzes overlapping event attendance and proactively suggests new connections based on how many events you have attended with the same person.
 * **Automated Follow-Ups:** Post-event nudges remind you to reach out and solidify connections with people you recently attended an event with.
 * **Localized Discovery:** The main dashboard engine recommends upcoming events tailored to your current location.
+
+## Note
+Visit the docs folder and read AGENTS.md for more context! You should definitely read TECHNICAL_DECISIONS.md as well
