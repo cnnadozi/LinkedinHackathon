@@ -11,6 +11,7 @@ All datasets live in the `data/` directory:
 | `data/user_data.json` | 2,000 | Member profiles |
 | `data/jobs_data.json` | 1,000 | Job postings |
 | `data/course_data.json` | 600 | Learning courses |
+| `data/events_data.json` | 100 | Professional networking events |
 
 Each file is a **flat JSON array**. Members reference jobs and courses by ID — there are no nested job or course objects inside member records.
 
@@ -43,6 +44,21 @@ Each file is a **flat JSON array**. Members reference jobs and courses by ID —
 | `easy_apply` | boolean | |
 | `description` | string | Posting text |
 
+### Events (`events_data.json`)
+
+Derived from member locations, job history, and job metadata (company, industry).
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `id` | string | e.g. `"event_0001"` |
+| `name` | string | Event title themed on industry/role |
+| `location` | string | From host member's `current_location` |
+| `time` | string | ISO 8601 datetime (Apr–Sep 2026) |
+| `description` | string | Event summary |
+| `host_user_id` | string | Member ID → resolve against `user_data.json` for host name |
+| `industry` | string | From host member's most recent job |
+| `company` | string | From host member's most recent job |
+
 ### Courses (`course_data.json`)
 
 | Field | Type | Notes |
@@ -56,11 +72,12 @@ Each file is a **flat JSON array**. Members reference jobs and courses by ID —
 
 ## Linking the datasets
 
-Members connect to jobs and courses through ID arrays:
+Members connect to jobs and courses through ID arrays. Events link back to members:
 
 ```
-user.job_history  →  jobs_data.json (by id)
-user.courses      →  course_data.json (by id)
+user.job_history   →  jobs_data.json (by id)
+user.courses       →  course_data.json (by id)
+event.host_user_id →  user_data.json (by id)
 ```
 
 Build lookup maps once, then resolve references when you need full objects:
