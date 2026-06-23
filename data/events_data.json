@@ -1,0 +1,1002 @@
+[
+    {
+        "id": "event_0001",
+        "name": "Breaking Into DevOps Engineer Roles",
+        "location": "Boston, MA",
+        "time": "2026-04-05T19:00:00.000Z",
+        "description": "Join a local Education community meetup in Boston, MA. Topics include day-to-day work as a DevOps Engineer, industry trends, and networking with professionals from Global Solutions LLC and beyond.",
+        "host_user_id": "user_4579",
+        "industry": "Education",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0002",
+        "name": "Breaking Into HR Coordinator Roles",
+        "location": "Seattle, WA",
+        "time": "2026-04-25T19:00:00.000Z",
+        "description": "An evening for Education talent in Seattle, WA. Panelists include leaders hiring for HR Coordinator roles at AI Dynamics and peers building careers in the field.",
+        "host_user_id": "user_5736",
+        "industry": "Education",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0003",
+        "name": "Breaking Into Sales Representative Roles",
+        "location": "Austin, TX",
+        "time": "2026-06-29T20:30:00.000Z",
+        "description": "Join a local Technology community meetup in Austin, TX. Topics include day-to-day work as a Sales Representative, industry trends, and networking with professionals from Tech Innovators Inc. and beyond.",
+        "host_user_id": "user_8816",
+        "industry": "Technology",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0004",
+        "name": "Breaking Into Marketing Specialist Roles",
+        "location": "New York, NY",
+        "time": "2026-08-08T20:30:00.000Z",
+        "description": "Connect with Marketing Specialist professionals and hiring leaders from the Retail space in New York, NY. Hear from teams like Tech Innovators Inc. about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_6029",
+        "industry": "Retail",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0005",
+        "name": "Meet Product Managers in Technology",
+        "location": "Austin, TX",
+        "time": "2026-04-28T18:30:00.000Z",
+        "description": "Join a local Technology community meetup in Austin, TX. Topics include day-to-day work as a Product Manager, industry trends, and networking with professionals from Tech Innovators Inc. and beyond.",
+        "host_user_id": "user_5746",
+        "industry": "Technology",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0006",
+        "name": "Technology Data Scientist Networking Night",
+        "location": "Seattle, WA",
+        "time": "2026-06-25T18:30:00.000Z",
+        "description": "Connect with Data Scientist professionals and hiring leaders from the Technology space in Seattle, WA. Hear from teams like Tech Innovators Inc. about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_5417",
+        "industry": "Technology",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0007",
+        "name": "Healthcare Professionals Mixer",
+        "location": "Boston, MA",
+        "time": "2026-08-02T18:30:00.000Z",
+        "description": "Join a local Healthcare community meetup in Boston, MA. Topics include day-to-day work as a HR Coordinator, industry trends, and networking with professionals from FutureWorks and beyond.",
+        "host_user_id": "user_8715",
+        "industry": "Healthcare",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0008",
+        "name": "Breaking Into HR Coordinator Roles",
+        "location": "Seattle, WA",
+        "time": "2026-08-08T18:30:00.000Z",
+        "description": "Join a local Finance community meetup in Seattle, WA. Topics include day-to-day work as a HR Coordinator, industry trends, and networking with professionals from AI Dynamics and beyond.",
+        "host_user_id": "user_1725",
+        "industry": "Finance",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0009",
+        "name": "Finance Professionals Mixer",
+        "location": "Boston, MA",
+        "time": "2026-08-27T19:00:00.000Z",
+        "description": "Join a local Finance community meetup in Boston, MA. Topics include day-to-day work as a Product Manager, industry trends, and networking with professionals from FutureWorks and beyond.",
+        "host_user_id": "user_8079",
+        "industry": "Finance",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0010",
+        "name": "Innovatech Career Insights Panel",
+        "location": "Seattle, WA",
+        "time": "2026-04-12T20:30:00.000Z",
+        "description": "Join a local Technology community meetup in Seattle, WA. Topics include day-to-day work as a Sales Representative, industry trends, and networking with professionals from Innovatech and beyond.",
+        "host_user_id": "user_8957",
+        "industry": "Technology",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0011",
+        "name": "Finance Professionals Mixer",
+        "location": "Austin, TX",
+        "time": "2026-08-12T20:30:00.000Z",
+        "description": "An evening for Finance talent in Austin, TX. Panelists include leaders hiring for Data Scientist roles at AI Dynamics and peers building careers in the field.",
+        "host_user_id": "user_5555",
+        "industry": "Finance",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0012",
+        "name": "Education Financial Analyst Networking Night",
+        "location": "Austin, TX",
+        "time": "2026-04-16T20:30:00.000Z",
+        "description": "Connect with Financial Analyst professionals and hiring leaders from the Education space in Austin, TX. Hear from teams like Innovatech about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_2200",
+        "industry": "Education",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0013",
+        "name": "Breaking Into HR Coordinator Roles",
+        "location": "San Francisco, CA",
+        "time": "2026-06-09T18:30:00.000Z",
+        "description": "Join a local Healthcare community meetup in San Francisco, CA. Topics include day-to-day work as a HR Coordinator, industry trends, and networking with professionals from AI Dynamics and beyond.",
+        "host_user_id": "user_1929",
+        "industry": "Healthcare",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0014",
+        "name": "Healthcare Marketing Specialist Networking Night",
+        "location": "San Francisco, CA",
+        "time": "2026-07-15T20:30:00.000Z",
+        "description": "Connect with Marketing Specialist professionals and hiring leaders from the Healthcare space in San Francisco, CA. Hear from teams like Innovatech about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_9746",
+        "industry": "Healthcare",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0015",
+        "name": "Breaking Into Sales Representative Roles",
+        "location": "Boston, MA",
+        "time": "2026-08-08T20:30:00.000Z",
+        "description": "Connect with Sales Representative professionals and hiring leaders from the Technology space in Boston, MA. Hear from teams like FutureWorks about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_6834",
+        "industry": "Technology",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0016",
+        "name": "Meet UX Designers in Finance",
+        "location": "New York, NY",
+        "time": "2026-08-26T18:30:00.000Z",
+        "description": "Join a local Finance community meetup in New York, NY. Topics include day-to-day work as a UX Designer, industry trends, and networking with professionals from Global Solutions LLC and beyond.",
+        "host_user_id": "user_8802",
+        "industry": "Finance",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0017",
+        "name": "Education Product Manager Networking Night",
+        "location": "San Francisco, CA",
+        "time": "2026-05-31T19:00:00.000Z",
+        "description": "An evening for Education talent in San Francisco, CA. Panelists include leaders hiring for Product Manager roles at FutureWorks and peers building careers in the field.",
+        "host_user_id": "user_3358",
+        "industry": "Education",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0018",
+        "name": "Breaking Into Product Manager Roles",
+        "location": "Boston, MA",
+        "time": "2026-07-29T18:30:00.000Z",
+        "description": "An evening for Education talent in Boston, MA. Panelists include leaders hiring for Product Manager roles at AI Dynamics and peers building careers in the field.",
+        "host_user_id": "user_7593",
+        "industry": "Education",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0019",
+        "name": "Finance Professionals Mixer",
+        "location": "New York, NY",
+        "time": "2026-08-27T19:00:00.000Z",
+        "description": "Join a local Finance community meetup in New York, NY. Topics include day-to-day work as a Product Manager, industry trends, and networking with professionals from FutureWorks and beyond.",
+        "host_user_id": "user_8274",
+        "industry": "Finance",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0020",
+        "name": "Global Solutions LLC Career Insights Panel",
+        "location": "San Francisco, CA",
+        "time": "2026-06-01T20:30:00.000Z",
+        "description": "An evening for Education talent in San Francisco, CA. Panelists include leaders hiring for Sales Representative roles at Global Solutions LLC and peers building careers in the field.",
+        "host_user_id": "user_7897",
+        "industry": "Education",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0021",
+        "name": "Education Professionals Mixer",
+        "location": "Boston, MA",
+        "time": "2026-04-04T18:30:00.000Z",
+        "description": "Join a local Education community meetup in Boston, MA. Topics include day-to-day work as a Product Manager, industry trends, and networking with professionals from AI Dynamics and beyond.",
+        "host_user_id": "user_3032",
+        "industry": "Education",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0022",
+        "name": "Meet Software Engineers in Retail",
+        "location": "Seattle, WA",
+        "time": "2026-05-13T17:00:00.000Z",
+        "description": "Connect with Software Engineer professionals and hiring leaders from the Retail space in Seattle, WA. Hear from teams like FutureWorks about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_4027",
+        "industry": "Retail",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0023",
+        "name": "Meet HR Coordinators in Retail",
+        "location": "Seattle, WA",
+        "time": "2026-04-28T18:30:00.000Z",
+        "description": "Join a local Retail community meetup in Seattle, WA. Topics include day-to-day work as a HR Coordinator, industry trends, and networking with professionals from Global Solutions LLC and beyond.",
+        "host_user_id": "user_5557",
+        "industry": "Retail",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0024",
+        "name": "Breaking Into Customer Service Manager Roles",
+        "location": "San Francisco, CA",
+        "time": "2026-05-10T20:30:00.000Z",
+        "description": "Connect with Customer Service Manager professionals and hiring leaders from the Healthcare space in San Francisco, CA. Hear from teams like AI Dynamics about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_5654",
+        "industry": "Healthcare",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0025",
+        "name": "AI Dynamics Career Insights Panel",
+        "location": "Austin, TX",
+        "time": "2026-04-17T17:00:00.000Z",
+        "description": "An evening for Retail talent in Austin, TX. Panelists include leaders hiring for Software Engineer roles at AI Dynamics and peers building careers in the field.",
+        "host_user_id": "user_3620",
+        "industry": "Retail",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0026",
+        "name": "Breaking Into Financial Analyst Roles",
+        "location": "San Francisco, CA",
+        "time": "2026-06-09T20:30:00.000Z",
+        "description": "Connect with Financial Analyst professionals and hiring leaders from the Healthcare space in San Francisco, CA. Hear from teams like Tech Innovators Inc. about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_7271",
+        "industry": "Healthcare",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0027",
+        "name": "Meet Customer Service Managers in Retail",
+        "location": "New York, NY",
+        "time": "2026-06-17T20:30:00.000Z",
+        "description": "Join a local Retail community meetup in New York, NY. Topics include day-to-day work as a Customer Service Manager, industry trends, and networking with professionals from Global Solutions LLC and beyond.",
+        "host_user_id": "user_4045",
+        "industry": "Retail",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0028",
+        "name": "Meet HR Coordinators in Finance",
+        "location": "Seattle, WA",
+        "time": "2026-04-23T19:00:00.000Z",
+        "description": "Join a local Finance community meetup in Seattle, WA. Topics include day-to-day work as a HR Coordinator, industry trends, and networking with professionals from Global Solutions LLC and beyond.",
+        "host_user_id": "user_4767",
+        "industry": "Finance",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0029",
+        "name": "Meet HR Coordinators in Education",
+        "location": "Boston, MA",
+        "time": "2026-07-22T19:00:00.000Z",
+        "description": "Join a local Education community meetup in Boston, MA. Topics include day-to-day work as a HR Coordinator, industry trends, and networking with professionals from Global Solutions LLC and beyond.",
+        "host_user_id": "user_1501",
+        "industry": "Education",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0030",
+        "name": "Meet DevOps Engineers in Technology",
+        "location": "Austin, TX",
+        "time": "2026-04-23T17:00:00.000Z",
+        "description": "An evening for Technology talent in Austin, TX. Panelists include leaders hiring for DevOps Engineer roles at Innovatech and peers building careers in the field.",
+        "host_user_id": "user_8422",
+        "industry": "Technology",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0031",
+        "name": "Meet Customer Service Managers in Healthcare",
+        "location": "Seattle, WA",
+        "time": "2026-04-18T18:30:00.000Z",
+        "description": "An evening for Healthcare talent in Seattle, WA. Panelists include leaders hiring for Customer Service Manager roles at FutureWorks and peers building careers in the field.",
+        "host_user_id": "user_3074",
+        "industry": "Healthcare",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0032",
+        "name": "Global Solutions LLC Career Insights Panel",
+        "location": "Austin, TX",
+        "time": "2026-04-07T19:00:00.000Z",
+        "description": "An evening for Healthcare talent in Austin, TX. Panelists include leaders hiring for DevOps Engineer roles at Global Solutions LLC and peers building careers in the field.",
+        "host_user_id": "user_1761",
+        "industry": "Healthcare",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0033",
+        "name": "Education Professionals Mixer",
+        "location": "Austin, TX",
+        "time": "2026-04-14T20:30:00.000Z",
+        "description": "An evening for Education talent in Austin, TX. Panelists include leaders hiring for Marketing Specialist roles at Tech Innovators Inc. and peers building careers in the field.",
+        "host_user_id": "user_2326",
+        "industry": "Education",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0034",
+        "name": "Technology Customer Service Manager Networking Night",
+        "location": "Boston, MA",
+        "time": "2026-07-10T17:00:00.000Z",
+        "description": "An evening for Technology talent in Boston, MA. Panelists include leaders hiring for Customer Service Manager roles at AI Dynamics and peers building careers in the field.",
+        "host_user_id": "user_2679",
+        "industry": "Technology",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0035",
+        "name": "Technology HR Coordinator Networking Night",
+        "location": "New York, NY",
+        "time": "2026-07-15T18:30:00.000Z",
+        "description": "Join a local Technology community meetup in New York, NY. Topics include day-to-day work as a HR Coordinator, industry trends, and networking with professionals from Innovatech and beyond.",
+        "host_user_id": "user_5222",
+        "industry": "Technology",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0036",
+        "name": "Retail Financial Analyst Networking Night",
+        "location": "Austin, TX",
+        "time": "2026-08-09T19:00:00.000Z",
+        "description": "Join a local Retail community meetup in Austin, TX. Topics include day-to-day work as a Financial Analyst, industry trends, and networking with professionals from Global Solutions LLC and beyond.",
+        "host_user_id": "user_9278",
+        "industry": "Retail",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0037",
+        "name": "Meet DevOps Engineers in Healthcare",
+        "location": "New York, NY",
+        "time": "2026-07-17T18:30:00.000Z",
+        "description": "An evening for Healthcare talent in New York, NY. Panelists include leaders hiring for DevOps Engineer roles at FutureWorks and peers building careers in the field.",
+        "host_user_id": "user_4923",
+        "industry": "Healthcare",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0038",
+        "name": "Meet Software Engineers in Technology",
+        "location": "San Francisco, CA",
+        "time": "2026-05-28T20:30:00.000Z",
+        "description": "Connect with Software Engineer professionals and hiring leaders from the Technology space in San Francisco, CA. Hear from teams like FutureWorks about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_7851",
+        "industry": "Technology",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0039",
+        "name": "Education Financial Analyst Networking Night",
+        "location": "San Francisco, CA",
+        "time": "2026-07-30T17:00:00.000Z",
+        "description": "Connect with Financial Analyst professionals and hiring leaders from the Education space in San Francisco, CA. Hear from teams like Global Solutions LLC about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_2706",
+        "industry": "Education",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0040",
+        "name": "Breaking Into Marketing Specialist Roles",
+        "location": "Boston, MA",
+        "time": "2026-08-28T18:30:00.000Z",
+        "description": "An evening for Retail talent in Boston, MA. Panelists include leaders hiring for Marketing Specialist roles at Tech Innovators Inc. and peers building careers in the field.",
+        "host_user_id": "user_2753",
+        "industry": "Retail",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0041",
+        "name": "Meet HR Coordinators in Healthcare",
+        "location": "Austin, TX",
+        "time": "2026-05-18T18:30:00.000Z",
+        "description": "An evening for Healthcare talent in Austin, TX. Panelists include leaders hiring for HR Coordinator roles at FutureWorks and peers building careers in the field.",
+        "host_user_id": "user_4312",
+        "industry": "Healthcare",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0042",
+        "name": "AI Dynamics Career Insights Panel",
+        "location": "New York, NY",
+        "time": "2026-07-16T19:00:00.000Z",
+        "description": "Join a local Finance community meetup in New York, NY. Topics include day-to-day work as a Software Engineer, industry trends, and networking with professionals from AI Dynamics and beyond.",
+        "host_user_id": "user_1263",
+        "industry": "Finance",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0043",
+        "name": "Technology Software Engineer Networking Night",
+        "location": "Austin, TX",
+        "time": "2026-06-25T20:30:00.000Z",
+        "description": "An evening for Technology talent in Austin, TX. Panelists include leaders hiring for Software Engineer roles at Innovatech and peers building careers in the field.",
+        "host_user_id": "user_8038",
+        "industry": "Technology",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0044",
+        "name": "Breaking Into DevOps Engineer Roles",
+        "location": "New York, NY",
+        "time": "2026-08-08T20:30:00.000Z",
+        "description": "Connect with DevOps Engineer professionals and hiring leaders from the Retail space in New York, NY. Hear from teams like Tech Innovators Inc. about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_9470",
+        "industry": "Retail",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0045",
+        "name": "Finance UX Designer Networking Night",
+        "location": "Seattle, WA",
+        "time": "2026-07-20T17:00:00.000Z",
+        "description": "Join a local Finance community meetup in Seattle, WA. Topics include day-to-day work as a UX Designer, industry trends, and networking with professionals from Innovatech and beyond.",
+        "host_user_id": "user_1353",
+        "industry": "Finance",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0046",
+        "name": "Technology Professionals Mixer",
+        "location": "Seattle, WA",
+        "time": "2026-04-24T20:30:00.000Z",
+        "description": "Join a local Technology community meetup in Seattle, WA. Topics include day-to-day work as a HR Coordinator, industry trends, and networking with professionals from Global Solutions LLC and beyond.",
+        "host_user_id": "user_3627",
+        "industry": "Technology",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0047",
+        "name": "Breaking Into Sales Representative Roles",
+        "location": "San Francisco, CA",
+        "time": "2026-08-03T17:00:00.000Z",
+        "description": "An evening for Retail talent in San Francisco, CA. Panelists include leaders hiring for Sales Representative roles at FutureWorks and peers building careers in the field.",
+        "host_user_id": "user_4147",
+        "industry": "Retail",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0048",
+        "name": "Tech Innovators Inc. Career Insights Panel",
+        "location": "Austin, TX",
+        "time": "2026-07-31T20:30:00.000Z",
+        "description": "An evening for Technology talent in Austin, TX. Panelists include leaders hiring for Sales Representative roles at Tech Innovators Inc. and peers building careers in the field.",
+        "host_user_id": "user_3235",
+        "industry": "Technology",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0049",
+        "name": "AI Dynamics Career Insights Panel",
+        "location": "Austin, TX",
+        "time": "2026-04-27T17:00:00.000Z",
+        "description": "Join a local Retail community meetup in Austin, TX. Topics include day-to-day work as a Software Engineer, industry trends, and networking with professionals from AI Dynamics and beyond.",
+        "host_user_id": "user_3646",
+        "industry": "Retail",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0050",
+        "name": "Meet DevOps Engineers in Finance",
+        "location": "New York, NY",
+        "time": "2026-06-17T18:30:00.000Z",
+        "description": "An evening for Finance talent in New York, NY. Panelists include leaders hiring for DevOps Engineer roles at Global Solutions LLC and peers building careers in the field.",
+        "host_user_id": "user_9585",
+        "industry": "Finance",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0051",
+        "name": "Meet Financial Analysts in Retail",
+        "location": "San Francisco, CA",
+        "time": "2026-07-27T20:30:00.000Z",
+        "description": "Connect with Financial Analyst professionals and hiring leaders from the Retail space in San Francisco, CA. Hear from teams like FutureWorks about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_6402",
+        "industry": "Retail",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0052",
+        "name": "Healthcare Financial Analyst Networking Night",
+        "location": "Austin, TX",
+        "time": "2026-04-21T19:00:00.000Z",
+        "description": "Connect with Financial Analyst professionals and hiring leaders from the Healthcare space in Austin, TX. Hear from teams like Tech Innovators Inc. about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_2192",
+        "industry": "Healthcare",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0053",
+        "name": "Meet Sales Representatives in Finance",
+        "location": "Seattle, WA",
+        "time": "2026-06-22T17:00:00.000Z",
+        "description": "An evening for Finance talent in Seattle, WA. Panelists include leaders hiring for Sales Representative roles at AI Dynamics and peers building careers in the field.",
+        "host_user_id": "user_4244",
+        "industry": "Finance",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0054",
+        "name": "Technology Professionals Mixer",
+        "location": "San Francisco, CA",
+        "time": "2026-05-29T19:00:00.000Z",
+        "description": "Join a local Technology community meetup in San Francisco, CA. Topics include day-to-day work as a Marketing Specialist, industry trends, and networking with professionals from FutureWorks and beyond.",
+        "host_user_id": "user_5785",
+        "industry": "Technology",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0055",
+        "name": "Meet Financial Analysts in Retail",
+        "location": "New York, NY",
+        "time": "2026-06-07T18:30:00.000Z",
+        "description": "Connect with Financial Analyst professionals and hiring leaders from the Retail space in New York, NY. Hear from teams like Innovatech about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_9764",
+        "industry": "Retail",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0056",
+        "name": "Healthcare Professionals Mixer",
+        "location": "New York, NY",
+        "time": "2026-05-19T19:00:00.000Z",
+        "description": "An evening for Healthcare talent in New York, NY. Panelists include leaders hiring for HR Coordinator roles at Innovatech and peers building careers in the field.",
+        "host_user_id": "user_1081",
+        "industry": "Healthcare",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0057",
+        "name": "Technology Data Scientist Networking Night",
+        "location": "Seattle, WA",
+        "time": "2026-06-10T17:00:00.000Z",
+        "description": "An evening for Technology talent in Seattle, WA. Panelists include leaders hiring for Data Scientist roles at Innovatech and peers building careers in the field.",
+        "host_user_id": "user_9019",
+        "industry": "Technology",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0058",
+        "name": "Meet Financial Analysts in Education",
+        "location": "San Francisco, CA",
+        "time": "2026-06-07T18:30:00.000Z",
+        "description": "Connect with Financial Analyst professionals and hiring leaders from the Education space in San Francisco, CA. Hear from teams like Tech Innovators Inc. about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_4105",
+        "industry": "Education",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0059",
+        "name": "Meet DevOps Engineers in Finance",
+        "location": "Boston, MA",
+        "time": "2026-07-22T19:00:00.000Z",
+        "description": "Join a local Finance community meetup in Boston, MA. Topics include day-to-day work as a DevOps Engineer, industry trends, and networking with professionals from FutureWorks and beyond.",
+        "host_user_id": "user_6837",
+        "industry": "Finance",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0060",
+        "name": "Technology Professionals Mixer",
+        "location": "Seattle, WA",
+        "time": "2026-06-03T20:30:00.000Z",
+        "description": "Connect with Marketing Specialist professionals and hiring leaders from the Technology space in Seattle, WA. Hear from teams like Innovatech about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_8499",
+        "industry": "Technology",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0061",
+        "name": "Meet DevOps Engineers in Healthcare",
+        "location": "New York, NY",
+        "time": "2026-07-27T20:30:00.000Z",
+        "description": "Connect with DevOps Engineer professionals and hiring leaders from the Healthcare space in New York, NY. Hear from teams like Global Solutions LLC about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_7935",
+        "industry": "Healthcare",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0062",
+        "name": "Finance Product Manager Networking Night",
+        "location": "New York, NY",
+        "time": "2026-07-20T17:00:00.000Z",
+        "description": "Join a local Finance community meetup in New York, NY. Topics include day-to-day work as a Product Manager, industry trends, and networking with professionals from FutureWorks and beyond.",
+        "host_user_id": "user_8891",
+        "industry": "Finance",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0063",
+        "name": "FutureWorks Career Insights Panel",
+        "location": "New York, NY",
+        "time": "2026-07-21T20:30:00.000Z",
+        "description": "Connect with HR Coordinator professionals and hiring leaders from the Healthcare space in New York, NY. Hear from teams like FutureWorks about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_3013",
+        "industry": "Healthcare",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0064",
+        "name": "Meet Financial Analysts in Education",
+        "location": "Austin, TX",
+        "time": "2026-07-02T17:00:00.000Z",
+        "description": "Join a local Education community meetup in Austin, TX. Topics include day-to-day work as a Financial Analyst, industry trends, and networking with professionals from Tech Innovators Inc. and beyond.",
+        "host_user_id": "user_1334",
+        "industry": "Education",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0065",
+        "name": "Meet Customer Service Managers in Finance",
+        "location": "San Francisco, CA",
+        "time": "2026-08-26T20:30:00.000Z",
+        "description": "Connect with Customer Service Manager professionals and hiring leaders from the Finance space in San Francisco, CA. Hear from teams like Global Solutions LLC about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_5594",
+        "industry": "Finance",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0066",
+        "name": "Education Professionals Mixer",
+        "location": "Seattle, WA",
+        "time": "2026-05-09T17:00:00.000Z",
+        "description": "Join a local Education community meetup in Seattle, WA. Topics include day-to-day work as a HR Coordinator, industry trends, and networking with professionals from FutureWorks and beyond.",
+        "host_user_id": "user_8519",
+        "industry": "Education",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0067",
+        "name": "Breaking Into HR Coordinator Roles",
+        "location": "New York, NY",
+        "time": "2026-08-03T19:00:00.000Z",
+        "description": "Join a local Retail community meetup in New York, NY. Topics include day-to-day work as a HR Coordinator, industry trends, and networking with professionals from Innovatech and beyond.",
+        "host_user_id": "user_5129",
+        "industry": "Retail",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0068",
+        "name": "Meet HR Coordinators in Technology",
+        "location": "Boston, MA",
+        "time": "2026-06-22T17:00:00.000Z",
+        "description": "An evening for Technology talent in Boston, MA. Panelists include leaders hiring for HR Coordinator roles at Innovatech and peers building careers in the field.",
+        "host_user_id": "user_1733",
+        "industry": "Technology",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0069",
+        "name": "Education Financial Analyst Networking Night",
+        "location": "Boston, MA",
+        "time": "2026-07-20T19:00:00.000Z",
+        "description": "Connect with Financial Analyst professionals and hiring leaders from the Education space in Boston, MA. Hear from teams like FutureWorks about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_6564",
+        "industry": "Education",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0070",
+        "name": "Breaking Into Customer Service Manager Roles",
+        "location": "San Francisco, CA",
+        "time": "2026-07-09T20:30:00.000Z",
+        "description": "Connect with Customer Service Manager professionals and hiring leaders from the Technology space in San Francisco, CA. Hear from teams like Tech Innovators Inc. about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_3477",
+        "industry": "Technology",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0071",
+        "name": "Finance Professionals Mixer",
+        "location": "Boston, MA",
+        "time": "2026-06-13T18:30:00.000Z",
+        "description": "Connect with Sales Representative professionals and hiring leaders from the Finance space in Boston, MA. Hear from teams like FutureWorks about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_1894",
+        "industry": "Finance",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0072",
+        "name": "Meet Customer Service Managers in Retail",
+        "location": "Seattle, WA",
+        "time": "2026-06-27T18:30:00.000Z",
+        "description": "Join a local Retail community meetup in Seattle, WA. Topics include day-to-day work as a Customer Service Manager, industry trends, and networking with professionals from Innovatech and beyond.",
+        "host_user_id": "user_3001",
+        "industry": "Retail",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0073",
+        "name": "Finance Professionals Mixer",
+        "location": "San Francisco, CA",
+        "time": "2026-07-08T19:00:00.000Z",
+        "description": "Connect with Customer Service Manager professionals and hiring leaders from the Finance space in San Francisco, CA. Hear from teams like FutureWorks about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_8426",
+        "industry": "Finance",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0074",
+        "name": "Meet Financial Analysts in Finance",
+        "location": "Seattle, WA",
+        "time": "2026-05-13T17:00:00.000Z",
+        "description": "Connect with Financial Analyst professionals and hiring leaders from the Finance space in Seattle, WA. Hear from teams like AI Dynamics about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_5239",
+        "industry": "Finance",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0075",
+        "name": "Healthcare Professionals Mixer",
+        "location": "New York, NY",
+        "time": "2026-08-27T17:00:00.000Z",
+        "description": "An evening for Healthcare talent in New York, NY. Panelists include leaders hiring for DevOps Engineer roles at Global Solutions LLC and peers building careers in the field.",
+        "host_user_id": "user_3381",
+        "industry": "Healthcare",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0076",
+        "name": "Meet HR Coordinators in Healthcare",
+        "location": "Seattle, WA",
+        "time": "2026-08-26T20:30:00.000Z",
+        "description": "Connect with HR Coordinator professionals and hiring leaders from the Healthcare space in Seattle, WA. Hear from teams like FutureWorks about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_6349",
+        "industry": "Healthcare",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0077",
+        "name": "Meet Financial Analysts in Retail",
+        "location": "San Francisco, CA",
+        "time": "2026-04-23T19:00:00.000Z",
+        "description": "Join a local Retail community meetup in San Francisco, CA. Topics include day-to-day work as a Financial Analyst, industry trends, and networking with professionals from FutureWorks and beyond.",
+        "host_user_id": "user_1210",
+        "industry": "Retail",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0078",
+        "name": "Healthcare Professionals Mixer",
+        "location": "New York, NY",
+        "time": "2026-05-04T18:30:00.000Z",
+        "description": "Join a local Healthcare community meetup in New York, NY. Topics include day-to-day work as a Financial Analyst, industry trends, and networking with professionals from Global Solutions LLC and beyond.",
+        "host_user_id": "user_7856",
+        "industry": "Healthcare",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0079",
+        "name": "Tech Innovators Inc. Career Insights Panel",
+        "location": "San Francisco, CA",
+        "time": "2026-04-17T19:00:00.000Z",
+        "description": "Join a local Technology community meetup in San Francisco, CA. Topics include day-to-day work as a Data Scientist, industry trends, and networking with professionals from Tech Innovators Inc. and beyond.",
+        "host_user_id": "user_9177",
+        "industry": "Technology",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0080",
+        "name": "Breaking Into Software Engineer Roles",
+        "location": "Austin, TX",
+        "time": "2026-07-09T18:30:00.000Z",
+        "description": "Join a local Education community meetup in Austin, TX. Topics include day-to-day work as a Software Engineer, industry trends, and networking with professionals from Global Solutions LLC and beyond.",
+        "host_user_id": "user_9929",
+        "industry": "Education",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0081",
+        "name": "Retail Professionals Mixer",
+        "location": "Seattle, WA",
+        "time": "2026-07-08T17:00:00.000Z",
+        "description": "Join a local Retail community meetup in Seattle, WA. Topics include day-to-day work as a DevOps Engineer, industry trends, and networking with professionals from Tech Innovators Inc. and beyond.",
+        "host_user_id": "user_9532",
+        "industry": "Retail",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0082",
+        "name": "Innovatech Career Insights Panel",
+        "location": "Boston, MA",
+        "time": "2026-07-06T17:00:00.000Z",
+        "description": "Connect with HR Coordinator professionals and hiring leaders from the Education space in Boston, MA. Hear from teams like Innovatech about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_7092",
+        "industry": "Education",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0083",
+        "name": "Healthcare Customer Service Manager Networking Night",
+        "location": "San Francisco, CA",
+        "time": "2026-07-05T20:30:00.000Z",
+        "description": "Join a local Healthcare community meetup in San Francisco, CA. Topics include day-to-day work as a Customer Service Manager, industry trends, and networking with professionals from Innovatech and beyond.",
+        "host_user_id": "user_3843",
+        "industry": "Healthcare",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0084",
+        "name": "AI Dynamics Career Insights Panel",
+        "location": "Seattle, WA",
+        "time": "2026-06-11T20:30:00.000Z",
+        "description": "Join a local Finance community meetup in Seattle, WA. Topics include day-to-day work as a Financial Analyst, industry trends, and networking with professionals from AI Dynamics and beyond.",
+        "host_user_id": "user_6469",
+        "industry": "Finance",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0085",
+        "name": "Technology Product Manager Networking Night",
+        "location": "San Francisco, CA",
+        "time": "2026-08-19T19:00:00.000Z",
+        "description": "Connect with Product Manager professionals and hiring leaders from the Technology space in San Francisco, CA. Hear from teams like Global Solutions LLC about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_1729",
+        "industry": "Technology",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0086",
+        "name": "AI Dynamics Career Insights Panel",
+        "location": "New York, NY",
+        "time": "2026-04-17T19:00:00.000Z",
+        "description": "Join a local Technology community meetup in New York, NY. Topics include day-to-day work as a DevOps Engineer, industry trends, and networking with professionals from AI Dynamics and beyond.",
+        "host_user_id": "user_6231",
+        "industry": "Technology",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0087",
+        "name": "Education HR Coordinator Networking Night",
+        "location": "New York, NY",
+        "time": "2026-07-05T18:30:00.000Z",
+        "description": "An evening for Education talent in New York, NY. Panelists include leaders hiring for HR Coordinator roles at Tech Innovators Inc. and peers building careers in the field.",
+        "host_user_id": "user_8996",
+        "industry": "Education",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0088",
+        "name": "Breaking Into Marketing Specialist Roles",
+        "location": "San Francisco, CA",
+        "time": "2026-05-15T17:00:00.000Z",
+        "description": "Join a local Retail community meetup in San Francisco, CA. Topics include day-to-day work as a Marketing Specialist, industry trends, and networking with professionals from Innovatech and beyond.",
+        "host_user_id": "user_4176",
+        "industry": "Retail",
+        "company": "Innovatech"
+    },
+    {
+        "id": "event_0089",
+        "name": "Breaking Into UX Designer Roles",
+        "location": "Austin, TX",
+        "time": "2026-08-08T20:30:00.000Z",
+        "description": "Connect with UX Designer professionals and hiring leaders from the Finance space in Austin, TX. Hear from teams like FutureWorks about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_1430",
+        "industry": "Finance",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0090",
+        "name": "Breaking Into DevOps Engineer Roles",
+        "location": "Seattle, WA",
+        "time": "2026-07-19T18:30:00.000Z",
+        "description": "Connect with DevOps Engineer professionals and hiring leaders from the Healthcare space in Seattle, WA. Hear from teams like Tech Innovators Inc. about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_3830",
+        "industry": "Healthcare",
+        "company": "Tech Innovators Inc."
+    },
+    {
+        "id": "event_0091",
+        "name": "Meet Product Managers in Finance",
+        "location": "Austin, TX",
+        "time": "2026-07-07T18:30:00.000Z",
+        "description": "Connect with Product Manager professionals and hiring leaders from the Finance space in Austin, TX. Hear from teams like AI Dynamics about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_3602",
+        "industry": "Finance",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0092",
+        "name": "Meet HR Coordinators in Retail",
+        "location": "New York, NY",
+        "time": "2026-08-21T17:00:00.000Z",
+        "description": "An evening for Retail talent in New York, NY. Panelists include leaders hiring for HR Coordinator roles at Global Solutions LLC and peers building careers in the field.",
+        "host_user_id": "user_9941",
+        "industry": "Retail",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0093",
+        "name": "Education Data Scientist Networking Night",
+        "location": "Austin, TX",
+        "time": "2026-07-05T18:30:00.000Z",
+        "description": "An evening for Education talent in Austin, TX. Panelists include leaders hiring for Data Scientist roles at Global Solutions LLC and peers building careers in the field.",
+        "host_user_id": "user_1693",
+        "industry": "Education",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0094",
+        "name": "Finance Marketing Specialist Networking Night",
+        "location": "Boston, MA",
+        "time": "2026-06-25T20:30:00.000Z",
+        "description": "An evening for Finance talent in Boston, MA. Panelists include leaders hiring for Marketing Specialist roles at AI Dynamics and peers building careers in the field.",
+        "host_user_id": "user_2157",
+        "industry": "Finance",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0095",
+        "name": "Retail Software Engineer Networking Night",
+        "location": "Austin, TX",
+        "time": "2026-08-04T18:30:00.000Z",
+        "description": "An evening for Retail talent in Austin, TX. Panelists include leaders hiring for Software Engineer roles at FutureWorks and peers building careers in the field.",
+        "host_user_id": "user_1299",
+        "industry": "Retail",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0096",
+        "name": "AI Dynamics Career Insights Panel",
+        "location": "Boston, MA",
+        "time": "2026-04-17T17:00:00.000Z",
+        "description": "An evening for Retail talent in Boston, MA. Panelists include leaders hiring for HR Coordinator roles at AI Dynamics and peers building careers in the field.",
+        "host_user_id": "user_8728",
+        "industry": "Retail",
+        "company": "AI Dynamics"
+    },
+    {
+        "id": "event_0097",
+        "name": "Breaking Into Data Scientist Roles",
+        "location": "Seattle, WA",
+        "time": "2026-04-15T19:00:00.000Z",
+        "description": "Connect with Data Scientist professionals and hiring leaders from the Finance space in Seattle, WA. Hear from teams like FutureWorks about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_3608",
+        "industry": "Finance",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0098",
+        "name": "FutureWorks Career Insights Panel",
+        "location": "Boston, MA",
+        "time": "2026-06-01T20:30:00.000Z",
+        "description": "An evening for Finance talent in Boston, MA. Panelists include leaders hiring for HR Coordinator roles at FutureWorks and peers building careers in the field.",
+        "host_user_id": "user_9405",
+        "industry": "Finance",
+        "company": "FutureWorks"
+    },
+    {
+        "id": "event_0099",
+        "name": "Retail Professionals Mixer",
+        "location": "Austin, TX",
+        "time": "2026-06-03T18:30:00.000Z",
+        "description": "Join a local Retail community meetup in Austin, TX. Topics include day-to-day work as a UX Designer, industry trends, and networking with professionals from Global Solutions LLC and beyond.",
+        "host_user_id": "user_7329",
+        "industry": "Retail",
+        "company": "Global Solutions LLC"
+    },
+    {
+        "id": "event_0100",
+        "name": "Meet DevOps Engineers in Healthcare",
+        "location": "Boston, MA",
+        "time": "2026-07-12T17:00:00.000Z",
+        "description": "Connect with DevOps Engineer professionals and hiring leaders from the Healthcare space in Boston, MA. Hear from teams like Global Solutions LLC about career paths, skills in demand, and open opportunities.",
+        "host_user_id": "user_6953",
+        "industry": "Healthcare",
+        "company": "Global Solutions LLC"
+    }
+]

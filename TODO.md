@@ -1,3 +1,2 @@
 cnnadozi:
-- make an MD file to outline what our project is
-- Make sure event data is valid
+- fill out README.md and link to AGENTS.md
