@@ -1,13 +1,24 @@
-import eventsData from "@/data/events_data.json";
+import { EventsFeedSection } from "@/components/EventsFeedSection";
 import type { Event } from "@/types/event";
-import EventsPageLayout from "@/components/EventsPageLayout";
 
 export default function EventsPage() {
-  const events = eventsData as Event[];
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { events, getMainUserAttendingEventIds } = require("@/server/lib/data") as {
+    events: Event[];
+    getMainUserAttendingEventIds: () => string[];
+  };
 
   return (
     <main className="page events-feed-page">
       <EventsPageLayout events={events}/>
+      <div className="events-feed-layout">
+        <div className="events-feed-main">
+          <EventsFeedSection
+            events={events}
+            mainUserAttendingEventIds={getMainUserAttendingEventIds()}
+          />
+        </div>
+      </div>
     </main>
   );
 }

@@ -1,26 +1,20 @@
 "use client";
 
 /**
- * Guest list overlay — mirrors the Attendance List page layout.
- * Wired to real event attendee data derived in server/lib/events.js, where each
- * attendee already carries a stable (hash-based "random") connection degree.
+ * Guest list overlay — layout copied from linkedin.com/mynetwork/invite-connect/connections/
  */
 import { useMemo, useState } from "react";
 import "@/components/AttendanceList.css";
 import {
   ActiveFilterTag,
-  AllFiltersLink,
   Avatar,
   Button,
-  ConnectionBadge,
+  ClearFiltersLink,
   FilterBar,
   FilterDropdown,
-  MessageIcon,
-  SegmentGroup,
   TextLink,
 } from "@/components/linkedin";
 import { Modal } from "@/components/linkedin/Modal";
-import type { ConnectionDegree } from "@/components/linkedin";
 import type { AttendeeRow } from "@/lib/eventTypes";
 
 type AttendeeModalProps = {
@@ -29,31 +23,18 @@ type AttendeeModalProps = {
   attendees: AttendeeRow[];
 };
 
-// Applied filter tags shown as removable chips below the connection-degree tabs.
-const ACTIVE_FILTERS = [
-  "Abingdon",
-  "Computer Games",
-  "Rice University",
-  "SDE Intern",
-];
-
-type DegreeFilter = "1st" | "2nd" | "3rd+";
-
-const CONNECTION_OPTIONS = [
-  { value: "1st" as const, label: "1st" },
-  { value: "2nd" as const, label: "2nd" },
-  { value: "3rd+" as const, label: "3rd+" },
-];
-
-// Maps a segment value to the connection degree it shows.
-const FILTER_TO_DEGREE: Record<DegreeFilter, ConnectionDegree> = {
-  "1st": 1,
-  "2nd": 2,
-  "3rd+": 3,
+type AttendeeFilters = {
+  location: string | null;
+  company: string | null;
+  industry: string | null;
 };
 
-// Stable avatar palette — picked deterministically from the attendee id so a
-// given person always renders the same color.
+const EMPTY_FILTERS: AttendeeFilters = {
+  location: null,
+  company: null,
+  industry: null,
+};
+
 const AVATAR_COLORS = [
   "#0a66c2",
   "#b24592",
@@ -75,77 +56,168 @@ function avatarColor(id: string): string {
   return AVATAR_COLORS[hash % AVATAR_COLORS.length];
 }
 
-export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) {
-  const [degreeFilter, setDegreeFilter] = useState<DegreeFilter | null>(null);
+function uniqueSorted(values: (string | null | undefined)[]): string[] {
+  return [...new Set(values.filter(Boolean) as string[])].sort((a, b) =>
+    a.localeCompare(b),
+  );
+}
 
-  // Clicking the active segment again clears the filter and shows everyone.
-  function selectDegree(value: DegreeFilter) {
-    setDegreeFilter((current) => (current === value ? null : value));
+function AlsoAttendingEvents({
+  events,
+}: {
+  events: Array<string | { id: string; name: string }>;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const normalizedEvents = events.map((event) =>
+    typeof event === "string"
+      ? { id: event, name: event, href: "#" }
+      : { id: event.id, name: event.name, href: `/events/${event.id}` },
+  );
+
+  if (normalizedEvents.length === 0) return null;
+
+  if (normalizedEvents.length === 1) {
+    const event = normalizedEvents[0];
+    return (
+      <p className="li-person-row__meta">
+        <span className="li-person-row__meta-label li-person-row__meta-label--mutual">
+          Also attending
+        </span>
+        <TextLink href={event.href}>{event.name}</TextLink>
+      </p>
+    );
   }
 
+  return (
+    <div className="li-person-row__also-attending">
+      <button
+        type="button"
+        className="li-person-row__also-attending-trigger"
+        aria-expanded={expanded}
+        aria-label={`Also attending ${normalizedEvents.length} events`}
+        onClick={() => setExpanded((open) => !open)}
+      >
+        <span className="li-person-row__meta-label li-person-row__meta-label--mutual">
+          Also attending
+        </span>
+        <span className="li-person-row__also-attending-count">
+          {normalizedEvents.length} events
+        </span>
+        <span className="li-person-row__also-attending-chevron" aria-hidden>
+          ▾
+        </span>
+      </button>
+      {expanded && (
+        <ul className="li-person-row__also-attending-menu">
+          {normalizedEvents.map((event) => (
+            <li key={event.id}>
+              <TextLink href={event.href}>{event.name}</TextLink>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) {
+  const [filters, setFilters] = useState<AttendeeFilters>(EMPTY_FILTERS);
+
+  const filterOptions = useMemo(
+    () => ({
+      locations: uniqueSorted(attendees.map((attendee) => attendee.location)),
+      companies: uniqueSorted(attendees.map((attendee) => attendee.company)),
+      industries: uniqueSorted(attendees.map((attendee) => attendee.industry)),
+    }),
+    [attendees],
+  );
+
+  const activeFilters = useMemo(
+    () =>
+      (Object.entries(filters) as [keyof AttendeeFilters, string | null][])
+        .filter(([, value]) => value)
+        .map(([key, value]) => ({ key, label: value as string })),
+    [filters],
+  );
+
   const visibleAttendees = useMemo(() => {
-    const list = degreeFilter
-      ? attendees.filter(
-          (attendee) => attendee.degree === FILTER_TO_DEGREE[degreeFilter],
-        )
-      : attendees;
-    // Cap the rendered rows so the dataset's hundreds of attendees stay snappy.
+    const list = attendees.filter((attendee) => {
+      if (filters.location && attendee.location !== filters.location) return false;
+      if (filters.company && attendee.company !== filters.company) return false;
+      if (filters.industry && attendee.industry !== filters.industry) return false;
+      return true;
+    });
     return list.slice(0, 50);
-  }, [attendees, degreeFilter]);
+  }, [attendees, filters]);
+
+  function setFilter(key: keyof AttendeeFilters, value: string | null) {
+    setFilters((current) => ({ ...current, [key]: value }));
+  }
+
+  function clearFilter(key: keyof AttendeeFilters) {
+    setFilter(key, null);
+  }
+
+  function clearAllFilters() {
+    setFilters(EMPTY_FILTERS);
+  }
 
   return (
     <Modal open={open} onClose={onClose} title="Attendance List" wide>
       <div className="attendance-list">
-        <FilterBar>
-          <Button variant="pill-active">People</Button>
-
-          <FilterDropdown label="Actively hiring" />
-          <FilterDropdown label="Locations" />
-          <FilterDropdown label="Current companies" />
-
-          <SegmentGroup
-            options={CONNECTION_OPTIONS}
-            value={(degreeFilter ?? "") as DegreeFilter}
-            onChange={selectDegree}
+        <FilterBar className="attendance-list__filters">
+          <FilterDropdown
+            label="Location"
+            options={filterOptions.locations}
+            value={filters.location}
+            onChange={(value) => setFilter("location", value)}
+          />
+          <FilterDropdown
+            label="Company"
+            options={filterOptions.companies}
+            value={filters.company}
+            onChange={(value) => setFilter("company", value)}
+          />
+          <FilterDropdown
+            label="Industry"
+            options={filterOptions.industries}
+            value={filters.industry}
+            onChange={(value) => setFilter("industry", value)}
           />
 
-          {ACTIVE_FILTERS.map((filter) => (
-            <ActiveFilterTag key={filter} label={filter} />
+          {activeFilters.map(({ key, label }) => (
+            <ActiveFilterTag
+              key={`${key}-${label}`}
+              label={label}
+              onRemove={() => clearFilter(key)}
+            />
           ))}
 
-          <AllFiltersLink />
+          {activeFilters.length > 0 && (
+            <ClearFiltersLink onClick={clearAllFilters} />
+          )}
         </FilterBar>
 
-        <ul>
+        <ul className="attendance-list__list">
           {visibleAttendees.map((attendee) => (
-            <li key={attendee.id} className="attendance-list-row">
+            <li key={attendee.id} className="li-person-row">
               <Avatar
                 alt={attendee.name}
                 src={attendee.profile_picture_url}
                 color={avatarColor(attendee.id)}
               />
-              <div className="attendance-list-content">
-                <div className="attendance-list-name-row">
-                  <span className="attendance-list-name">{attendee.name}</span>
-                  <ConnectionBadge degree={attendee.degree} />
-                </div>
-                <p className="attendance-list-events">
-                  {attendee.mutualEvents.length > 0 ? (
-                    attendee.mutualEvents.map((event, index) => (
-                      <span key={event}>
-                        {index > 0 && ", "}
-                        <TextLink href="#">{event}</TextLink>
-                      </span>
-                    ))
-                  ) : (
-                    <span>{attendee.headline}</span>
-                  )}
-                </p>
+              <div className="li-person-row__content">
+                <span className="li-person-row__name">{attendee.name}</span>
+                <p className="li-person-row__headline">{attendee.headline}</p>
+                {attendee.location && (
+                  <p className="li-person-row__location">{attendee.location}</p>
+                )}
+                <AlsoAttendingEvents events={attendee.mutualEvents} />
               </div>
               <Button
-                variant={attendee.nudged ? "success" : "primary"}
-                className="attendance-list-nudge"
-                icon={<MessageIcon className="li-btn-icon" />}
+                variant={attendee.nudged ? "success" : "secondary"}
+                size="sm"
+                className="li-person-row__action"
                 disabled={attendee.nudged}
               >
                 {attendee.nudged ? "Nudged ✓" : "Nudge"}

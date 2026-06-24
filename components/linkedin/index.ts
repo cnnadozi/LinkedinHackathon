@@ -16,6 +16,7 @@ export { ConnectionBadge, type ConnectionDegree } from "./ConnectionBadge";
 export {
   ActiveFilterTag,
   AllFiltersLink,
+  ClearFiltersLink,
   FilterBar,
   FilterDropdown,
   SegmentGroup,
