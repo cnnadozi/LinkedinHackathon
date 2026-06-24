@@ -49,6 +49,28 @@ function memberHeadline(member) {
   return `${job.position} at ${job.company}`;
 }
 
+function getUserConnections(userId) {
+  return userById[userId]?.connections ?? [];
+}
+
+function isDirectConnection(viewerId, targetId) {
+  if (!viewerId || !targetId || viewerId === targetId) return false;
+  return getUserConnections(viewerId).includes(targetId);
+}
+
+/** LinkedIn-style degree: 1st = direct, 2nd = one mutual, 3rd+ = everyone else. */
+function getConnectionDegree(viewerId, targetId) {
+  if (!viewerId || !targetId || viewerId === targetId) return 3;
+  if (isDirectConnection(viewerId, targetId)) return 1;
+
+  const viewerConnections = new Set(getUserConnections(viewerId));
+  for (const connectionId of getUserConnections(targetId)) {
+    if (viewerConnections.has(connectionId)) return 2;
+  }
+
+  return 3;
+}
+
 module.exports = {
   users,
   jobs,
@@ -64,4 +86,7 @@ module.exports = {
   resolveMemberJobs,
   latestJob,
   memberHeadline,
+  getUserConnections,
+  isDirectConnection,
+  getConnectionDegree,
 };

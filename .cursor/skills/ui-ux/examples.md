@@ -9,7 +9,10 @@ Styles live in **`app/globals.css` only**. Copy values from linkedin.com DevTool
 <li className="li-person-row">
   <Avatar alt={name} src={photoUrl} />
   <div className="li-person-row__content">
-    <span className="li-person-row__name">{name}</span>
+    <p className="li-person-row__name-row">
+      <span className="li-person-row__name">{name}</span>
+      <ConnectionBadge degree={2} />
+    </p>
     <p className="li-person-row__headline">{headline}</p>
     <ul className="li-person-row__meta-list">
       <li className="li-person-row__meta">
@@ -49,6 +52,23 @@ Styles live in **`app/globals.css` only**. Copy values from linkedin.com DevTool
   text-decoration: underline;
 }
 ```
+
+## Pagination (list footers)
+
+```tsx
+import { Pagination, LIST_PAGE_SIZE } from "@/components/linkedin";
+
+const [page, setPage] = useState(1);
+const totalPages = Math.max(1, Math.ceil(items.length / LIST_PAGE_SIZE));
+const pageItems = items.slice((page - 1) * LIST_PAGE_SIZE, page * LIST_PAGE_SIZE);
+
+<div className="list-panel">
+  <div className="list-panel__scroll">{/* pageItems */}</div>
+  <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
+</div>
+```
+
+Reset `page` to 1 when filters or search change the list. Copy footer styles from linkedin.com list pages (`.li-pagination` in `globals.css`).
 
 ## DevTools workflow
 

@@ -95,6 +95,20 @@ describe("events API helpers", () => {
     expect(attendeeWithOverlap.mutualEvents).toEqual(expected);
   });
 
+  it("derives attendee connection degree from user connections data", () => {
+    const { getEventDetail } = require("../../server/lib/events");
+    const { getConnectionDegree, MAIN_USER_ID } = require("../../server/lib/data");
+    const detail = getEventDetail("event_0001");
+
+    expect(detail).not.toBeNull();
+    expect(detail.attendees.length).toBeGreaterThan(0);
+
+    for (const row of detail.attendees) {
+      expect(row.degree).toBe(getConnectionDegree(MAIN_USER_ID, row.id));
+      expect(row.isConnection).toBe(row.degree === 1);
+    }
+  });
+
   it("returns null for unknown events", () => {
     const { getEventDetail } = require("../../server/lib/events");
     expect(getEventDetail("event_missing")).toBeNull();

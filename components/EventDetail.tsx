@@ -14,7 +14,6 @@ import {
   Button,
   Card,
   IconButton,
-  Tabs,
   TextButton,
 } from "@/components/linkedin";
 import { eventBannerClass, formatEventDate } from "@/lib/formatEventDate";
@@ -27,19 +26,58 @@ type EventDetailProps = {
   relatedEvents: Event[];
 };
 
-const EVENT_TABS = [
-  { value: "details" as const, label: "Details" },
-  { value: "comments" as const, label: "Comments" },
-];
+const ABOUT_PREVIEW_LENGTH = 280;
+
+function truncateDescription(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  const slice = text.slice(0, maxLength);
+  const lastSpace = slice.lastIndexOf(" ");
+  return lastSpace > 0 ? slice.slice(0, lastSpace) : slice;
+}
+
+function EventAbout({ description }: { description: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const shouldTruncate = description.length > ABOUT_PREVIEW_LENGTH;
+  const preview = truncateDescription(description, ABOUT_PREVIEW_LENGTH);
+
+  return (
+    <section className="event-detail__about" aria-labelledby="event-about-heading">
+      <h2 id="event-about-heading" className="event-detail__about-title">
+        About
+      </h2>
+      <p className="event-detail__about-text">
+        {expanded || !shouldTruncate ? description : preview}
+        {shouldTruncate && !expanded && (
+          <>
+            {" … "}
+            <TextButton
+              variant="primary"
+              className="event-detail__about-toggle"
+              onClick={() => setExpanded(true)}
+            >
+              See more
+            </TextButton>
+          </>
+        )}
+      </p>
+      {shouldTruncate && expanded && (
+        <TextButton
+          variant="primary"
+          className="event-detail__about-toggle event-detail__about-toggle--less"
+          onClick={() => setExpanded(false)}
+        >
+          See less
+        </TextButton>
+      )}
+    </section>
+  );
+}
 
 export function EventDetail({ data, relatedEvents }: EventDetailProps) {
   const [rsvpd, setRsvpd] = useState(data.rsvpd);
   const [attendeeCount, setAttendeeCount] = useState(data.attendance.total);
   const [rsvpLoading, setRsvpLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<(typeof EVENT_TABS)[number]["value"]>(
-    "details",
-  );
 
   const { event, host, attendance } = data;
   const { scheduleLabel } = formatEventDate(event.time);
@@ -126,44 +164,7 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
                 <IconButton aria-label="More actions">•••</IconButton>
               </div>
 
-              <Tabs
-                options={EVENT_TABS}
-                value={activeTab}
-                onChange={setActiveTab}
-                aria-label="Event sections"
-                className="event-detail__tabs"
-              />
-
-              {activeTab === "details" ? (
-                <article className="event-detail__post">
-                  <header className="event-detail__post-header">
-                    {host && (
-                      <Avatar
-                        alt={host.name}
-                        src={host.profile_picture_url}
-                        size="md"
-                      />
-                    )}
-                    <div className="event-detail__post-meta">
-                      <p className="event-detail__post-author">{organizerName}</p>
-                      <p className="event-detail__post-subtitle">
-                        {event.company} · {event.industry}
-                      </p>
-                    </div>
-                    <Button variant="secondary" size="sm">
-                      + Follow
-                    </Button>
-                  </header>
-                  <p className="event-detail__description">{event.description}</p>
-                  <p className="event-detail__post-stats">
-                    136 reactions · 35 comments · 39 reposts
-                  </p>
-                </article>
-              ) : (
-                <p className="event-detail__comments-empty">
-                  Comments are not available in this demo.
-                </p>
-              )}
+              <EventAbout description={event.description} />
             </div>
           </Card>
         </div>
