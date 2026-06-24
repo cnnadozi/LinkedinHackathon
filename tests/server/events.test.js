@@ -40,7 +40,7 @@ describe("events API helpers", () => {
   });
 
   it("derives attendee count from user attending_event_ids in the dataset", () => {
-    const { getEventDetail, deriveAttendeeIds } = require("../../server/lib/events");
+    const { getEventDetail, deriveAttendeeIds, getEventAttendeeCounts } = require("../../server/lib/events");
     const { users } = require("../../server/lib/data");
     const eventId = "event_0001";
 
@@ -56,6 +56,9 @@ describe("events API helpers", () => {
     const detail = getEventDetail(eventId);
     expect(detail?.attendance.total).toBe(fromData);
     expect(detail?.attendees.length).toBe(fromData);
+    expect(getEventAttendeeCounts([{ id: eventId, host_user_id: "user_4579" }])[eventId]).toBe(
+      fromData,
+    );
   });
 
   it("returns only events the main user also attends for each attendee row", () => {
@@ -90,6 +93,20 @@ describe("events API helpers", () => {
       .sort((a, b) => a.name.localeCompare(b.name));
 
     expect(attendeeWithOverlap.mutualEvents).toEqual(expected);
+  });
+
+  it("derives attendee connection degree from user connections data", () => {
+    const { getEventDetail } = require("../../server/lib/events");
+    const { getConnectionDegree, MAIN_USER_ID } = require("../../server/lib/data");
+    const detail = getEventDetail("event_0001");
+
+    expect(detail).not.toBeNull();
+    expect(detail.attendees.length).toBeGreaterThan(0);
+
+    for (const row of detail.attendees) {
+      expect(row.degree).toBe(getConnectionDegree(MAIN_USER_ID, row.id));
+      expect(row.isConnection).toBe(row.degree === 1);
+    }
   });
 
   it("returns null for unknown events", () => {

@@ -22,6 +22,8 @@ export type AttendeeRow = {
   location: string;
   company: string | null;
   industry: string | null;
+  school: string | null;
+  skills: string[];
   degree: 1 | 2 | 3;
   isConnection: boolean;
   mutualEvents: { id: string; name: string }[];

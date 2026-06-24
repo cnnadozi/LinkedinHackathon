@@ -1,7 +1,7 @@
 /** Top global nav — mirrors linkedin.com shell with Gather icon for calendar overlay. */
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,7 +14,8 @@ import {
   UsersIcon,
 } from "@heroicons/react/24/solid";
 import { Avatar } from "./linkedin/Avatar";
-import { DEMO_USER_PROFILE_PICTURE_URL } from "@/lib/profilePicture";
+import { ProfileMenu } from "./linkedin/ProfileMenu";
+import type { MainUserProfile } from "@/lib/mainUserProfile";
 
 type NavLinkItem = {
   label: string;
@@ -63,9 +64,24 @@ function navLinkClass(isActive: boolean, extra = "") {
     .join(" ");
 }
 
-export function LinkedInNav() {
+export function LinkedInNav({ mainUserProfile }: { mainUserProfile: MainUserProfile }) {
   const pathname = usePathname();
   const gatherActive = pathname.startsWith("/gather");
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!profileMenuOpen) return;
+
+    const handlePointerDown = (event: MouseEvent) => {
+      if (!profileMenuRef.current?.contains(event.target as Node)) {
+        setProfileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
+  }, [profileMenuOpen]);
 
   return (
     <header className="li-nav">
@@ -123,19 +139,37 @@ export function LinkedInNav() {
         </nav>
 
         <div className="li-nav__end">
-          <button type="button" className="li-nav__link li-nav__link--me">
-            <span className="li-nav__icon li-nav__icon--avatar">
-              <Avatar
-                alt="Demo User"
-                src={DEMO_USER_PROFILE_PICTURE_URL}
-                size="sm"
-              />
-            </span>
-            <span className="li-nav__label li-nav__label--me">
-              Me
-              <ChevronDown className="li-nav__caret" size={14} aria-hidden />
-            </span>
-          </button>
+          <div className="li-nav__me-wrap" ref={profileMenuRef}>
+            <button
+              type="button"
+              className="li-nav__link li-nav__link--me"
+              aria-haspopup="menu"
+              aria-expanded={profileMenuOpen}
+              aria-controls="nav-profile-menu"
+              onClick={() => setProfileMenuOpen((open) => !open)}
+            >
+              <span className="li-nav__icon li-nav__icon--avatar">
+                <Avatar
+                  alt={mainUserProfile.name}
+                  src={mainUserProfile.profilePictureUrl}
+                  size="sm"
+                />
+              </span>
+              <span className="li-nav__label li-nav__label--me">
+                Me
+                <ChevronDown className="li-nav__caret" size={14} aria-hidden />
+              </span>
+            </button>
+
+            {profileMenuOpen ? (
+              <div id="nav-profile-menu">
+                <ProfileMenu
+                  profile={mainUserProfile}
+                  onClose={() => setProfileMenuOpen(false)}
+                />
+              </div>
+            ) : null}
+          </div>
 
           <span className="li-nav__divider" aria-hidden />
 

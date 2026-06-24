@@ -43,6 +43,7 @@ describe("EventsFeedSection", () => {
       <EventsFeedSection
         events={events}
         mainUserAttendingEventIds={["event_0002", "event_0003"]}
+        attendeeCounts={{ event_0001: 45, event_0002: 30, event_0003: 22 }}
       />,
     );
 
@@ -58,6 +59,7 @@ describe("EventsFeedSection", () => {
       <EventsFeedSection
         events={events}
         mainUserAttendingEventIds={["event_0002", "event_0003"]}
+        attendeeCounts={{ event_0001: 45, event_0002: 30, event_0003: 22 }}
       />,
     );
 

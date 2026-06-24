@@ -10,6 +10,8 @@ const {
   DEMO_USER_ID,
   latestJob,
   memberHeadline,
+  isDirectConnection,
+  getConnectionDegree,
 } = require("./data");
 const {
   toggleUserRsvp,
@@ -18,14 +20,6 @@ const {
   addNudge,
   getUserRsvpIds,
 } = require("./state");
-
-function simpleHash(value) {
-  let hash = 0;
-  for (let i = 0; i < value.length; i += 1) {
-    hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
-  }
-  return hash;
-}
 
 function scoreUserForEvent(user, event) {
   let score = 0;
@@ -54,16 +48,12 @@ function deriveAttendeeIds(event) {
   return { ids, totalAttending: ids.length };
 }
 
-function isConnection(attendeeId, eventId, currentUserId) {
-  if (attendeeId === currentUserId) return false;
-  const hash = simpleHash(`${currentUserId}:${eventId}:${attendeeId}`);
-  return hash % 5 === 0;
+function isConnection(attendeeId, _eventId, currentUserId) {
+  return isDirectConnection(currentUserId, attendeeId);
 }
 
-function connectionDegree(attendeeId, eventId, currentUserId, connected) {
-  if (connected) return 1;
-  const hash = simpleHash(`${attendeeId}:${eventId}`);
-  return hash % 3 === 0 ? 2 : 3;
+function connectionDegree(attendeeId, _eventId, currentUserId) {
+  return getConnectionDegree(currentUserId, attendeeId);
 }
 
 function otherAttendingEvents(attendeeId, eventId, currentUserId = MAIN_USER_ID) {
@@ -89,10 +79,14 @@ function buildAttendeeRow(attendeeId, event, currentUserId) {
   if (!user) return null;
 
   const connected = isConnection(attendeeId, event.id, currentUserId);
-  const degree = connectionDegree(attendeeId, event.id, currentUserId, connected);
+  const degree = connectionDegree(attendeeId, event.id, currentUserId);
   const nudgeKey = `${event.id}:${attendeeId}`;
 
   const job = latestJob(user);
+
+  const schools = (user.school_history ?? [])
+    .sort((a, b) => b.graduation_year - a.graduation_year)
+    .map((s) => s.school_name);
 
   return {
     id: user.id,
@@ -102,6 +96,8 @@ function buildAttendeeRow(attendeeId, event, currentUserId) {
     location: user.current_location,
     company: job?.company ?? null,
     industry: job?.industry ?? null,
+    school: schools[0] ?? null,
+    skills: user.skills ?? [],
     degree,
     isConnection: connected,
     mutualEvents: otherAttendingEvents(attendeeId, event.id, currentUserId),
@@ -183,11 +179,18 @@ function getRsvpEventsForUser(userId = MAIN_USER_ID) {
     }));
 }
 
+function getEventAttendeeCounts(eventList) {
+  return Object.fromEntries(
+    eventList.map((event) => [event.id, deriveAttendeeIds(event).totalAttending]),
+  );
+}
+
 module.exports = {
   getEventDetail,
   toggleRsvp,
   recordNudge,
   getRsvpEventsForUser,
   deriveAttendeeIds,
+  getEventAttendeeCounts,
   isConnection,
 };

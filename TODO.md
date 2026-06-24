@@ -1,5 +1,6 @@
+EXTRA
 - meeting imgs
-- connections 
-- show profile for main user
-
-
+- UI clean up
+- organize code
+git fetch origin && git merge origin/main
+git pull origin main --no-rebase 

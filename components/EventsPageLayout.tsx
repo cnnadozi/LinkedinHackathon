@@ -15,10 +15,15 @@ function CalendarPanelIcon() {
 
 type Props = {
   events: Event[];
-  mainUserAttendingEventIds?: string[];
+  mainUserAttendingEventIds: string[];
+  attendeeCounts: Record<string, number>;
 };
 
-export default function EventsPageLayout({ events, mainUserAttendingEventIds = [] }: Props) {
+export default function EventsPageLayout({
+  events,
+  mainUserAttendingEventIds,
+  attendeeCounts,
+}: Props) {
   const [calOpen, setCalOpen] = useState(true);
 
   const splitClass = [
@@ -30,20 +35,23 @@ export default function EventsPageLayout({ events, mainUserAttendingEventIds = [
     <div className={splitClass}>
       {/* ── Events column ── */}
       <div className="events-split__feed">
-        <div className="events-feed-filter-bar">
-          <button
-            type="button"
-            className={`events-split__cal-toggle${calOpen ? " events-split__cal-toggle--active" : ""}`}
-            onClick={() => setCalOpen((o) => !o)}
-            aria-pressed={calOpen}
-            aria-label={calOpen ? "Hide calendar" : "Show calendar"}
-          >
-            <CalendarPanelIcon />
-            {calOpen ? "Hide calendar" : "Show calendar"}
-          </button>
-        </div>
-
-        <EventsFeedSection events={events} mainUserAttendingEventIds={mainUserAttendingEventIds} />
+        <EventsFeedSection
+          events={events}
+          mainUserAttendingEventIds={mainUserAttendingEventIds}
+          attendeeCounts={attendeeCounts}
+          calendarToggle={
+            <button
+              type="button"
+              className={`events-split__cal-toggle${calOpen ? " events-split__cal-toggle--active" : ""}`}
+              onClick={() => setCalOpen((o) => !o)}
+              aria-pressed={calOpen}
+              aria-label={calOpen ? "Hide calendar" : "Show calendar"}
+            >
+              <CalendarPanelIcon />
+              {calOpen ? "Hide calendar" : "Show calendar"}
+            </button>
+          }
+        />
       </div>
 
       {/* ── Calendar panel ── */}
@@ -72,6 +80,7 @@ export default function EventsPageLayout({ events, mainUserAttendingEventIds = [
           </div>
         </aside>
       )}
+
     </div>
   );
 }

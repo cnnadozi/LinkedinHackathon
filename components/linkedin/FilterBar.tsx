@@ -124,11 +124,9 @@ export function SegmentGroup<T extends string>({
 
 export function ClearFiltersLink({ onClick }: { onClick?: () => void }) {
   return (
-    <span className="li-filter-bar-end">
-      <Button variant="ghost" onClick={onClick}>
-        Clear filters
-      </Button>
-    </span>
+    <button type="button" className="li-filter-bar__clear" onClick={onClick}>
+      Clear filters
+    </button>
   );
 }
 

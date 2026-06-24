@@ -16,13 +16,7 @@ export function ConnectionBadge({
   degree,
   className = "",
 }: ConnectionBadgeProps) {
-  const classes = [
-    "li-connection-badge",
-    degree === 1 ? "li-connection-badge--1" : "",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const classes = ["li-connection-badge", className].filter(Boolean).join(" ");
 
   return (
     <span className={classes} aria-label={`${LABELS[degree]} degree connection`}>

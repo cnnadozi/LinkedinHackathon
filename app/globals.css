@@ -381,11 +381,45 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--li-space-sm);
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--li-border-hairline);
 }
 
 .li-filter-bar-end {
   margin-left: auto;
+}
+
+/* Vertical separator between filter groups (linkedin.com/jobs search bar) */
+.li-filter-bar__divider {
+  width: 1px;
+  height: 32px;
+  background: var(--li-border-hairline);
+  flex-shrink: 0;
+  margin: 0 2px;
+}
+
+/* Inline text control — same row as filter pills (linkedin.com connections filter bar) */
+.li-filter-bar__clear {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--li-blue-interactive);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 6px 8px;
+  flex-shrink: 0;
+  line-height: 1.25;
+}
+
+.li-filter-bar__clear:hover {
+  text-decoration: underline;
+}
+
+.li-filter-bar__clear:focus-visible {
+  outline: 2px solid var(--li-blue-interactive);
+  outline-offset: 2px;
 }
 
 .li-filter-dropdown {
@@ -480,11 +514,18 @@ body {
   min-width: 0;
 }
 
+.li-person-row__name-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 0;
+  line-height: 1.25;
+}
+
 .li-person-row__name {
-  display: block;
   font-size: 16px;
   font-weight: 600;
-  line-height: 1.25;
   color: var(--li-text-primary);
 }
 
@@ -599,8 +640,9 @@ body {
 
 .li-connection-badge {
   font-size: 12px;
-  color: var(--li-text-muted);
+  color: var(--li-placeholder);
   font-weight: 400;
+  line-height: 1.33;
 }
 
 /* ── Filter chips ── */
@@ -1328,8 +1370,64 @@ p {
 }
 
 .li-nav__caret {
+  flex-shrink: 0;
   width: 12px;
   height: 12px;
+}
+
+.li-nav__me-wrap {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+/* Me menu popover — linkedin.com nav profile dropdown */
+.li-profile-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 200;
+  width: 264px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--li-border-hairline);
+  border-radius: 8px;
+  background: var(--li-surface);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.14);
+}
+
+.li-profile-menu__avatar {
+  align-self: flex-start;
+}
+
+.li-profile-menu__identity {
+  min-width: 0;
+}
+
+.li-profile-menu__name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--li-text-primary);
+  line-height: 1.25;
+}
+
+.li-profile-menu__headline {
+  margin: 2px 0 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--li-placeholder);
+}
+
+.li-profile-menu__view-btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 4px;
 }
 
 /* ── Event page layout (linkedin.com/events) ── */
@@ -1457,53 +1555,37 @@ p {
   border-top: 1px solid var(--li-border-hairline);
 }
 
-.event-detail__tabs {
+.event-detail__about {
   margin-top: 20px;
-}
-
-.event-detail__post {
   padding-top: 16px;
+  border-top: 1px solid var(--li-border-hairline);
 }
 
-.event-detail__post-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.event-detail__post-meta {
-  flex: 1;
-  min-width: 0;
-}
-
-.event-detail__post-author {
-  font-size: 14px;
+.event-detail__about-title {
+  margin: 0 0 8px;
+  font-size: 16px;
   font-weight: 600;
-  color: var(--li-gray-dark);
+  color: var(--li-text-primary);
 }
 
-.event-detail__post-subtitle {
-  font-size: 12px;
-  color: var(--li-gray-medium);
-}
-
-.event-detail__description {
+.event-detail__about-text {
+  margin: 0;
   font-size: 14px;
   line-height: 1.6;
-  color: var(--li-gray-dark);
-  margin-bottom: 12px;
+  color: var(--li-text-primary);
 }
 
-.event-detail__post-stats {
-  font-size: 12px;
-  color: var(--li-gray-medium);
+.event-detail__about-toggle {
+  display: inline;
+  padding: 0;
+  font-size: inherit;
+  font-weight: 600;
+  vertical-align: baseline;
 }
 
-.event-detail__comments-empty {
-  padding: 24px 0 8px;
-  font-size: 14px;
-  color: var(--li-gray-medium);
+.event-detail__about-toggle--less {
+  display: inline-block;
+  margin-top: 4px;
 }
 
 .event-detail__back {
@@ -1743,14 +1825,6 @@ p {
   min-width: 0;
 }
 
-/* Filter bar */
-.events-feed-filter-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
 .events-feed-filter-dropdown {
   position: relative;
   display: inline-block;
@@ -1834,7 +1908,6 @@ p {
   height: 66px;
   border-radius: 4px;
   flex-shrink: 0;
-  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
 }
 
 .event-feed-card__body {
@@ -1958,7 +2031,75 @@ p {
   justify-content: center;
   min-width: 32px;
   height: 32px;
+  color: var(--li-gray-medium);
+}
+
+/* ── Pagination (linkedin.com list footers — black active pill) ── */
+
+.li-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--li-border-hairline);
+  background: var(--li-surface);
+  flex-shrink: 0;
+}
+
+.li-pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--li-gray-dark);
   font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.li-pagination__btn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.li-pagination__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.li-pagination__prev,
+.li-pagination__next {
+  color: var(--li-text-primary);
+  font-weight: 600;
+  padding: 0 14px;
+}
+
+.li-pagination__page--active {
+  background: var(--li-text-primary);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 50%;
+  min-width: 32px;
+  width: 32px;
+  padding: 0;
+}
+
+.li-pagination__page--active:hover {
+  background: var(--li-text-primary) !important;
+}
+
+.li-pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
   color: var(--li-gray-medium);
 }
 
@@ -1980,125 +2121,108 @@ p {
 /* ── Gather page ── */
 
 .gather-page {
-  padding-top: 20px;
+  max-width: var(--li-max-width);
+  margin: 0 auto;
+  padding: 24px 16px 40px;
 }
 
 .gather-page__header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 16px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .gather-page__title-block {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
 }
 
 .gather-page__icon-badge {
-  color: var(--li-gray-dark);
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--li-blue-interactive);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .gather-page__h1 {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
-  color: var(--li-text-primary);
-  margin: 0;
+  color: var(--li-black);
   line-height: 1.2;
+  margin: 0 0 2px;
 }
 
 .gather-page__subtitle {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--li-gray-medium);
-  margin: 4px 0 0;
+  margin: 0;
 }
 
 .gather-legend {
   display: flex;
-  align-items: center;
-  gap: 16px;
   flex-wrap: wrap;
+  gap: 10px;
   margin-bottom: 16px;
-  padding: 10px 14px;
-  background: var(--li-surface);
-  border: 1px solid var(--li-border-hairline);
-  border-radius: var(--li-radius);
 }
 
 .gather-legend__item {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--li-gray-dark);
+  gap: 5px;
+  font-size: 12px;
+  color: var(--li-gray-medium);
 }
 
 .gather-legend__dot {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-/* ── Events 50/50 split layout ── */
+/* ── Events split layout (feed + calendar panel) ── */
 
 .events-split {
-  display: flex;
-  gap: 24px;
-  align-items: flex-start;
+  display: block;
+}
+
+.events-split--with-cal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
 }
 
 .events-split__feed {
-  flex: 1;
   min-width: 0;
 }
 
 .events-split__cal {
-  flex: 1;
-  min-width: 0;
   position: sticky;
-  top: 20px;
-  background: var(--li-surface);
-  border: 1px solid var(--li-border-hairline);
-  border-radius: var(--li-radius);
-  overflow: hidden;
+  top: calc(var(--li-nav-height) + 16px);
+  min-width: 0;
 }
 
-/* When calendar is open — standard 50/50 */
-.events-split--with-cal .events-split__feed {
-  flex: 1;
-}
-
-.events-split--with-cal .events-split__cal {
-  flex: 1;
-}
-
-/* When calendar is expanded — calendar takes more space */
-.events-split--cal-expanded .events-split__feed {
-  flex: 0 0 30%;
-}
-
-.events-split--cal-expanded .events-split__cal {
-  flex: 1;
-}
-
-/* Calendar panel header */
 .events-split__cal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--li-border-hairline);
+  margin-bottom: 10px;
 }
 
 .events-split__cal-title {
   font-size: 16px;
   font-weight: 600;
-  color: var(--li-text-primary);
+  color: var(--li-gray-dark);
 }
 
 .events-split__cal-close {
@@ -2111,7 +2235,8 @@ p {
   border-radius: 50%;
   background: transparent;
   color: var(--li-gray-medium);
-  font-size: 16px;
+  font-size: 14px;
+  font-family: inherit;
   cursor: pointer;
   transition: background 0.12s;
 }
@@ -2119,6 +2244,48 @@ p {
 .events-split__cal-close:hover {
   background: rgba(0, 0, 0, 0.08);
   color: var(--li-gray-dark);
+}
+
+/* Calendar toggle button — sits in the filter bar */
+.events-feed-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.events-split__cal-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: var(--li-radius-pill);
+  border: 1.5px solid var(--li-border-hairline);
+  background: var(--li-surface);
+  color: var(--li-gray-medium);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: background 0.12s, color 0.12s, border-color 0.12s, box-shadow 0.12s;
+}
+
+.events-split__cal-toggle:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--li-gray-dark);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.events-split__cal-toggle--active {
+  border-color: var(--li-blue-interactive);
+  color: var(--li-blue-interactive);
+  background: var(--li-blue-tint);
+  box-shadow: 0 1px 4px rgba(10, 102, 194, 0.18);
+}
+
+.events-split__cal-toggle--active:hover {
+  background: rgba(10, 102, 194, 0.12);
 }
 
 /* Calendar footer tab bar */
@@ -2153,11 +2320,6 @@ p {
   border-color: var(--li-gray-medium);
 }
 
-.events-split__cal-footer-btn--active {
-  border-color: var(--li-blue-interactive);
-  color: var(--li-blue-interactive);
-}
-
 .events-split__cal-footer-btn--hide {
   color: var(--li-gray-medium);
 }
@@ -2167,79 +2329,180 @@ p {
   border-color: #c00;
 }
 
-/* Calendar toggle button */
-.events-split__cal-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border: 1px solid var(--li-gray-light);
-  border-radius: var(--li-radius-pill);
-  background: var(--li-surface);
-  color: var(--li-gray-dark);
-  font-size: 13px;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  margin-left: 10px;
-  transition: background 0.12s, border-color 0.12s;
-}
-
-.events-split__cal-toggle:hover {
-  background: rgba(0, 0, 0, 0.04);
-}
-
-.events-split__cal-toggle--active {
-  border-color: var(--li-blue-interactive);
-  color: var(--li-blue-interactive);
-}
-
-/* Expanded calendar — week/day scroll area gets taller */
-.cal-wrap--expanded .cal-week__scroll,
-.cal-wrap--expanded .cal-day__scroll {
-  max-height: 780px;
-}
-
-/* Calendar header right group */
-.cal-header__right-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Expand/minimize button */
-.cal-header__expand-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border: none;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--li-gray-medium);
-  font-size: 18px;
-  cursor: pointer;
-  transition: background 0.12s, color 0.12s;
-}
-
-.cal-header__expand-btn:hover {
-  background: rgba(0, 0, 0, 0.08);
-  color: var(--li-blue-interactive);
-}
-
-/* Responsive: stack on small screens */
-@media (max-width: 900px) {
-  .events-split {
-    flex-direction: column;
+@media (max-width: 860px) {
+  .events-split--with-cal {
+    grid-template-columns: 1fr;
   }
 
   .events-split__cal {
     position: static;
-    order: -1;
   }
+}
 
-  .events-split--cal-expanded .events-split__feed {
-    flex: 1;
-  }
+/* ── Nudge chat (floating message window) ───────────────────────────── */
+.nudge-chat {
+  position: fixed;
+  right: 24px;
+  bottom: 0;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  max-height: 540px;
+  background: #fff;
+  border: 1px solid var(--li-border-hairline);
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.nudge-chat__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--li-border-hairline);
+}
+
+.nudge-chat__person {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.nudge-chat__person-text {
+  min-width: 0;
+}
+
+.nudge-chat__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--li-gray-dark);
+}
+
+.nudge-chat__headline {
+  font-size: 12px;
+  color: var(--li-gray-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nudge-chat__close {
+  border: none;
+  background: none;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--li-gray-medium);
+  cursor: pointer;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.nudge-chat__close:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.nudge-chat__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 120px;
+}
+
+.nudge-chat__empty {
+  font-size: 13px;
+  color: var(--li-gray-medium);
+  text-align: center;
+  margin: auto 0;
+}
+
+.nudge-chat__message {
+  align-self: flex-end;
+  max-width: 80%;
+  padding: 8px 12px;
+  background: var(--li-blue-interactive);
+  color: #fff;
+  border-radius: 14px 14px 2px 14px;
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.nudge-chat__suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--li-border-hairline);
+}
+
+.nudge-chat__suggestions-loading {
+  font-size: 12px;
+  color: var(--li-gray-medium);
+  font-style: italic;
+}
+
+.nudge-chat__suggestion {
+  font-size: 12px;
+  padding: 6px 10px;
+  border: 1px solid var(--li-blue-interactive);
+  color: var(--li-blue-interactive);
+  background: #fff;
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.nudge-chat__suggestion:hover {
+  background: rgba(10, 102, 194, 0.08);
+}
+
+.nudge-chat__composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--li-border-hairline);
+}
+
+.nudge-chat__input {
+  flex: 1;
+  resize: none;
+  border: 1px solid var(--li-border-hairline);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 14px;
+  background: var(--li-gray-bg, #f3f2ef);
+}
+
+.nudge-chat__input:focus {
+  outline: 2px solid var(--li-blue-interactive);
+  outline-offset: -1px;
+}
+
+.nudge-chat__send {
+  border: none;
+  background: var(--li-blue-interactive);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.nudge-chat__send:disabled {
+  background: var(--li-gray-light);
+  color: #fff;
+  cursor: not-allowed;
 }

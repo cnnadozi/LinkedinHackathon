@@ -4,12 +4,61 @@
   margin: 0 auto;
 }
 
-.attendance-list__filters {
-  margin-bottom: 4px;
-}
-
 .attendance-list__list {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+/* Filter bar spacing inside modal */
+.attendee-filter-bar {
+  margin-bottom: 12px;
+}
+
+/* Bordered panel: scrollable list + pagination footer */
+.attendance-list__panel {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--li-border-hairline);
+  border-radius: var(--li-radius);
+  background: var(--li-surface);
+  max-height: min(560px, calc(100vh - 260px));
+  overflow: hidden;
+}
+
+.attendance-list__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.attendance-list__scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.attendance-list__scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.attendance-list__scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.attendance-list__scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* Result count */
+
+.attendee-result-count {
+  font-size: 13px;
+  color: var(--li-gray-medium);
+  margin-bottom: 8px;
+}
+
+.li-person-row__actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
