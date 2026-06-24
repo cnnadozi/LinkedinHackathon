@@ -1,44 +1,37 @@
-/** Home page — events feed preview with attendance list and dataset status. */
+/** Home page — featured event detail view. */
 import Link from "next/link";
-import AttendanceList from "@/components/AttendanceList";
+import { EventDetail } from "@/components/EventDetail";
 import {
-  loadDatasetHealth,
   loadEventDetailFromDataset,
+  loadRelatedEvents,
 } from "@/lib/eventDetail.server";
 
+const FEATURED_EVENT_ID = "event_0001";
+
 export default async function Home() {
-  const health = loadDatasetHealth();
-  const featuredEvent = loadEventDetailFromDataset("event_0001");
+  const data = loadEventDetailFromDataset(FEATURED_EVENT_ID);
+  const relatedEvents = loadRelatedEvents(FEATURED_EVENT_ID);
+
+  if (!data) {
+    return (
+      <main className="page page--event-detail">
+        <div className="event-detail__not-found">
+          <h1>Event not found</h1>
+          <p>
+            We couldn&apos;t find an event with id{" "}
+            <code>{FEATURED_EVENT_ID}</code>.
+          </p>
+          <Link href="/" className="event-detail__back">
+            ← Back to events
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   return (
-    <main>
-      <h1>LinkedIn Gather</h1>
-      <p>Events hub — attendance list preview.</p>
-
-      {featuredEvent && (
-        <section className="status">
-          <strong>Featured event</strong>
-          <p>
-            <Link href={`/events/${featuredEvent.event.id}`}>
-              {featuredEvent.event.name}
-            </Link>{" "}
-            · {featuredEvent.event.location}
-          </p>
-        </section>
-      )}
-
-      <AttendanceList />
-
-      <section className="status">
-        <strong>Dataset status</strong>
-        <ul>
-          <li>Server: {health.status}</li>
-          <li>Users: {health.datasets.users}</li>
-          <li>Jobs: {health.datasets.jobs}</li>
-          <li>Courses: {health.datasets.courses}</li>
-          <li>Events: {health.datasets.events}</li>
-        </ul>
-      </section>
+    <main className="page page--event-detail">
+      <EventDetail data={data} relatedEvents={relatedEvents} />
     </main>
   );
 }

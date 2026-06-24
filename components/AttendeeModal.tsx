@@ -1,152 +1,146 @@
 "use client";
 
 /**
- * Guest list overlay — filters, connection badges, and Nudge actions.
- * Opens from the event detail attendee section (Figma: attendee popup).
+ * Guest list overlay — mirrors the Attendance List page layout.
+ * Data is hardcoded for now; will be wired to event attendance later.
  */
-import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import "@/components/AttendanceList.css";
 import {
+  ActiveFilterTag,
+  AllFiltersLink,
   Avatar,
   Button,
   ConnectionBadge,
   FilterBar,
-  FilterChips,
+  FilterDropdown,
   MessageIcon,
+  SegmentGroup,
   TextLink,
-  type FilterChip,
 } from "@/components/linkedin";
 import { Modal } from "@/components/linkedin/Modal";
-import { recordEventNudge } from "@/lib/eventActions";
-import type { AttendeeRow } from "@/lib/eventTypes";
+import type { ConnectionDegree } from "@/components/linkedin";
 
 type AttendeeModalProps = {
   open: boolean;
   onClose: () => void;
-  eventId: string;
-  attendees: AttendeeRow[];
-  initialFilter?: "all" | "connections";
-  onNudge?: (attendeeId: string) => void;
 };
 
-const DEGREE_CHIPS: FilterChip[] = [
-  { id: "1", label: "1st" },
-  { id: "2", label: "2nd" },
-  { id: "3", label: "3rd+" },
+type Attendee = {
+  id: string;
+  name: string;
+  connectionDegree: ConnectionDegree;
+  avatarColor?: string;
+  events: string[];
+};
+
+// Applied filter tags shown as removable chips below the connection-degree tabs.
+const ACTIVE_FILTERS = [
+  "Abingdon",
+  "Computer Games",
+  "Rice University",
+  "SDE Intern",
 ];
 
-export function AttendeeModal({
-  open,
-  onClose,
-  eventId,
-  attendees,
-  initialFilter = "all",
-  onNudge,
-}: AttendeeModalProps) {
-  const router = useRouter();
-  const [activeDegrees, setActiveDegrees] = useState<string[]>([]);
-  const [connectionsOnly, setConnectionsOnly] = useState(
-    initialFilter === "connections",
-  );
-  const [nudgedIds, setNudgedIds] = useState<Set<string>>(
-    () => new Set(attendees.filter((row) => row.nudged).map((row) => row.id)),
-  );
+const CONNECTION_OPTIONS = [
+  { value: "1st" as const, label: "1st" },
+  { value: "2nd" as const, label: "2nd" },
+  { value: "3rd+" as const, label: "3rd+" },
+];
 
-  useEffect(() => {
-    if (open) {
-      setConnectionsOnly(initialFilter === "connections");
-    }
-  }, [open, initialFilter]);
+const ATTENDEES: Attendee[] = [
+  {
+    id: "1",
+    name: "Cedric Wilson, LPC, NCC",
+    connectionDegree: 3,
+    avatarColor: "#6b4c9a",
+    events: [
+      "Software Engineering Internship Information Session",
+      "Product Management Career Workshop",
+      "Data Science Networking Night",
+      "Resume & LinkedIn Review Clinic",
+      "Tech Industry Alumni Panel Discussion",
+    ],
+  },
+  {
+    id: "2",
+    name: "Ben Ashton",
+    connectionDegree: 3,
+    avatarColor: "#5b7f95",
+    events: ["Data Science Networking Night", "Resume & LinkedIn Review Clinic"],
+  },
+  {
+    id: "3",
+    name: "Garrett Louthen",
+    connectionDegree: 3,
+    avatarColor: "#8b6914",
+    events: ["Product Management Career Workshop"],
+  },
+  {
+    id: "4",
+    name: "Cody A. J.",
+    connectionDegree: 3,
+    avatarColor: "#4a7c59",
+    events: [
+      "Resume & LinkedIn Review Clinic",
+      "Tech Industry Alumni Panel Discussion",
+    ],
+  },
+  {
+    id: "5",
+    name: "Kevin R. Stovall",
+    connectionDegree: 3,
+    avatarColor: "#7a5c4f",
+    events: ["Data Science Networking Night"],
+  },
+];
 
-  const filteredAttendees = useMemo(() => {
-    return attendees.filter((row) => {
-      if (connectionsOnly && !row.isConnection) return false;
-      if (
-        activeDegrees.length > 0 &&
-        !activeDegrees.includes(String(row.degree))
-      ) {
-        return false;
-      }
-      return true;
-    });
-  }, [attendees, activeDegrees, connectionsOnly]);
-
-  function toggleDegree(id: string) {
-    setActiveDegrees((current) =>
-      current.includes(id)
-        ? current.filter((entry) => entry !== id)
-        : [...current, id],
-    );
-  }
-
-  async function handleNudge(attendeeId: string) {
-    await recordEventNudge(eventId, attendeeId);
-    setNudgedIds((current) => new Set(current).add(attendeeId));
-    onNudge?.(attendeeId);
-    router.push(`/messages/${attendeeId}`);
-  }
-
+export function AttendeeModal({ open, onClose }: AttendeeModalProps) {
   return (
     <Modal open={open} onClose={onClose} title="Attendance List" wide>
-      <div className="attendee-modal">
-        <FilterBar className="attendee-modal__filters">
+      <div className="attendance-list">
+        <FilterBar>
           <Button variant="pill-active">People</Button>
-          <Button
-            variant={connectionsOnly ? "pill-active" : "filter"}
-            aria-pressed={connectionsOnly}
-            onClick={() => setConnectionsOnly((value) => !value)}
-          >
-            Your connections
-          </Button>
-          <FilterChips
-            chips={DEGREE_CHIPS}
-            activeIds={activeDegrees}
-            onToggle={toggleDegree}
-            onClear={() => setActiveDegrees([])}
-          />
+
+          <FilterDropdown label="Actively hiring" />
+          <FilterDropdown label="Locations" />
+          <FilterDropdown label="Current companies" />
+
+          <SegmentGroup options={CONNECTION_OPTIONS} value="3rd+" />
+
+          {ACTIVE_FILTERS.map((filter) => (
+            <ActiveFilterTag key={filter} label={filter} />
+          ))}
+
+          <AllFiltersLink />
         </FilterBar>
 
-        <ul className="attendee-modal__list">
-          {filteredAttendees.slice(0, 50).map((attendee) => {
-            const nudged = nudgedIds.has(attendee.id) || attendee.nudged;
-
-            return (
-              <li key={attendee.id} className="attendee-modal__row">
-                <Avatar alt={attendee.name} size="md" />
-                <div className="attendee-modal__info">
-                  <div className="attendee-modal__name-row">
-                    <span className="attendee-modal__name">{attendee.name}</span>
-                    <ConnectionBadge degree={attendee.degree} />
-                  </div>
-                  <p className="attendee-modal__headline">{attendee.headline}</p>
-                  {attendee.mutualEvents.length > 0 && (
-                    <p className="attendee-modal__mutual">
-                      {attendee.mutualEvents.map((eventName, index) => (
-                        <span key={eventName}>
-                          {index > 0 && ", "}
-                          <TextLink href="#">{eventName}</TextLink>
-                        </span>
-                      ))}
-                    </p>
-                  )}
+        <ul>
+          {ATTENDEES.map((attendee) => (
+            <li key={attendee.id} className="attendance-list-row">
+              <Avatar alt={attendee.name} color={attendee.avatarColor} />
+              <div className="attendance-list-content">
+                <div className="attendance-list-name-row">
+                  <span className="attendance-list-name">{attendee.name}</span>
+                  <ConnectionBadge degree={attendee.connectionDegree} />
                 </div>
-                <Button
-                  variant={nudged ? "success" : "primary"}
-                  size="sm"
-                  disabled={nudged}
-                  onClick={() => handleNudge(attendee.id)}
-                  icon={<MessageIcon className="li-btn-icon" />}
-                  aria-label={
-                    nudged
-                      ? `Already nudged ${attendee.name}`
-                      : `Nudge ${attendee.name}`
-                  }
-                >
-                  {nudged ? "Nudged ✓" : "Nudge"}
-                </Button>
-              </li>
-            );
-          })}
+                <p className="attendance-list-events">
+                  {attendee.events.map((event, index) => (
+                    <span key={event}>
+                      {index > 0 && ", "}
+                      <TextLink href="#">{event}</TextLink>
+                    </span>
+                  ))}
+                </p>
+              </div>
+              <Button
+                variant="primary"
+                className="attendance-list-nudge"
+                icon={<MessageIcon className="li-btn-icon" />}
+              >
+                Nudge
+              </Button>
+            </li>
+          ))}
         </ul>
       </div>
     </Modal>
