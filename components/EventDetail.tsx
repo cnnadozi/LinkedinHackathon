@@ -75,6 +75,8 @@ function EventAbout({ description }: { description: string }) {
   );
 }
 
+type Tab = "details" | "comments";
+
 export function EventDetail({ data, relatedEvents }: EventDetailProps) {
   const [rsvpd, setRsvpd] = useState(data.rsvpd);
   const [attendeeCount, setAttendeeCount] = useState(data.attendance.total);
@@ -83,6 +85,7 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const [leaveModalOpen, setLeaveModalOpen] = useState(false);
   const actionsMenuRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState<Tab>("details");
 
   const { event, host, attendance } = data;
   const { scheduleLabel } = formatEventDate(event.time);
@@ -235,7 +238,46 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
                 ) : null}
               </div>
 
-              <EventAbout description={event.description} />
+              <div className="event-detail__tabs" role="tablist">
+                <button
+                  role="tab"
+                  aria-selected={activeTab === "details"}
+                  className={`event-detail__tab${activeTab === "details" ? " event-detail__tab--active" : ""}`}
+                  onClick={() => setActiveTab("details")}
+                >
+                  Details
+                </button>
+                <button
+                  role="tab"
+                  aria-selected={activeTab === "comments"}
+                  className={`event-detail__tab${activeTab === "comments" ? " event-detail__tab--active" : ""}`}
+                  onClick={() => setActiveTab("comments")}
+                >
+                  Comments
+                </button>
+              </div>
+
+              {activeTab === "details" && (
+                <EventAbout description={event.description} />
+              )}
+
+              {activeTab === "comments" && (
+                <div className="event-detail__comments">
+                  <div className="event-detail__comment-composer">
+                    <Avatar alt="You" size="sm" />
+                    <div
+                      className="event-detail__comment-input"
+                      role="textbox"
+                      aria-label="Add a comment"
+                      aria-multiline="true"
+                      contentEditable
+                      suppressContentEditableWarning
+                      data-placeholder="Add a comment…"
+                    />
+                  </div>
+                  <p className="event-detail__comments-empty">No comments yet. Be the first to comment.</p>
+                </div>
+              )}
             </div>
           </Card>
         </div>
