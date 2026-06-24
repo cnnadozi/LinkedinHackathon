@@ -1,3 +1,4 @@
+/** Inline "· 1st" / "· 2nd" / "· 3rd" badge next to attendee names. */
 export type ConnectionDegree = 1 | 2 | 3;
 
 type ConnectionBadgeProps = {

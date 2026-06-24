@@ -1,3 +1,4 @@
+/** Profile photo or initials fallback — sizes match LinkedIn avatar scale. */
 type AvatarSize = "sm" | "md" | "lg";
 
 export type AvatarProps = {

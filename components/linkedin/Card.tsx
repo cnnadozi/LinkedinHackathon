@@ -1,3 +1,4 @@
+/** White surface container with configurable padding (event cards, modals, etc.). */
 import type { ReactNode } from "react";
 
 type CardPadding = "sm" | "md" | "lg";

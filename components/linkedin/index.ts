@@ -1,3 +1,4 @@
+/** Re-exports all LinkedIn-style UI primitives used across the Events Hub. */
 export { Avatar, type AvatarProps } from "./Avatar";
 export { AvatarStack } from "./AvatarStack";
 export { Button, type ButtonProps } from "./Button";

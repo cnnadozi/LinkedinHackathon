@@ -1,3 +1,4 @@
+/** Home page — events feed preview with attendance list and API health check. */
 import AttendanceList from "@/components/AttendanceList";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
@@ -11,6 +12,7 @@ type HealthResponse = {
   };
 };
 
+/** Ping Express on the server; returns null when the API is offline. */
 async function getHealth(): Promise<HealthResponse | null> {
   try {
     const res = await fetch(`${API_BASE}/api/health`, { cache: "no-store" });

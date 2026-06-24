@@ -1,3 +1,4 @@
+/** Root layout — wraps every route; AppShell/nav will mount here later. */
 import type { Metadata } from "next";
 import "./globals.css";
 

@@ -1,3 +1,7 @@
+/**
+ * Express API — serves static JSON datasets from data/ for the hackathon demo.
+ * Run alongside Next.js: npm run dev:server (port 3001).
+ */
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -13,6 +17,7 @@ function loadDataset(filename) {
   return JSON.parse(raw);
 }
 
+// Datasets are loaded once at startup — fine for demo-sized JSON files.
 const users = loadDataset("user_data.json");
 const jobs = loadDataset("jobs_data.json");
 const courses = loadDataset("course_data.json");
@@ -26,6 +31,7 @@ app.use(
 );
 app.use(express.json());
 
+// --- Health & dataset counts ---
 app.get("/api/health", (_req, res) => {
   res.json({
     status: "ok",
@@ -37,6 +43,7 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
+// --- Users (user_data.json) ---
 app.get("/api/users", (_req, res) => {
   res.json(users);
 });
@@ -50,6 +57,7 @@ app.get("/api/users/:id", (req, res) => {
   res.json(user);
 });
 
+// --- Jobs (jobs_data.json) ---
 app.get("/api/jobs", (_req, res) => {
   res.json(jobs);
 });
@@ -63,6 +71,7 @@ app.get("/api/jobs/:id", (req, res) => {
   res.json(job);
 });
 
+// --- Courses (course_data.json) ---
 app.get("/api/courses", (_req, res) => {
   res.json(courses);
 });

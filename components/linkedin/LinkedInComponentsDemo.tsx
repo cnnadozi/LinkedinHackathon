@@ -1,3 +1,4 @@
+/** Dev showcase — exercises every linkedin/ primitive in one scrollable page. */
 "use client";
 
 import { useState } from "react";
@@ -41,6 +42,7 @@ const SUGGESTED_MESSAGE =
 export function LinkedInComponentsDemo() {
   const [modalOpen, setModalOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState<string[]>(["connections"]);
+  // Tracks which attendees have been nudged in the modal demo.
   const [nudged, setNudged] = useState<Record<string, boolean>>({});
   const [attendeeSearch, setAttendeeSearch] = useState("");
   const [message, setMessage] = useState("");

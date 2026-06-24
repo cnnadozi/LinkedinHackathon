@@ -1,3 +1,4 @@
+/** LinkedIn-style button — variants map to li-btn--* classes in globals.css. */
 import type { ButtonHTMLAttributes } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "ghost" | "success";

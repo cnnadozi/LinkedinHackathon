@@ -1,3 +1,4 @@
+/** Toggleable filter pills — used in AttendeeModal and event detail filters. */
 "use client";
 
 export type FilterChip = {

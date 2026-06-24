@@ -1,3 +1,4 @@
+/** Search field with magnifier icon and optional clear button. */
 import type { InputHTMLAttributes } from "react";
 
 export type SearchInputProps = Omit<

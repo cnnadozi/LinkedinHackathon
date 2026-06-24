@@ -1,3 +1,4 @@
+/** Overlapping attendee avatars with "+N" overflow (e.g. "248 attending" preview). */
 import { Avatar, type AvatarProps } from "./Avatar";
 
 type AvatarStackProps = {
@@ -20,6 +21,7 @@ export function AvatarStack({
         <div
           key={`${avatar.alt}-${index}`}
           className="li-avatar-stack__item"
+          // Later avatars sit on top so the stack reads left-to-right.
           style={{ zIndex: max - index }}
         >
           <Avatar {...avatar} size={size} />

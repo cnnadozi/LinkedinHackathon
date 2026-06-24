@@ -1,3 +1,7 @@
+/**
+ * Attendance list panel — LinkedIn-style guest list with filters and Nudge actions.
+ * Uses mock data for now; will wire to /api/users and event attendance later.
+ */
 "use client";
 
 import "@/components/AttendanceList.css";
@@ -11,6 +15,7 @@ type Attendee = {
   events: string[];
 };
 
+// Applied filter tags shown as removable chips below the connection-degree tabs.
 const ACTIVE_FILTERS = [
   "Abingdon",
   "Computer Games",
@@ -78,6 +83,7 @@ function MessageIcon() {
   );
 }
 
+/** Renders a photo or falls back to colored initials (matches LinkedIn guest list). */
 function Avatar({ attendee }: { attendee: Attendee }) {
   if (attendee.avatarUrl) {
     return (
@@ -90,6 +96,7 @@ function Avatar({ attendee }: { attendee: Attendee }) {
     );
   }
 
+  // Strip commas from titles like "Cedric Wilson, LPC, NCC" before taking initials.
   const initials = attendee.name
     .split(/[\s,]+/)
     .filter(Boolean)
