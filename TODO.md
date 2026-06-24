@@ -1,2 +1,2 @@
-- fix the bad looking icons
+- make one main MOCK profile
 - add img directory with web scrapper

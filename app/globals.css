@@ -737,24 +737,29 @@ p {
 .li-nav__search-icon {
   position: absolute;
   left: 12px;
-  color: var(--li-gray-medium);
+  color: rgba(0, 0, 0, 0.6);
   display: inline-flex;
 }
 
 .li-nav__search-input {
   width: 100%;
   height: 34px;
-  padding: 0 12px 0 36px;
-  border: 1px solid var(--li-gray-light);
-  border-radius: var(--li-radius-pill);
-  background: var(--li-surface);
+  padding: 0 12px 0 40px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: var(--li-input-bg);
   font: inherit;
   font-size: 14px;
   color: var(--li-text-primary);
 }
 
+.li-nav__search-input::placeholder {
+  color: rgba(0, 0, 0, 0.6);
+}
+
 .li-nav__search-input:focus {
   outline: none;
+  background: var(--li-surface);
   border-color: var(--li-text-primary);
   box-shadow: inset 0 0 0 1px var(--li-text-primary);
 }
@@ -769,6 +774,15 @@ p {
   display: flex;
   align-items: stretch;
   height: 100%;
+}
+
+/* Hairline separating the primary cluster from the business cluster */
+.li-nav__divider {
+  align-self: center;
+  width: 1px;
+  height: 40px;
+  margin: 0 8px;
+  background: var(--li-gray-light);
 }
 
 .li-nav__link {
@@ -826,6 +840,13 @@ p {
   width: 24px;
   height: 24px;
   color: inherit;
+}
+
+/* Heroicons solid glyphs (Home–Notifications): filled, inherit nav gray */
+.li-nav__glyph {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
 }
 
 .li-nav__icon--avatar .li-avatar {
