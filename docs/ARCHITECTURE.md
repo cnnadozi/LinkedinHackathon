@@ -15,35 +15,33 @@ Overview of the tech stack, project layout, and data layer for this hackathon pr
 
 | Layer | Choice | Notes |
 |-------|--------|-------|
-| Framework | **Next.js** | App Router — file-based routing and frontend shell only |
-
-Next.js handles pages and UI. The API lives in a separate Express server (see Backend).
+| Framework | **Next.js** | App Router — pages, UI, and API route handlers |
 
 ### Backend
 
 | Layer | Choice | Notes |
 |-------|--------|-------|
-| Framework | **Express.js** | Standalone API server in `server/` |
+| Framework | **Next.js Route Handlers** | `/api/*` in `app/api/` |
+| Business logic | **`server/lib/`** | Loads JSON, derives attendees, RSVP/nudge state |
 | Data source | **Local JSON** | Reads from the `data/` folder — no hosted database |
-| Approach | **Express + JSON** | Mock backend that loads and filters dataset files |
+| Approach | **Next.js + JSON** | Mock backend that loads and filters dataset files |
 
-The starter datasets live in `data/`. Express reads those JSON files and exposes REST endpoints to the Next.js frontend. No external DB or auth required for the hackathon build.
+The starter datasets live in `data/`. Server Components import `server/lib/` directly for reads; client mutations call `/api/*` route handlers. No external DB or auth required for the hackathon build.
 
 ### Local development
 
-Two processes run during development:
+One process runs during development:
 
 | Service | Default URL | Command |
 |---------|-------------|---------|
-| Next.js (frontend) | `http://localhost:3000` | `npm run dev` |
-| Express (API) | `http://localhost:3001` | `npm run dev:server` |
+| Next.js (UI + API) | `http://localhost:3000` | `npm run dev` |
 
-The frontend calls the Express API (e.g. `http://localhost:3001/api/jobs`). CORS is enabled on Express for browser requests from the Next.js origin.
+Server Components read from `server/lib/` without HTTP. Browser `fetch()` calls same-origin `/api/*` routes — no CORS setup needed.
 
 ### Possible directions later
 
 - **Supabase (Postgres)** — hosted DB if the team outgrows local JSON files
-- **Prisma + SQLite** — add a real ORM layer inside Express if queries get complex
+- **Prisma + SQLite** — add a real ORM layer if queries get complex
 
 ---
 
@@ -51,9 +49,17 @@ The frontend calls the Express API (e.g. `http://localhost:3001/api/jobs`). CORS
 
 ```
 LinkedinHackathon/
-├── app/                    # Next.js App Router (pages, layout, global styles)
+├── app/                    # Next.js App Router (pages, layout, API routes)
 │   ├── layout.tsx          # Root layout
 │   ├── page.tsx            # Home page
+│   ├── api/                # Route handlers (/api/*)
+│   │   ├── health/
+│   │   ├── users/[id]/
+│   │   ├── jobs/[id]/
+│   │   ├── courses/[id]/
+│   │   └── events/[id]/
+│   ├── events/[eventId]/   # Event detail page
+│   ├── messages/[connectionId]/
 │   └── globals.css         # Global CSS
 ├── components/             # Shared React components
 ├── data/                   # Local JSON datasets
@@ -66,8 +72,8 @@ LinkedinHackathon/
 │   ├── TECHNICAL_DECISIONS.md
 │   └── UI_DESIGN.md        # Color tokens and UI system
 ├── PLEASEREADTHIS.md       # All pages, overlays, and components — read first
-├── server/                 # Express API (reads data/*.json)
-│   └── index.js            # API entry point, routes, CORS
+├── server/                 # Backend logic (reads data/*.json)
+│   └── lib/                # Data loaders, events, RSVP state, suggestions
 ├── types/                  # TypeScript types (one file per domain)
 │   ├── user.ts             # User, SchoolHistory
 │   ├── job.ts              # Job, SalaryRange
@@ -83,11 +89,11 @@ LinkedinHackathon/
 
 | Path | Purpose |
 |------|---------|
-| `app/` | Next.js routes and page-level UI. Add new routes as folders/files under `app/`. |
+| `app/` | Next.js routes, pages, and `/api/*` route handlers. |
 | `components/` | Reusable React components shared across pages. |
-| `data/` | Static JSON datasets loaded by the Express server at startup. |
+| `data/` | Static JSON datasets loaded by `server/lib/` at startup. |
 | `docs/` | Architecture, UI design, and other project docs. |
-| `server/` | Standalone Express API. All REST endpoints live here. |
+| `server/lib/` | Backend business logic shared by route handlers and Server Components. |
 | `types/` | TypeScript models mirroring the JSON schemas. Import from `@/types` or specific files like `@/types/user`. |
 
 ---
@@ -96,7 +102,7 @@ LinkedinHackathon/
 
 How data is stored, linked, and served for the LinkedIn Events Hub hackathon build.
 
-There is **no hosted database**. The “DB” is flat JSON in `data/`, loaded into memory by the Express server at startup. The Next.js frontend reads everything through REST endpoints on `http://localhost:3001`.
+There is **no hosted database**. The “DB” is flat JSON in `data/`, loaded into memory at startup. Server Components import `server/lib/` directly; client code uses same-origin `/api/*` route handlers.
 
 Base datasets come from [pit.najera.cc](https://pit.najera.cc/) (Possibilities in Tech · Hackathon 2026). Events were added locally for this project.
 
@@ -111,7 +117,8 @@ data/                          ← source of truth (JSON files)
   course_data.json
   events_data.json
 
-server/index.js                ← loads JSON, exposes /api/*
+server/lib/                    ← loads JSON, derived data, persisted RSVP state
+app/api/                       ← Next.js route handlers (/api/*)
 types/*.ts                     ← shared TypeScript types
 ```
 
@@ -212,7 +219,7 @@ function latestJob(member) {
 
 ### Derived / runtime data (not in JSON)
 
-The UI needs data that does not exist in the starter files. The Express layer (or client helpers) **generates or holds this in memory** for the demo:
+The UI needs data that does not exist in the starter files. The backend layer **generates or holds this** for the demo:
 
 | Concept | Purpose | Suggested approach |
 |---------|---------|-------------------|
@@ -220,12 +227,12 @@ The UI needs data that does not exist in the starter files. The Express layer (o
 | **Event attendees** | Guest list modal | Sample users by matching `event.location` / `event.industry`; always include `host_user_id` |
 | **Connection subset** | “Your connections”, “, X connections” | Deterministic subset of attendees (e.g. hash of `userId + eventId`) |
 | **Connection degree** | 1st / 2nd / 3rd badge | Mock: 1st = connection subset; others = remaining attendees |
-| **RSVPs** | Calendar + “going” state | In-memory map `{ userId: eventId[] }` or JSON file added later |
-| **Nudge state** | “Nudged ✓” | In-memory `Set` of `{ eventId, targetUserId }` |
+| **RSVPs** | Calendar + “going” state | Persisted in `server/.demo-state.json` |
+| **Nudge state** | “Nudged ✓” | Persisted in `server/.demo-state.json` |
 | **Mutual events** | AI panel | Events where both current user and target appear in derived attendee sets (last 6 months) |
 | **AI suggestions** | Talking points | Rule-based from `posts_activity`, `skills`, `school_history`, mutual events |
 
-Keep derived logic in `server/` so the frontend stays thin. Persist to a new JSON file only if needed between restarts.
+Keep derived logic in `server/lib/` so the frontend stays thin. RSVP and nudge state are written to `server/.demo-state.json`.
 
 ### Feature → data mapping
 
@@ -234,16 +241,14 @@ Keep derived logic in `server/` so the frontend stays thin. Persist to a new JSO
 | Events feed (`/`) | `events_data.json` — filter/sort by `time`, boost by `location` vs current user |
 | Event detail | Event + host user + resolved host job |
 | Attendee modal | Derived attendee list + resolved jobs for headline/company |
-| Attendee filters | `latestJob(member).company`, `.position`, `.industry`, `member.current_location`, `school_history` |
-| Calendar overlay | RSVP’d events for current user |
-| AI connection panel | Both users’ `skills`, `posts_activity`, shared schools; mutual events from derived attendance |
-| Messaging | Target user profile + mock thread (optional static copy) |
+| Calendar overlay | `GET /api/users/:id/rsvps` — RSVP’d events for current user |
+| AI connection panel | `GET /api/users/:id/suggestions` — shared themes, schools, mutual events, talking points |
 
 ### Loading data
 
 #### Local (default)
 
-Express reads from `data/` at startup — no network or API keys.
+`server/lib/` reads from `data/` at startup — no network or API keys.
 
 #### Remote refresh (optional)
 
@@ -264,32 +269,26 @@ curl https://pit.najera.cc/course_data.json -o data/course_data.json
 
 ---
 
-## API (Express)
+## API (Next.js Route Handlers)
 
-### Implemented
+All endpoints live under `app/api/`. Server Components can also import `server/lib/` directly and skip HTTP for reads.
 
 | Method | Path | Returns |
 |--------|------|---------|
-| GET | `/api/health` | Status + record counts (users, jobs, courses) |
+| GET | `/api/health` | Status + record counts (users, jobs, courses, events) |
 | GET | `/api/users` | All members |
 | GET | `/api/users/:id` | Single member |
+| GET | `/api/users/:id/rsvps` | Events the user RSVP’d to (calendar overlay) |
+| GET | `/api/users/:id/suggestions` | AI connection panel payload vs demo user |
 | GET | `/api/jobs` | All jobs |
 | GET | `/api/jobs/:id` | Single job |
 | GET | `/api/courses` | All courses |
 | GET | `/api/courses/:id` | Single course |
-
-### Planned (Events Hub)
-
-| Method | Path | Returns |
-|--------|------|---------|
 | GET | `/api/events` | All events; query: `?location=`, `?industry=` |
-| GET | `/api/events/:id` | Event + resolved host |
-| GET | `/api/events/:id/attendees` | Derived attendee rows + filters via query params |
-| POST | `/api/events/:id/rsvp` | Toggle RSVP for current user |
+| GET | `/api/events/:id` | Event + resolved host + derived attendees |
+| GET | `/api/events/:id/attendees` | Attendee rows; query: `?filter=connections`, `?degree=1\|2\|3` |
+| POST | `/api/events/:id/rsvp` | Toggle RSVP for demo user |
 | POST | `/api/events/:id/nudge` | Record nudge to target user |
-| GET | `/api/users/:id/suggestions` | Mock AI panel payload vs current user |
-
-Update `/api/health` to include `events: events.length` when the events loader is added.
 
 ---
 

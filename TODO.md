@@ -1,1 +1,2 @@
-- finish UI and frontend
+- fix the bad looking icons
+- add img directory with web scrapper

@@ -52,24 +52,28 @@ describe("formatEventDate", () => {
 });
 ```
 
-## Express route (with exported app)
+## Backend module (`server/lib/`)
 
-`tests/server/routes/users.test.js`:
+`tests/server/events.test.js`:
 
 ```js
-const request = require("supertest");
-const { describe, expect, it } = require("vitest");
-const { createApp } = require("@/server/app");
+const { getEventDetail, toggleRsvp } = require("../../server/lib/events");
 
-describe("GET /api/users/:id", () => {
-  it("returns 404 for unknown id", async () => {
-    const app = createApp({ users: [] });
-    const res = await request(app).get("/api/users/missing");
-    expect(res.status).toBe(404);
-    expect(res.body.error).toBe("User not found");
+describe("events API helpers", () => {
+  it("returns event detail with host and attendance summary", () => {
+    const detail = getEventDetail("event_0001");
+    expect(detail.event.id).toBe("event_0001");
+    expect(detail.attendance.total).toBeGreaterThan(0);
+  });
+
+  it("toggles RSVP state for the demo user", () => {
+    const first = toggleRsvp("event_0002");
+    expect(first?.rsvpd).toBe(true);
   });
 });
 ```
+
+Use `DEMO_STATE_FILE` env var in tests when RSVP/nudge persistence must be isolated (see `tests/server/state.test.js`).
 
 ## Mocking fetch in a component
 
