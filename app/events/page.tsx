@@ -7,7 +7,7 @@ export default function EventsPage() {
 
   return (
     <main className="page events-feed-page">
-      <EventsPageLayout events={events} />
+      <EventsPageLayout events={events}/>
     </main>
   );
 }
