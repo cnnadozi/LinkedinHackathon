@@ -4,9 +4,11 @@
  * LinkedIn-style event detail — hero card, action row, tabs, and attendee modal.
  * Layout mirrors linkedin.com/events/* with hackathon attendee enhancements.
  */
-import { useState } from "react";
+import { LogOut } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { AttendeeModal } from "./AttendeeModal";
 import { EventDetailSidebar } from "./EventDetailSidebar";
+import { LeaveEventModal } from "./LeaveEventModal";
 import {
   Avatar,
   AvatarButton,
@@ -78,11 +80,27 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
   const [attendeeCount, setAttendeeCount] = useState(data.attendance.total);
   const [rsvpLoading, setRsvpLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
+  const [leaveModalOpen, setLeaveModalOpen] = useState(false);
+  const actionsMenuRef = useRef<HTMLDivElement>(null);
 
   const { event, host, attendance } = data;
   const { scheduleLabel } = formatEventDate(event.time);
   const bannerClass = eventBannerClass(event.industry);
   const organizerName = host?.name ?? event.company;
+
+  useEffect(() => {
+    if (!actionsMenuOpen) return;
+
+    const handlePointerDown = (event: MouseEvent) => {
+      if (!actionsMenuRef.current?.contains(event.target as Node)) {
+        setActionsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
+  }, [actionsMenuOpen]);
 
   async function handleRsvp() {
     setRsvpLoading(true);
@@ -90,12 +108,34 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
     if (result) {
       setAttendeeCount((c) => c + (result.rsvpd ? 1 : -1));
       setRsvpd(result.rsvpd);
+      if (!result.rsvpd) {
+        setActionsMenuOpen(false);
+      }
+    }
+    setRsvpLoading(false);
+  }
+
+  async function handleLeaveEvent() {
+    if (!rsvpd) return;
+
+    setRsvpLoading(true);
+    const result = await toggleEventRsvp(event.id);
+    if (result && !result.rsvpd) {
+      setAttendeeCount((c) => c - 1);
+      setRsvpd(false);
+      setLeaveModalOpen(false);
+      setActionsMenuOpen(false);
     }
     setRsvpLoading(false);
   }
 
   function openAttendeeModal() {
     setModalOpen(true);
+  }
+
+  function openLeaveModal() {
+    setActionsMenuOpen(false);
+    setLeaveModalOpen(true);
   }
 
   return (
@@ -158,10 +198,41 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
                 >
                   {rsvpd ? "Attending ✓" : "Attend"}
                 </Button>
-                <Button variant="secondary" size="md">
-                  Share
-                </Button>
-                <IconButton aria-label="More actions">•••</IconButton>
+                {rsvpd ? (
+                  <div className="event-detail__actions-menu" ref={actionsMenuRef}>
+                    <IconButton
+                      aria-label="More actions"
+                      aria-haspopup="menu"
+                      aria-expanded={actionsMenuOpen}
+                      aria-controls="event-detail-actions-menu"
+                      disabled={rsvpLoading}
+                      onClick={() => setActionsMenuOpen((open) => !open)}
+                    >
+                      •••
+                    </IconButton>
+                    {actionsMenuOpen ? (
+                      <div
+                        id="event-detail-actions-menu"
+                        className="event-detail__actions-popover"
+                        role="menu"
+                      >
+                        <button
+                          type="button"
+                          className="event-detail__actions-popover-item"
+                          role="menuitem"
+                          onClick={openLeaveModal}
+                        >
+                          <LogOut
+                            className="event-detail__actions-popover-icon"
+                            size={20}
+                            aria-hidden
+                          />
+                          Leave event
+                        </button>
+                      </div>
+                    ) : null}
+                  </div>
+                ) : null}
               </div>
 
               <EventAbout description={event.description} />
@@ -178,6 +249,13 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
         attendees={data.attendees}
         eventId={event.id}
         eventName={event.name}
+      />
+
+      <LeaveEventModal
+        open={leaveModalOpen}
+        loading={rsvpLoading}
+        onClose={() => setLeaveModalOpen(false)}
+        onConfirm={handleLeaveEvent}
       />
     </div>
   );

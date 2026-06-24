@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { EventDetail } from "@/components/EventDetail";
 import type { EventDetailPayload } from "@/lib/eventTypes";
+import { toggleEventRsvp } from "@/lib/eventActions";
 
 vi.mock("@/lib/eventActions", () => ({
   toggleEventRsvp: vi.fn().mockResolvedValue({ rsvpd: true }),
@@ -96,6 +97,11 @@ describe("EventDetail", () => {
     expect(
       screen.getByRole("button", { name: "248 attendees · 12 connections" }),
     ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Attend" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Share" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "More actions" }),
+    ).not.toBeInTheDocument();
   });
 
   it("expands long descriptions with See more", async () => {
@@ -125,5 +131,32 @@ describe("EventDetail", () => {
       screen.getByRole("dialog", { name: "Attendance List" }),
     ).toBeInTheDocument();
     expect(screen.getByText("Alice Example")).toBeInTheDocument();
+  });
+
+  it("shows leave event flow when attending", async () => {
+    const user = userEvent.setup();
+    const attendingData: EventDetailPayload = { ...mockData, rsvpd: true };
+
+    vi.mocked(toggleEventRsvp).mockResolvedValueOnce({ rsvpd: false });
+
+    render(<EventDetail data={attendingData} relatedEvents={mockRelatedEvents} />);
+
+    expect(screen.getByRole("button", { name: "Attending ✓" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "More actions" })).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "More actions" }));
+    await user.click(screen.getByRole("menuitem", { name: "Leave event" }));
+
+    expect(
+      screen.getByRole("dialog", { name: "Leave this event?" }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Leave" }));
+
+    expect(toggleEventRsvp).toHaveBeenCalledWith("event_0001");
+    expect(screen.getByRole("button", { name: "Attend" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "More actions" }),
+    ).not.toBeInTheDocument();
   });
 });

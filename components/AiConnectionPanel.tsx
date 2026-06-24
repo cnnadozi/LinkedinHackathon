@@ -1,10 +1,9 @@
 "use client";
 
 /**
- * AI-powered connection assistant shown above the nudge composer. Analyzes the
- * two members' shared activity and surfaces three sections: shared themes,
- * mutual events (last 6 months), and tappable AI talking points. Collapsible so
- * it doesn't crowd the chat; talking points drop into the message box on tap.
+ * AI-powered connection assistant shown above the nudge composer. Surfaces
+ * tappable AI talking points based on shared activity. Collapsible so it
+ * doesn't crowd the chat.
  */
 import { useState } from "react";
 
@@ -40,11 +39,7 @@ export function AiConnectionPanel({
 }: AiConnectionPanelProps) {
   const [collapsed, setCollapsed] = useState(false);
 
-  const hasContent =
-    !!data &&
-    (data.sharedThemes.length > 0 ||
-      data.mutualEvents.length > 0 ||
-      data.talkingPoints.length > 0);
+  const hasContent = !!data && data.talkingPoints.length > 0;
 
   return (
     <section className="ai-panel" aria-label="AI connection assistant">
@@ -73,38 +68,6 @@ export function AiConnectionPanel({
             </p>
           ) : (
             <>
-              {data!.sharedThemes.length > 0 && (
-                <div className="ai-panel__section">
-                  <h4 className="ai-panel__section-title">Shared Themes</h4>
-                  <div className="ai-panel__chips">
-                    {data!.sharedThemes.map((theme) => (
-                      <span key={theme} className="ai-panel__chip">
-                        {theme}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {data!.mutualEvents.length > 0 && (
-                <div className="ai-panel__section">
-                  <h4 className="ai-panel__section-title">
-                    Mutual Events{" "}
-                    <span className="ai-panel__count">
-                      {data!.mutualEvents.length} mutual event
-                      {data!.mutualEvents.length === 1 ? "" : "s"}
-                    </span>
-                  </h4>
-                  <ul className="ai-panel__events">
-                    {data!.mutualEvents.map((event) => (
-                      <li key={event.id} className="ai-panel__event">
-                        {event.name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
               {data!.talkingPoints.length > 0 && (
                 <div className="ai-panel__section">
                   <h4 className="ai-panel__section-title">
