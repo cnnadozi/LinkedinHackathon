@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Card } from "./linkedin/Card";
+import { Button, Card } from "@/components/linkedin";
 import { eventBannerClass } from "@/lib/formatEventDate";
 import type { Event } from "@/types/event";
 
@@ -47,9 +47,9 @@ export function EventDetailSidebar({ relatedEvents }: EventDetailSidebarProps) {
         <p className="event-sidebar__premium-copy">
           Join live conversations with leaders and peers in your industry.
         </p>
-        <button type="button" className="event-sidebar__premium-cta">
+        <Button variant="secondary" size="sm" className="event-sidebar__premium-cta">
           See all Premium events
-        </button>
+        </Button>
       </Card>
 
       <Card padding="md" className="event-sidebar__related">

@@ -320,3 +320,139 @@
 .li-modal-body {
   padding: var(--li-space-xl);
 }
+
+/* ── Text button (inline link style) ──────────────────── */
+
+.li-text-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.li-text-btn:hover {
+  text-decoration: underline;
+}
+
+.li-text-btn--primary {
+  color: var(--li-blue);
+}
+
+.li-text-btn--primary:hover {
+  color: var(--li-blue-hover);
+}
+
+.li-text-btn--default {
+  color: var(--li-text);
+}
+
+.li-text-btn--default:hover {
+  color: var(--li-blue);
+}
+
+.li-text-btn--connections {
+  color: var(--li-connections);
+}
+
+/* ── Tabs ─────────────────────────────────────────────── */
+
+.li-tabs {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--li-border-light);
+}
+
+.li-tabs__tab {
+  position: relative;
+  padding: 0.75rem 0.25rem;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--li-text-muted);
+  cursor: pointer;
+}
+
+.li-tabs__tab--active {
+  color: var(--li-green);
+}
+
+.li-tabs__tab--active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--li-green);
+}
+
+.li-tabs__tab:focus-visible {
+  outline: 2px solid var(--li-blue);
+  outline-offset: 2px;
+}
+
+/* ── Icon button ──────────────────────────────────────── */
+
+.li-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--li-border);
+  border-radius: 50%;
+  background: var(--li-surface);
+  color: var(--li-text-muted);
+  font-size: 0.875rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.li-icon-btn:hover:not(:disabled) {
+  background: var(--li-surface-muted);
+}
+
+.li-icon-btn:focus-visible {
+  outline: 2px solid var(--li-blue);
+  outline-offset: 2px;
+}
+
+/* ── Badge ────────────────────────────────────────────── */
+
+.li-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.li-badge--live {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--li-text);
+}
+
+.li-badge--default {
+  background: var(--li-surface-muted);
+  color: var(--li-text);
+}
+
+/* ── Avatar button ────────────────────────────────────── */
+
+.li-avatar-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.li-avatar-btn:focus-visible {
+  outline: 2px solid var(--li-blue);
+  outline-offset: 2px;
+}

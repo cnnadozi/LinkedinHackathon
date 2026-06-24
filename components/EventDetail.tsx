@@ -7,9 +7,16 @@
 import { useState } from "react";
 import { AttendeeModal } from "./AttendeeModal";
 import { EventDetailSidebar } from "./EventDetailSidebar";
-import { Avatar } from "./linkedin/Avatar";
-import { Button } from "./linkedin/Button";
-import { Card } from "./linkedin/Card";
+import {
+  Avatar,
+  AvatarButton,
+  Badge,
+  Button,
+  Card,
+  IconButton,
+  Tabs,
+  TextButton,
+} from "@/components/linkedin";
 import { eventBannerClass, formatEventDate } from "@/lib/formatEventDate";
 import { toggleEventRsvp } from "@/lib/eventActions";
 import type { EventDetailPayload } from "@/lib/eventTypes";
@@ -21,14 +28,20 @@ type EventDetailProps = {
 };
 
 type ModalFilter = "all" | "connections";
-type EventTab = "details" | "comments";
+
+const EVENT_TABS = [
+  { value: "details" as const, label: "Details" },
+  { value: "comments" as const, label: "Comments" },
+];
 
 export function EventDetail({ data, relatedEvents }: EventDetailProps) {
   const [rsvpd, setRsvpd] = useState(data.rsvpd);
   const [rsvpLoading, setRsvpLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalFilter, setModalFilter] = useState<ModalFilter>("all");
-  const [activeTab, setActiveTab] = useState<EventTab>("details");
+  const [activeTab, setActiveTab] = useState<(typeof EVENT_TABS)[number]["value"]>(
+    "details",
+  );
 
   const { event, host, attendance } = data;
   const { scheduleLabel } = formatEventDate(event.time);
@@ -54,7 +67,9 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
           <Card padding="sm" className="event-detail-card">
             <div className={`event-detail__banner ${bannerClass}`}>
               <div className="event-detail__banner-overlay">
-                <span className="event-detail__live-badge">Upcoming event</span>
+                <Badge variant="live" className="event-detail__live-badge">
+                  Upcoming event
+                </Badge>
                 <p className="event-detail__banner-title">{event.name}</p>
               </div>
             </div>
@@ -64,32 +79,28 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
 
               <p className="event-detail__byline">
                 Event by{" "}
-                <button type="button" className="event-detail__byline-link">
-                  {organizerName}
-                </button>
+                <TextButton variant="primary">{organizerName}</TextButton>
               </p>
 
               <p className="event-detail__schedule">{scheduleLabel}</p>
               <p className="event-detail__location">{event.location}</p>
 
               <p className="event-detail__attendance-line">
-                <button
-                  type="button"
-                  className="event-detail__attendance-link"
+                <TextButton
+                  variant="default"
                   onClick={() => openAttendeeModal("all")}
                 >
                   {attendance.total.toLocaleString()} attendees
-                </button>
+                </TextButton>
                 {attendance.connectionsCount > 0 && (
                   <>
                     ,{" "}
-                    <button
-                      type="button"
-                      className="event-detail__connections-link"
+                    <TextButton
+                      variant="connections"
                       onClick={() => openAttendeeModal("connections")}
                     >
                       {attendance.connectionsCount} connections
-                    </button>
+                    </TextButton>
                   </>
                 )}
               </p>
@@ -97,15 +108,13 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
               {attendance.connectionPreview.length > 0 && (
                 <div className="event-detail__connections-strip">
                   {attendance.connectionPreview.map((connection) => (
-                    <button
+                    <AvatarButton
                       key={connection.id}
-                      type="button"
-                      className="event-detail__connection-avatar"
                       aria-label={`View ${connection.alt} in attendee list`}
                       onClick={() => openAttendeeModal("connections")}
                     >
                       <Avatar alt={connection.alt} size="sm" />
-                    </button>
+                    </AvatarButton>
                   ))}
                 </div>
               )}
@@ -119,43 +128,19 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
                 >
                   {rsvpd ? "Attending ✓" : "Attend"}
                 </Button>
-                <Button variant="secondary" size="md">
+                <Button variant="secondary" size="md" showChevron>
                   Share
-                  <span aria-hidden> ▾</span>
                 </Button>
-                <button
-                  type="button"
-                  className="event-detail__more"
-                  aria-label="More actions"
-                >
-                  •••
-                </button>
+                <IconButton aria-label="More actions">•••</IconButton>
               </div>
 
-              <div className="event-detail__tabs" role="tablist" aria-label="Event sections">
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={activeTab === "details"}
-                  className={`event-detail__tab${
-                    activeTab === "details" ? " event-detail__tab--active" : ""
-                  }`}
-                  onClick={() => setActiveTab("details")}
-                >
-                  Details
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={activeTab === "comments"}
-                  className={`event-detail__tab${
-                    activeTab === "comments" ? " event-detail__tab--active" : ""
-                  }`}
-                  onClick={() => setActiveTab("comments")}
-                >
-                  Comments
-                </button>
-              </div>
+              <Tabs
+                options={EVENT_TABS}
+                value={activeTab}
+                onChange={setActiveTab}
+                aria-label="Event sections"
+                className="event-detail__tabs"
+              />
 
               {activeTab === "details" ? (
                 <article className="event-detail__post">
