@@ -22,6 +22,8 @@ type AttendeeModalProps = {
   open: boolean;
   onClose: () => void;
   attendees: AttendeeRow[];
+  eventId: string;
+  eventName: string;
 };
 
 type AttendeeFilters = {
@@ -121,7 +123,13 @@ function AlsoAttendingEvents({
   );
 }
 
-export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) {
+export function AttendeeModal({
+  open,
+  onClose,
+  attendees,
+  eventId,
+  eventName,
+}: AttendeeModalProps) {
   const [filters, setFilters] = useState<AttendeeFilters>(EMPTY_FILTERS);
   // The attendee whose Nudge chat window is currently open, if any.
   const [chatAttendee, setChatAttendee] = useState<AttendeeRow | null>(null);
@@ -233,6 +241,8 @@ export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) 
       {chatAttendee && (
         <NudgeChat
           attendee={chatAttendee}
+          eventId={eventId}
+          eventName={eventName}
           onClose={() => setChatAttendee(null)}
         />
       )}

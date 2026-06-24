@@ -175,6 +175,8 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         attendees={data.attendees}
+        eventId={event.id}
+        eventName={event.name}
       />
     </div>
   );

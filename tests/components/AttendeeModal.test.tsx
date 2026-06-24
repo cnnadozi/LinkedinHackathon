@@ -38,7 +38,7 @@ const attendees: AttendeeRow[] = [
 
 describe("AttendeeModal", () => {
   it("shows location, company, and industry filters instead of connection tabs", () => {
-    render(<AttendeeModal open attendees={attendees} onClose={() => {}} />);
+    render(<AttendeeModal open attendees={attendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />);
 
     expect(screen.getByLabelText("Filter by Location")).toBeInTheDocument();
     expect(screen.getByLabelText("Filter by Company")).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe("AttendeeModal", () => {
   });
 
   it("shows headline and location without connection badges", () => {
-    render(<AttendeeModal open attendees={attendees} onClose={() => {}} />);
+    render(<AttendeeModal open attendees={attendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />);
 
     expect(screen.getByText("Engineer at Example Co")).toBeInTheDocument();
 
@@ -71,7 +71,7 @@ describe("AttendeeModal", () => {
     ];
 
     render(
-      <AttendeeModal open attendees={singleEventAttendees} onClose={() => {}} />,
+      <AttendeeModal open attendees={singleEventAttendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />,
     );
 
     const label = screen.getByText("Also attending");
@@ -80,7 +80,7 @@ describe("AttendeeModal", () => {
   });
 
   it("hides also-attending when there is no overlap", () => {
-    render(<AttendeeModal open attendees={attendees} onClose={() => {}} />);
+    render(<AttendeeModal open attendees={attendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />);
 
     const benRow = screen.getByText("Ben Builder").closest(".li-person-row");
     expect(benRow).not.toBeNull();
@@ -89,7 +89,7 @@ describe("AttendeeModal", () => {
 
   it("shows multiple also-attending events in an expandable dropdown", async () => {
     const user = userEvent.setup();
-    render(<AttendeeModal open attendees={attendees} onClose={() => {}} />);
+    render(<AttendeeModal open attendees={attendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />);
 
     expect(
       screen.getByRole("button", { name: "Also attending 2 events" }),
@@ -113,7 +113,7 @@ describe("AttendeeModal", () => {
 
   it("filters attendees by the selected location", async () => {
     const user = userEvent.setup();
-    render(<AttendeeModal open attendees={attendees} onClose={() => {}} />);
+    render(<AttendeeModal open attendees={attendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />);
 
     await user.selectOptions(
       screen.getByLabelText("Filter by Location"),
@@ -131,7 +131,7 @@ describe("AttendeeModal", () => {
   });
 
   it("hides Clear filters when no filters are applied", () => {
-    render(<AttendeeModal open attendees={attendees} onClose={() => {}} />);
+    render(<AttendeeModal open attendees={attendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />);
 
     expect(
       screen.queryByRole("button", { name: "Clear filters" }),
