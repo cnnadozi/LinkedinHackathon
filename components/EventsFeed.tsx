@@ -1,39 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Pagination, LIST_PAGE_SIZE } from "@/components/linkedin";
 import { EventCard } from "./EventCard";
 import type { Event } from "@/types/event";
-
-const PER_PAGE = 10;
 
 type EventsFeedProps = {
   events: Event[];
   attendeeCounts: Record<string, number>;
 };
 
-function pageRange(current: number, total: number): (number | "…")[] {
-  if (total <= 7) {
-    return Array.from({ length: total }, (_, i) => i + 1);
-  }
-  if (current <= 4) {
-    return [1, 2, 3, 4, 5, "…", total];
-  }
-  if (current >= total - 3) {
-    return [1, "…", total - 4, total - 3, total - 2, total - 1, total];
-  }
-  return [1, "…", current - 1, current, current + 1, "…", total];
-}
-
 export function EventsFeed({ events, attendeeCounts }: EventsFeedProps) {
   const [page, setPage] = useState(1);
-  const totalPages = Math.ceil(events.length / PER_PAGE);
-  const visible = events.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  const totalPages = Math.max(1, Math.ceil(events.length / LIST_PAGE_SIZE));
+  const visible = events.slice((page - 1) * LIST_PAGE_SIZE, page * LIST_PAGE_SIZE);
 
-  function goTo(p: number) {
-    setPage(Math.max(1, Math.min(p, totalPages)));
-  }
+  useEffect(() => {
+    setPage(1);
+  }, [events]);
 
-  const pages = pageRange(page, totalPages);
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
 
   return (
     <>
@@ -51,45 +39,12 @@ export function EventsFeed({ events, attendeeCounts }: EventsFeedProps) {
           ))}
         </ul>
 
-        <nav className="events-pagination" aria-label="Pagination">
-          <button
-            type="button"
-            className="events-pagination__btn events-pagination__prev"
-            onClick={() => goTo(page - 1)}
-            disabled={page === 1}
-            aria-label="Previous page"
-          >
-            ← Previous
-          </button>
-
-          {pages.map((p, i) =>
-            p === "…" ? (
-              <span key={`ellipsis-${i}`} className="events-pagination__ellipsis">
-                …
-              </span>
-            ) : (
-              <button
-                key={p}
-                type="button"
-                className={`events-pagination__btn events-pagination__page${page === p ? " events-pagination__page--active" : ""}`}
-                onClick={() => goTo(p as number)}
-                aria-current={page === p ? "page" : undefined}
-              >
-                {p}
-              </button>
-            )
-          )}
-
-          <button
-            type="button"
-            className="events-pagination__btn events-pagination__next"
-            onClick={() => goTo(page + 1)}
-            disabled={page === totalPages}
-            aria-label="Next page"
-          >
-            Next →
-          </button>
-        </nav>
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onPageChange={setPage}
+          aria-label="Events pagination"
+        />
       </div>
     </>
   );

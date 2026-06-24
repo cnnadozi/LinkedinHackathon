@@ -20,6 +20,7 @@ UI work:
 - [ ] Read docs/UI_DESIGN.md + docs/APP_MAP.md
 - [ ] Reuse components/linkedin/* primitives; add styles to app/globals.css
 - [ ] Mirror DOM structure (avatar + content + action button for person rows)
+- [ ] Long lists (>10 items): use `Pagination` + `LIST_PAGE_SIZE`, not full render
 - [ ] Visual check against live site before finishing
 - [ ] Run unit tests (see unit-testing skill)
 ```
@@ -93,12 +94,14 @@ font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Hel
 Used in attendee modal — matches Connections page:
 
 ```
-[Avatar 48px] [Name → Headline → meta lines] [Outlined pill button]
+[Avatar 48px] [Name · 2nd → Headline → meta lines] [Outlined pill button]
 ```
 
 Classes: `li-person-row`, `li-person-row__content`, `li-person-row__name`, `li-person-row__headline`, `li-person-row__meta-list`, `li-person-row__action`
 
-**No connection degree badges** in the attendee list.
+**Connection degree** — inline after name via `ConnectionBadge` (`Name · 2nd`), gray regular weight. Not a pill badge in the action column.
+
+**No** bordered degree pills in the attendee list action column.
 
 ### Buttons (`Button.tsx`)
 
@@ -121,7 +124,32 @@ Use `li-person-row__meta` + `TextLink` (blue). Headline always shown separately 
 
 ### Attendee modal filters
 
-Location, Company, Industry — filter pills + active tags + **Clear filters** (not "All filters").
+Location, Company, Industry — filter pills + **Clear filters** inline text (same row as pills).
+
+### Pagination (long lists)
+
+Use whenever a list can exceed **10 items** (events feed, attendee modal, connections-style tables).
+
+| Rule | Detail |
+|------|--------|
+| Component | `Pagination` from `components/linkedin` |
+| Page size | `LIST_PAGE_SIZE` (10) — do not hardcode |
+| Placement | Footer inside the list panel (scrollable rows above, pagination below) |
+| Styles | `.li-pagination` in `app/globals.css` — black circle active page |
+| Reset page | `setPage(1)` when filters/search change the underlying list |
+| Hide when | `totalPages <= 1` (component returns null automatically) |
+
+Reference: linkedin.com jobs search results footer, events feed card footer.
+
+```tsx
+const [page, setPage] = useState(1);
+const totalPages = Math.max(1, Math.ceil(items.length / LIST_PAGE_SIZE));
+const pageItems = items.slice((page - 1) * LIST_PAGE_SIZE, page * LIST_PAGE_SIZE);
+
+<Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
+```
+
+**Do not** render entire long lists without pagination or slice limits.
 
 ## Custom UI (hackathon only)
 
@@ -139,6 +167,7 @@ Everything else uses LinkedIn-copied primitives.
 - Connection degree (1st/2nd/3rd) in attendee modal
 - Duplicate CSS in `linkedin.css` or component-scoped link colors
 - Hardcoded hex in TSX instead of `--li-*` tokens
+- Rendering long lists without `Pagination` (use `LIST_PAGE_SIZE` = 10)
 
 ## Feature completion gate
 

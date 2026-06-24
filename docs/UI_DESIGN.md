@@ -88,7 +88,11 @@ Copied from Connections **Message** button:
 
 ### Filter bar
 
-Filter pills with hairline border; active state uses blue tint. **Clear filters** link on the right when filters are applied.
+Filter pills with hairline border; active state uses blue tint. **Clear filters** inline with other pills.
+
+### Pagination
+
+Lists with more than **10 items** use `Pagination` + `LIST_PAGE_SIZE` (10). Footer bar inside list panel — black circle on active page, Previous / Next. Hide when only one page.
 
 ---
 
@@ -103,6 +107,7 @@ Filter pills with hairline border; active state uses blue tint. **Clear filters*
 | Filled blue CTA | `Button primary` | RSVP, Send |
 | Text link | `TextLink` | Event names, inline links |
 | Filter pills | `FilterBar`, `FilterDropdown` | Attendee modal |
+| List pagination | `Pagination`, `LIST_PAGE_SIZE` | Events feed, attendee modal |
 | Avatar stack | `AvatarStack` | Event detail |
 | Modal shell | `Modal` | Attendee modal, calendar |
 

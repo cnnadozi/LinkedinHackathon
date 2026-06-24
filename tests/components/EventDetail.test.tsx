@@ -80,7 +80,7 @@ const mockRelatedEvents = [
 ];
 
 describe("EventDetail", () => {
-  it("renders event title, description, and attendance links", () => {
+  it("renders event title, About section, and attendance links", () => {
     render(<EventDetail data={mockData} relatedEvents={mockRelatedEvents} />);
 
     expect(
@@ -88,12 +88,29 @@ describe("EventDetail", () => {
         name: "Breaking Into DevOps Engineer Roles",
       }),
     ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "About" })).toBeInTheDocument();
     expect(
       screen.getByText(/Join a local Education community meetup/),
     ).toBeInTheDocument();
+    expect(screen.queryByRole("tab", { name: "Comments" })).not.toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "248 attendees · 12 connections" }),
     ).toBeInTheDocument();
+  });
+
+  it("expands long descriptions with See more", async () => {
+    const user = userEvent.setup();
+    const longDescription = `${"Word ".repeat(80)}end.`;
+    const longData: EventDetailPayload = {
+      ...mockData,
+      event: { ...mockData.event, description: longDescription },
+    };
+
+    render(<EventDetail data={longData} relatedEvents={mockRelatedEvents} />);
+
+    expect(screen.queryByText(longDescription)).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "See more" }));
+    expect(screen.getByText(longDescription)).toBeInTheDocument();
   });
 
   it("opens the attendee modal when attendance count is clicked", async () => {
