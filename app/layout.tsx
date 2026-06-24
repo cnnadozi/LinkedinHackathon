@@ -5,7 +5,7 @@ import "@/components/linkedin/linkedin.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "LinkedIn Hackathon",
+  title: "LinkedIn Gather",
   description: "Possibilities in Tech Hackathon 2026",
 };
 

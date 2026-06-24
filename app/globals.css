@@ -1497,3 +1497,73 @@ p {
     height: 48px;
   }
 }
+
+/* ── Gather Page ── */
+.gather-page {
+  max-width: var(--li-max-width);
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.gather-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.gather-page__title-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gather-page__icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--li-blue-interactive);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gather-page__h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--li-black);
+  line-height: 1.2;
+  margin: 0 0 2px;
+}
+
+.gather-page__subtitle {
+  font-size: 13px;
+  color: var(--li-gray-medium);
+  margin: 0;
+}
+
+.gather-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.gather-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--li-gray-medium);
+}
+
+.gather-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
