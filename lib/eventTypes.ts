@@ -21,7 +21,7 @@ export type AttendeeRow = {
   profile_picture_url: string;
   degree: 1 | 2 | 3;
   isConnection: boolean;
-  mutualEvents: string[];
+  mutualEvents: { id: string; name: string }[];
   nudged: boolean;
 };
 

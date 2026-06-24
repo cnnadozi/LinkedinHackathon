@@ -54,7 +54,7 @@ const mockData: EventDetailPayload = {
       profile_picture_url: "https://i.pravatar.cc/150?u=user_1",
       degree: 1,
       isConnection: true,
-      mutualEvents: ["Tech Mixer"],
+      mutualEvents: [{ id: "event_0009", name: "Tech Mixer" }],
       nudged: false,
     },
   ],

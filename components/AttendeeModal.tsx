@@ -20,6 +20,7 @@ import {
   TextLink,
 } from "@/components/linkedin";
 import { Modal } from "@/components/linkedin/Modal";
+import { NudgeChat } from "@/components/NudgeChat";
 import type { ConnectionDegree } from "@/components/linkedin";
 import type { AttendeeRow } from "@/lib/eventTypes";
 
@@ -77,6 +78,8 @@ function avatarColor(id: string): string {
 
 export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) {
   const [degreeFilter, setDegreeFilter] = useState<DegreeFilter | null>(null);
+  // The attendee whose Nudge chat window is currently open, if any.
+  const [chatAttendee, setChatAttendee] = useState<AttendeeRow | null>(null);
 
   // Clicking the active segment again clears the filter and shows everyone.
   function selectDegree(value: DegreeFilter) {
@@ -132,9 +135,11 @@ export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) 
                 <p className="attendance-list-events">
                   {attendee.mutualEvents.length > 0 ? (
                     attendee.mutualEvents.map((event, index) => (
-                      <span key={event}>
+                      <span key={event.id}>
                         {index > 0 && ", "}
-                        <TextLink href="#">{event}</TextLink>
+                        <TextLink href={`/events/${event.id}`}>
+                          {event.name}
+                        </TextLink>
                       </span>
                     ))
                   ) : (
@@ -143,17 +148,24 @@ export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) 
                 </p>
               </div>
               <Button
-                variant={attendee.nudged ? "success" : "primary"}
+                variant="primary"
                 className="attendance-list-nudge"
                 icon={<MessageIcon className="li-btn-icon" />}
-                disabled={attendee.nudged}
+                onClick={() => setChatAttendee(attendee)}
               >
-                {attendee.nudged ? "Nudged ✓" : "Nudge"}
+                Nudge
               </Button>
             </li>
           ))}
         </ul>
       </div>
+
+      {chatAttendee && (
+        <NudgeChat
+          attendee={chatAttendee}
+          onClose={() => setChatAttendee(null)}
+        />
+      )}
     </Modal>
   );
 }
