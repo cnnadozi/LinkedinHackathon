@@ -97,7 +97,11 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
                       aria-label={`View ${connection.alt} in attendee list`}
                       onClick={openAttendeeModal}
                     >
-                      <Avatar alt={connection.alt} size="sm" />
+                      <Avatar
+                        alt={connection.alt}
+                        src={connection.src}
+                        size="sm"
+                      />
                     </AvatarButton>
                   ))}
                 </div>
@@ -129,7 +133,13 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
               {activeTab === "details" ? (
                 <article className="event-detail__post">
                   <header className="event-detail__post-header">
-                    {host && <Avatar alt={host.name} size="md" />}
+                    {host && (
+                      <Avatar
+                        alt={host.name}
+                        src={host.profile_picture_url}
+                        size="md"
+                      />
+                    )}
                     <div className="event-detail__post-meta">
                       <p className="event-detail__post-author">{organizerName}</p>
                       <p className="event-detail__post-subtitle">
@@ -157,7 +167,11 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
         <EventDetailSidebar relatedEvents={relatedEvents} />
       </div>
 
-      <AttendeeModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <AttendeeModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        attendees={data.attendees}
+      />
     </div>
   );
 }

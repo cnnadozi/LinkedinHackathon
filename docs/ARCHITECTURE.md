@@ -159,6 +159,7 @@ Events do **not** include attendee lists or RSVP state in the JSON. Those are de
 |-------|------|-------|
 | `id` | string | e.g. `"user_4579"` |
 | `name` | string | Display name |
+| `profile_picture_url` | string | Pravatar URL seeded by `id` |
 | `school_history` | object[] | `school_name`, `degree`, `graduation_year` |
 | `job_history` | string[] | Job IDs → `jobs_data.json` |
 | `current_location` | string | e.g. `"Boston, MA"` — attendee filter + local events |

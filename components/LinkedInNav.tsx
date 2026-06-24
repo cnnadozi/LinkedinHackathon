@@ -14,6 +14,7 @@ import {
   UsersIcon,
 } from "@heroicons/react/24/solid";
 import { Avatar } from "./linkedin/Avatar";
+import { DEMO_USER_PROFILE_PICTURE_URL } from "@/lib/profilePicture";
 
 type NavLinkItem = {
   label: string;
@@ -124,7 +125,11 @@ export function LinkedInNav() {
         <div className="li-nav__end">
           <button type="button" className="li-nav__link li-nav__link--me">
             <span className="li-nav__icon li-nav__icon--avatar">
-              <Avatar alt="Demo User" size="sm" />
+              <Avatar
+                alt="Demo User"
+                src={DEMO_USER_PROFILE_PICTURE_URL}
+                size="sm"
+              />
             </span>
             <span className="li-nav__label li-nav__label--me">
               Me

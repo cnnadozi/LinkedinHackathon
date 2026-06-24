@@ -9,6 +9,8 @@ export type SchoolHistory = {
 export type User = {
   id: string;
   name: string;
+  /** Pravatar URL seeded by member id. */
+  profile_picture_url: string;
   school_history: SchoolHistory[];
   job_history: string[];
   current_location: string;

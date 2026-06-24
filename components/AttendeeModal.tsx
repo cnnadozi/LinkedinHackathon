@@ -2,7 +2,6 @@
 
 /**
  * Guest list overlay — mirrors the Attendance List page layout.
- * Data is hardcoded for now; will be wired to event attendance later.
  */
 import "@/components/AttendanceList.css";
 import {
@@ -18,22 +17,14 @@ import {
   TextLink,
 } from "@/components/linkedin";
 import { Modal } from "@/components/linkedin/Modal";
-import type { ConnectionDegree } from "@/components/linkedin";
+import type { AttendeeRow } from "@/lib/eventTypes";
 
 type AttendeeModalProps = {
   open: boolean;
   onClose: () => void;
+  attendees: AttendeeRow[];
 };
 
-type Attendee = {
-  id: string;
-  name: string;
-  connectionDegree: ConnectionDegree;
-  avatarColor?: string;
-  events: string[];
-};
-
-// Applied filter tags shown as removable chips below the connection-degree tabs.
 const ACTIVE_FILTERS = [
   "Abingdon",
   "Computer Games",
@@ -47,54 +38,7 @@ const CONNECTION_OPTIONS = [
   { value: "3rd+" as const, label: "3rd+" },
 ];
 
-const ATTENDEES: Attendee[] = [
-  {
-    id: "1",
-    name: "Cedric Wilson, LPC, NCC",
-    connectionDegree: 3,
-    avatarColor: "#6b4c9a",
-    events: [
-      "Software Engineering Internship Information Session",
-      "Product Management Career Workshop",
-      "Data Science Networking Night",
-      "Resume & LinkedIn Review Clinic",
-      "Tech Industry Alumni Panel Discussion",
-    ],
-  },
-  {
-    id: "2",
-    name: "Ben Ashton",
-    connectionDegree: 3,
-    avatarColor: "#5b7f95",
-    events: ["Data Science Networking Night", "Resume & LinkedIn Review Clinic"],
-  },
-  {
-    id: "3",
-    name: "Garrett Louthen",
-    connectionDegree: 3,
-    avatarColor: "#8b6914",
-    events: ["Product Management Career Workshop"],
-  },
-  {
-    id: "4",
-    name: "Cody A. J.",
-    connectionDegree: 3,
-    avatarColor: "#4a7c59",
-    events: [
-      "Resume & LinkedIn Review Clinic",
-      "Tech Industry Alumni Panel Discussion",
-    ],
-  },
-  {
-    id: "5",
-    name: "Kevin R. Stovall",
-    connectionDegree: 3,
-    avatarColor: "#7a5c4f",
-    events: ["Data Science Networking Night"],
-  },
-];
-
-export function AttendeeModal({ open, onClose }: AttendeeModalProps) {
+export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) {
   return (
     <Modal open={open} onClose={onClose} title="Attendance List" wide>
       <div className="attendance-list">
@@ -115,29 +59,37 @@ export function AttendeeModal({ open, onClose }: AttendeeModalProps) {
         </FilterBar>
 
         <ul>
-          {ATTENDEES.map((attendee) => (
+          {attendees.map((attendee) => (
             <li key={attendee.id} className="attendance-list-row">
-              <Avatar alt={attendee.name} color={attendee.avatarColor} />
+              <Avatar
+                alt={attendee.name}
+                src={attendee.profile_picture_url}
+              />
               <div className="attendance-list-content">
                 <div className="attendance-list-name-row">
                   <span className="attendance-list-name">{attendee.name}</span>
-                  <ConnectionBadge degree={attendee.connectionDegree} />
+                  <ConnectionBadge degree={attendee.degree} />
                 </div>
                 <p className="attendance-list-events">
-                  {attendee.events.map((event, index) => (
-                    <span key={event}>
-                      {index > 0 && ", "}
-                      <TextLink href="#">{event}</TextLink>
-                    </span>
-                  ))}
+                  {attendee.mutualEvents.length > 0 ? (
+                    attendee.mutualEvents.map((event, index) => (
+                      <span key={event}>
+                        {index > 0 && ", "}
+                        <TextLink href="#">{event}</TextLink>
+                      </span>
+                    ))
+                  ) : (
+                    <span>{attendee.headline}</span>
+                  )}
                 </p>
               </div>
               <Button
-                variant="primary"
+                variant={attendee.nudged ? "success" : "primary"}
                 className="attendance-list-nudge"
                 icon={<MessageIcon className="li-btn-icon" />}
+                disabled={attendee.nudged}
               >
-                Nudge
+                {attendee.nudged ? "Nudged ✓" : "Nudge"}
               </Button>
             </li>
           ))}
