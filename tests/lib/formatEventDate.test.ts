@@ -1,7 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   eventBannerClass,
+  eventThumbnailUrl,
   formatEventDate,
+  formatSidebarEventStatus,
+  isEventLive,
 } from "@/lib/formatEventDate";
 
 describe("formatEventDate", () => {
@@ -23,5 +26,50 @@ describe("eventBannerClass", () => {
     expect(eventBannerClass("Health Care")).toBe(
       "event-detail__banner--health-care",
     );
+  });
+});
+
+describe("eventThumbnailUrl", () => {
+  it("returns a stable picsum URL seeded by event id", () => {
+    expect(eventThumbnailUrl("event_0001")).toBe(
+      "https://picsum.photos/seed/event_0001/160/96",
+    );
+  });
+});
+
+describe("formatSidebarEventStatus", () => {
+  it("shows Happening now for events in progress", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-04-05T19:15:00.000Z"));
+
+    expect(formatSidebarEventStatus("2026-04-05T19:00:00.000Z")).toEqual({
+      label: "Happening now",
+      isLive: true,
+    });
+
+    vi.useRealTimers();
+  });
+
+  it("formats same-day events as Today with time", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-04-05T12:00:00.000Z"));
+
+    const result = formatSidebarEventStatus("2026-04-05T19:00:00.000Z");
+
+    expect(result.isLive).toBe(false);
+    expect(result.label).toMatch(/^Today,/);
+
+    vi.useRealTimers();
+  });
+});
+
+describe("isEventLive", () => {
+  it("returns false before the event starts", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-04-05T18:00:00.000Z"));
+
+    expect(isEventLive("2026-04-05T19:00:00.000Z")).toBe(false);
+
+    vi.useRealTimers();
   });
 });

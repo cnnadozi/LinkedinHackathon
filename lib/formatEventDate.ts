@@ -43,3 +43,56 @@ export function eventBannerClass(industry: string): string {
   const key = industry.toLowerCase().replace(/\s+/g, "-");
   return `event-detail__banner--${key}`;
 }
+
+/** Stable cover image for sidebar / feed thumbnails (no image field in dataset). */
+export function eventThumbnailUrl(eventId: string): string {
+  return `https://picsum.photos/seed/${encodeURIComponent(eventId)}/160/96`;
+}
+
+export function isEventLive(iso: string, durationMinutes = 45): boolean {
+  const start = new Date(iso);
+  const end = new Date(start.getTime() + durationMinutes * 60_000);
+  const now = new Date();
+  return now >= start && now < end;
+}
+
+export type SidebarEventStatus = {
+  label: string;
+  isLive: boolean;
+};
+
+/** Compact time label for sidebar recommendation rows. */
+export function formatSidebarEventStatus(
+  iso: string,
+  durationMinutes = 45,
+): SidebarEventStatus {
+  if (isEventLive(iso, durationMinutes)) {
+    return { label: "Happening now", isLive: true };
+  }
+
+  const date = new Date(iso);
+  const now = new Date();
+  const sameDay = date.toDateString() === now.toDateString();
+  const tomorrow = new Date(now);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const isTomorrow = date.toDateString() === tomorrow.toDateString();
+
+  const time = date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  if (sameDay) return { label: `Today, ${time}`, isLive: false };
+  if (isTomorrow) return { label: `Tomorrow, ${time}`, isLive: false };
+
+  return {
+    label: date.toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+    }),
+    isLive: false,
+  };
+}
