@@ -7,5 +7,7 @@ Make sure to update these documents regularly with new information.
 |-----|---------|
 | [README.md](./README.md) | Project vision, hackathon context, and key features (1-click access, attendee insights, integrated calendar) for the LinkedIn Events Hub |
 | [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Tech stack, folder layout, dev commands, and Express API routes |
-| [docs/DATASET_USAGE.md](./docs/DATASET_USAGE.md) | JSON dataset schemas, linking members/jobs/courses, and usage patterns |
-| [docs/TECHNICAL_DECISIONS.md](./docs/TECHNICAL_DECISIONS.md) | Implementation decisions and rationale (not duplicated from ARCHITECTURE) | 
+| [docs/DB_DESC.md](./docs/DB_DESC.md) | JSON data layer, schemas, linking, derived runtime data, and API endpoints |
+| [docs/TECHNICAL_DECISIONS.md](./docs/TECHNICAL_DECISIONS.md) | Implementation decisions and rationale (not duplicated from ARCHITECTURE) |
+| [docs/UI_DESIGN.md](./docs/UI_DESIGN.md) | Color tokens, typography, layout, and UI patterns. Read this before doing anything UI related |
+| [PLEASEREADTHIS.md](./PLEASEREADTHIS.md) | **Start here** — all pages, overlays, and components |

@@ -1,2 +1,2 @@
 cnnadozi:
-- Set up Figma MCP
+- Make necessary skills, hooks, and subagents

@@ -1,6 +1,6 @@
 # LinkedIn Events Hub
 
-> Elevating and expanding LinkedIn's event experience for seamless discovery and connection. Built for [Hackathon Name].
+Elevating and expanding LinkedIn's event experience for seamless discovery and connection. Built for [Hackathon Name].
 
 ## The Vision
 While LinkedIn already hosts events, discovering them currently relies heavily on manual searches. Our revamped **LinkedIn Events** experience transforms this by introducing a prominent, single-click icon that takes you straight to a dedicated events page, supercharging it with new capabilities. Our solution turns event discovery into a proactive networking tool, helping professionals seamlessly track their schedules, discover local opportunities, and leverage mutual connections to make meaningful real-world interactions.
@@ -15,5 +15,3 @@ While LinkedIn already hosts events, discovering them currently relies heavily o
 * **Automated Follow-Ups:** Post-event nudges remind you to reach out and solidify connections with people you recently attended an event with.
 * **Localized Discovery:** The main dashboard engine recommends upcoming events tailored to your current location.
 
-## Note
-Visit the docs folder and read AGENTS.md for more context! You should definitely read TECHNICAL_DECISIONS.md as well

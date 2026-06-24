@@ -27,7 +27,7 @@ Next.js handles pages and UI. The API lives in a separate Express server (see Ba
 | Data source | **Local JSON** | Reads from the `data/` folder — no hosted database |
 | Approach | **Express + JSON** | Mock backend that loads and filters dataset files |
 
-The starter datasets live in `data/` (see [DATASET_USAGE.md](./DATASET_USAGE.md)). Express reads those JSON files and exposes REST endpoints to the Next.js frontend. No external DB or auth required for the hackathon build.
+The starter datasets live in `data/` (see [DB_DESC.md](./DB_DESC.md)). Express reads those JSON files and exposes REST endpoints to the Next.js frontend. No external DB or auth required for the hackathon build.
 
 ### Local development
 
@@ -49,8 +49,8 @@ The frontend calls the Express API (e.g. `http://localhost:3001/api/jobs`). CORS
 
 | Source | Location |
 |--------|----------|
-| Hackathon dataset | `data/user_data.json`, `data/jobs_data.json`, `data/course_data.json` |
-| Documentation | [DATASET_USAGE.md](./DATASET_USAGE.md) |
+| Hackathon dataset | `data/user_data.json`, `data/jobs_data.json`, `data/course_data.json`, `data/events_data.json` |
+| Documentation | [DB_DESC.md](./DB_DESC.md) |
 | Original source | [pit.najera.cc](https://pit.najera.cc/) |
 
 ---
@@ -65,12 +65,16 @@ LinkedinHackathon/
 │   └── globals.css         # Global CSS
 ├── components/             # Shared React components
 ├── data/                   # Local JSON datasets
+│   ├── events_data.json    # Professional networking events
 │   ├── user_data.json      # Member profiles
 │   ├── jobs_data.json      # Job postings
 │   └── course_data.json    # Learning courses
 ├── docs/                   # Project documentation
 │   ├── ARCHITECTURE.md     # This file — tech stack + folder layout
-│   └── DATASET_USAGE.md    # Dataset schemas and linking guide
+│   ├── DB_DESC.md          # Data schemas, linking, and API data layer
+│   ├── TECHNICAL_DECISIONS.md
+│   └── UI_DESIGN.md        # Color tokens and UI system
+├── PLEASEREADTHIS.md       # All pages, overlays, and components — read first
 ├── server/                 # Express API (reads data/*.json)
 │   └── index.js            # API entry point, routes, CORS
 ├── types/                  # TypeScript types (one file per domain)
@@ -91,7 +95,7 @@ LinkedinHackathon/
 | `app/` | Next.js routes and page-level UI. Add new routes as folders/files under `app/`. |
 | `components/` | Reusable React components shared across pages. |
 | `data/` | Static JSON datasets loaded by the Express server at startup. |
-| `docs/` | Architecture, dataset usage, and other project docs. |
+| `docs/` | Architecture, data layer (`DB_DESC.md`), UI design, and other project docs. |
 | `server/` | Standalone Express API. All REST endpoints live here. |
 | `types/` | TypeScript models mirroring the JSON schemas. Import from `@/types` or specific files like `@/types/user`. |
 
@@ -106,3 +110,5 @@ LinkedinHackathon/
 | GET | `/api/jobs/:id` | Single job by ID |
 | GET | `/api/courses` | All courses |
 | GET | `/api/courses/:id` | Single course by ID |
+
+Planned events endpoints are documented in [DB_DESC.md](./DB_DESC.md).
