@@ -34,6 +34,7 @@ const EVENT_TABS = [
 
 export function EventDetail({ data, relatedEvents }: EventDetailProps) {
   const [rsvpd, setRsvpd] = useState(data.rsvpd);
+  const [attendeeCount, setAttendeeCount] = useState(data.attendance.total);
   const [rsvpLoading, setRsvpLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<(typeof EVENT_TABS)[number]["value"]>(
@@ -48,7 +49,10 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
   async function handleRsvp() {
     setRsvpLoading(true);
     const result = await toggleEventRsvp(event.id);
-    if (result) setRsvpd(result.rsvpd);
+    if (result) {
+      setAttendeeCount((c) => c + (result.rsvpd ? 1 : -1));
+      setRsvpd(result.rsvpd);
+    }
     setRsvpLoading(false);
   }
 
@@ -83,7 +87,7 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
 
               <p className="event-detail__attendance-line">
                 <TextButton variant="default" onClick={openAttendeeModal}>
-                  {attendance.total.toLocaleString()} attendees
+                  {attendeeCount.toLocaleString()} attendees
                   {attendance.connectionsCount > 0 &&
                     ` · ${attendance.connectionsCount} connections`}
                 </TextButton>
@@ -116,7 +120,7 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
                 >
                   {rsvpd ? "Attending ✓" : "Attend"}
                 </Button>
-                <Button variant="secondary" size="md" showChevron>
+                <Button variant="secondary" size="md">
                   Share
                 </Button>
                 <IconButton aria-label="More actions">•••</IconButton>
