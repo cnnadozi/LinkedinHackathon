@@ -15,9 +15,53 @@ export function FilterBar({ children, className = "" }: FilterBarProps) {
 type FilterDropdownProps = {
   label: string;
   onClick?: () => void;
+  options?: string[];
+  value?: string | null;
+  onChange?: (value: string | null) => void;
 };
 
-export function FilterDropdown({ label, onClick }: FilterDropdownProps) {
+export function FilterDropdown({
+  label,
+  onClick,
+  options,
+  value = null,
+  onChange,
+}: FilterDropdownProps) {
+  if (options && onChange) {
+    const isActive = Boolean(value);
+    const triggerLabel = isActive ? value : label;
+
+    return (
+      <div className="li-filter-dropdown">
+        <Button
+          variant="filter"
+          showChevron
+          className={[
+            "li-filter-dropdown__trigger",
+            isActive ? "li-filter-dropdown__trigger--active" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          {triggerLabel}
+        </Button>
+        <select
+          className="li-filter-dropdown__select"
+          value={value ?? ""}
+          onChange={(event) => onChange(event.target.value || null)}
+          aria-label={`Filter by ${label}`}
+        >
+          <option value="">{label}</option>
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
+
   return (
     <Button variant="filter" showChevron onClick={onClick}>
       {label}
@@ -78,12 +122,15 @@ export function SegmentGroup<T extends string>({
   );
 }
 
-export function AllFiltersLink({ onClick }: { onClick?: () => void }) {
+export function ClearFiltersLink({ onClick }: { onClick?: () => void }) {
   return (
     <span className="li-filter-bar-end">
       <Button variant="ghost" onClick={onClick}>
-        All filters
+        Clear filters
       </Button>
     </span>
   );
 }
+
+/** @deprecated Use ClearFiltersLink */
+export const AllFiltersLink = ClearFiltersLink;

@@ -68,10 +68,10 @@ LinkedinHackathon/
 │   ├── jobs_data.json      # Job postings
 │   └── course_data.json    # Learning courses
 ├── docs/                   # Project documentation
+│   ├── APP_MAP.md          # Start here — pages, overlays, components, main user
 │   ├── ARCHITECTURE.md     # This file — tech stack, layout, data layer, API
 │   ├── TECHNICAL_DECISIONS.md
 │   └── UI_DESIGN.md        # Color tokens and UI system
-├── PLEASEREADTHIS.md       # All pages, overlays, and components — read first
 ├── server/                 # Backend logic (reads data/*.json)
 │   └── lib/                # Data loaders, events, RSVP state, suggestions
 ├── types/                  # TypeScript types (one file per domain)
@@ -151,7 +151,7 @@ Each file is a **flat JSON array**. Cross-entity links use string IDs, not neste
 | `industry` | string | From host’s most recent job |
 | `company` | string | From host’s most recent job |
 
-Events do **not** include attendee lists or RSVP state in the JSON. Those are derived at runtime (see below).
+Events do **not** include attendee lists in `events_data.json`. Attendee counts come from each member's `attending_event_ids`. RSVP state for the demo user is still runtime-only (see below).
 
 #### Members (`user_data.json`)
 
@@ -166,6 +166,7 @@ Events do **not** include attendee lists or RSVP state in the JSON. Those are de
 | `posts_activity` | string[] | AI **Shared Themes** / talking points |
 | `skills` | string[] | Attendee filters, AI themes |
 | `courses` | string[] | Course IDs → `course_data.json` |
+| `attending_event_ids` | string[] | Events this member attends (max 5). Assigned in data — edit directly or run `node scripts/populate-attending-event-ids.js` |
 
 #### Jobs (`jobs_data.json`)
 
@@ -218,19 +219,42 @@ function latestJob(member) {
 }
 ```
 
+### Main user
+
+The hackathon demo simulates a single logged-in LinkedIn member. **All “current user” behavior uses one fixed profile** — not a random or session-based user.
+
+| | |
+|--|--|
+| **ID** | `user_5736` |
+| **Name** | Alice Johnson |
+| **Constants** | `MAIN_USER_ID` in `lib/mainUser.ts` and `server/lib/data.js`; `DEMO_USER_ID` is a deprecated alias for the same value |
+| **Env override** | `MAIN_USER_ID=user_XXXX` |
+
+Alice’s `attending_event_ids` in `user_data.json` (source of truth for guest lists and overlap):
+
+- `event_0002` — Breaking Into HR Coordinator Roles
+- `event_0034` — Technology Customer Service Manager Networking Night
+- `event_0050` — Meet DevOps Engineers in Finance
+
+**Server helpers:** `getMainUser()`, `getMainUserAttendingEventIds()` in `server/lib/data.js`.
+
+**Consumers:** `server/lib/events.js` (RSVP, attendees, mutual **Also attending** overlap), events feed **Attending** filter, calendar RSVPs, nudge/connection logic, nav avatar (`lib/profilePicture.ts`).
+
+Do not change the main user casually — tests, attendee overlap, and the attending filter all assume `user_5736`.
+
 ### Derived / runtime data (not in JSON)
 
 The UI needs data that does not exist in the starter files. The backend layer **generates or holds this** for the demo:
 
 | Concept | Purpose | Suggested approach |
 |---------|---------|-------------------|
-| **Current user** | Fixed “logged-in” member for connections / RSVPs | Pick one `user_*` ID as demo user (env or constant) |
-| **Event attendees** | Guest list modal | Sample users by matching `event.location` / `event.industry`; always include `host_user_id` |
-| **Connection subset** | “Your connections”, “, X connections” | Deterministic subset of attendees (e.g. hash of `userId + eventId`) |
+| **Main user** | Fixed logged-in member for the whole demo | **`user_5736` (Alice Johnson)** — see [Main user](#main-user). Export `MAIN_USER_ID`; optional env override |
+| **Event attendees** | Guest list modal | Users whose `attending_event_ids` includes the event; always include `host_user_id` |
+| **Connection subset** | “Your connections”, “, X connections” | Deterministic subset of attendees (e.g. hash of `userId + eventId`) relative to main user |
 | **Connection degree** | 1st / 2nd / 3rd badge | Mock: 1st = connection subset; others = remaining attendees |
-| **RSVPs** | Calendar + “going” state | Persisted in `server/.demo-state.json` |
+| **RSVPs** | Calendar + “going” state | Persisted in `server/.demo-state.json` for main user |
 | **Nudge state** | “Nudged ✓” | Persisted in `server/.demo-state.json` |
-| **Mutual events** | AI panel | Events where both current user and target appear in derived attendee sets (last 6 months) |
+| **Mutual events** | Attendee modal **Also attending** + AI panel | Other events both main user and attendee share via `attending_event_ids` (exclude current event) |
 | **AI suggestions** | Talking points | Rule-based from `posts_activity`, `skills`, `school_history`, mutual events |
 
 Keep derived logic in `server/lib/` so the frontend stays thin. RSVP and nudge state are written to `server/.demo-state.json`.
@@ -239,10 +263,10 @@ Keep derived logic in `server/lib/` so the frontend stays thin. RSVP and nudge s
 
 | UI feature | Data sources |
 |------------|--------------|
-| Events feed (`/`) | `events_data.json` — filter/sort by `time`, boost by `location` vs current user |
-| Event detail | Event + host user + resolved host job |
-| Attendee modal | Derived attendee list + resolved jobs for headline/company |
-| Calendar overlay | `GET /api/users/:id/rsvps` — RSVP’d events for current user |
+| Events feed (`/events`) | `events_data.json` — **Attending** filter uses main user’s `attending_event_ids` |
+| Event detail | Event + host user + resolved host job; RSVP/nudge relative to main user |
+| Attendee modal | Users in `attending_event_ids` for the event; **Also attending** = overlap with main user’s events |
+| Calendar overlay | `GET /api/users/:id/rsvps` — RSVP’d events for main user (`user_5736` by default) |
 | AI connection panel | `GET /api/users/:id/suggestions` — shared themes, schools, mutual events, talking points |
 
 ### Loading data

@@ -17,4 +17,6 @@ export type User = {
   posts_activity: string[];
   skills: string[];
   courses: string[];
+  /** Event IDs this member is attending — source of truth for attendee lists. */
+  attending_event_ids: string[];
 };

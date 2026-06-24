@@ -5,8 +5,8 @@ export function getProfilePictureUrl(userId: string, size = 150): string {
   return `${PRAVATAR_BASE}/${size}?u=${encodeURIComponent(userId)}`;
 }
 
-/** Demo logged-in member id (matches server/lib/data.js default). */
-export const DEMO_USER_ID = "user_5736";
+export { MAIN_USER_ID, MAIN_USER_ID as DEMO_USER_ID } from "@/lib/mainUser";
+import { MAIN_USER_ID } from "@/lib/mainUser";
 
 export const DEMO_USER_PROFILE_PICTURE_URL =
-  getProfilePictureUrl(DEMO_USER_ID);
+  getProfilePictureUrl(MAIN_USER_ID);

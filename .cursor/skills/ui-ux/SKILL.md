@@ -9,82 +9,71 @@ description: >-
 
 # UI / UX
 
-**Mandatory before any UI change.** Match the live LinkedIn product for the shell; limit custom UI to the four hackathon features. Do not ship one-off styles when a primitive already exists.
+**Mandatory before any UI change.** Copy layout and computed styles from the **live LinkedIn website**. All styles live in **`app/globals.css` only** — no duplicate CSS files.
 
 ## Quick workflow
 
-Copy this checklist and track progress:
-
 ```
 UI work:
-- [ ] Read docs/UI_DESIGN.md and PLEASEREADTHIS.md (page + component map)
-- [ ] Reuse components/linkedin/* primitives before creating new UI
-- [ ] Style with --li-* tokens and .li-* classes in app/globals.css
-- [ ] Verify accessibility (focus, labels, keyboard, modal behavior)
-- [ ] Run unit tests for behavior (see unit-testing skill)
+- [ ] Open the matching linkedin.com page in Chrome DevTools
+- [ ] Inspect target element → copy computed CSS (color, size, padding, border, radius)
+- [ ] Read docs/UI_DESIGN.md + docs/APP_MAP.md
+- [ ] Reuse components/linkedin/* primitives; add styles to app/globals.css
+- [ ] Mirror DOM structure (avatar + content + action button for person rows)
+- [ ] Visual check against live site before finishing
+- [ ] Run unit tests (see unit-testing skill)
 ```
 
-## Required reading (in order)
+## Source of truth: live LinkedIn
+
+| Feature area | Copy from |
+|--------------|-----------|
+| Nav, feed shell, cards | [linkedin.com/feed](https://www.linkedin.com/feed/) |
+| Person rows, Message/Nudge button, filters | [linkedin.com/mynetwork/invite-connect/connections/](https://www.linkedin.com/mynetwork/invite-connect/connections/) |
+| Messaging thread + compose | [linkedin.com/messaging](https://www.linkedin.com/messaging/) |
+| Hackathon-only flows | [Figma board](https://www.figma.com/design/7317KbaaqvI7tnXJeSUGRd/LinkedIn-Hackathon?node-id=0-1) |
+
+**Do:**
+- Copy computed CSS values into `--li-*` tokens in `app/globals.css`
+- Match flex layout, typography hierarchy, and pill button styles from DevTools
+- Use semantic React components with `.li-*` classes from `globals.css`
+
+**Do not:**
+- Invent colors (especially green for links)
+- Add styles to `components/linkedin/*.css` — that folder is components only
+- Maintain a second stylesheet parallel to `globals.css`
+- Hotlink LinkedIn CDN assets in production builds
+
+## Required reading
 
 | Doc | Why |
 |-----|-----|
-| [PLEASEREADTHIS.md](../../../PLEASEREADTHIS.md) | Routes, overlays, component inventory |
-| [docs/UI_DESIGN.md](../../../docs/UI_DESIGN.md) | Tokens, typography, layout, reuse vs custom |
-| [app/globals.css](../../../app/globals.css) | Source of truth for CSS variables and `.li-*` classes |
-
-Visual references: [linkedin.com/feed](https://www.linkedin.com/feed/) (shell patterns) · [Figma board](https://www.figma.com/design/7317KbaaqvI7tnXJeSUGRd/LinkedIn-Hackathon?node-id=0-1) (hackathon features)
-
-## Design rules
-
-### Mirror LinkedIn for the shell
-
-Global nav, page background, cards, typography, filters, messaging, avatars, and connection badges should feel like LinkedIn. Recreate patterns in our React + CSS — do not copy LinkedIn HTML, assets, or proprietary source.
-
-### Custom UI is scoped to four features only
-
-1. **Gather** nav icon + calendar overlay  
-2. **Enhanced attendee section** on event detail  
-3. **Attendee modal** with filters and **Nudge**  
-4. **AI connection assistant** panel in messaging  
-
-Everything else uses existing LinkedIn-like primitives.
+| [docs/APP_MAP.md](../../../docs/APP_MAP.md) | Routes, overlays, component map |
+| [docs/UI_DESIGN.md](../../../docs/UI_DESIGN.md) | Tokens, page references, patterns |
+| [app/globals.css](../../../app/globals.css) | **Only** stylesheet for `.li-*` classes |
 
 ## Styling conventions
 
-### Tokens — always use CSS variables
+### Single stylesheet
 
-Never hardcode hex colors in components. Use `var(--li-*)` from `globals.css`:
+`app/layout.tsx` imports **`./globals.css` only**. Every `.li-*` rule belongs there.
 
-| Token | Typical use |
-|-------|-------------|
-| `--li-bg` | Page background |
-| `--li-surface` | Cards, modals, panels |
-| `--li-blue-interactive` | Primary buttons, links, focus |
-| `--li-green` / `--li-green-alt` | Success, "Nudged ✓" |
-| `--li-gray-dark` | Headlines, body |
-| `--li-gray-medium` | Metadata, placeholders |
-| `--li-gray-light` | Borders, dividers |
-| `--li-cyan` | Calendar accents, info states |
+### Tokens (from linkedin.com computed styles)
 
-Layout tokens: `--li-max-width`, `--li-nav-height`, `--li-radius`, `--li-radius-pill`.
+| Token | Value | Use |
+|-------|-------|-----|
+| `--li-blue-interactive` | `#0a66c2` | Links, outlined buttons, focus |
+| `--li-blue-hover` | `#004182` | Hover states |
+| `--li-blue-tint` | `rgba(10,102,194,0.08)` | Active filter / button hover fill |
+| `--li-text-primary` | `rgba(0,0,0,0.9)` | Names, titles |
+| `--li-placeholder` | `rgba(0,0,0,0.6)` | Headlines, metadata |
+| `--li-border-hairline` | `rgba(0,0,0,0.08)` | Row dividers |
+| `--li-bg` | `#f3f2ef` | Page background |
+| `--li-green-alt` | `#057642` | Success / "Nudged ✓" only |
 
-### Class naming — `.li-*` BEM in globals.css
+**Links are always `--li-blue-interactive`. Never green.**
 
-Components apply semantic classes; styles live in `app/globals.css`:
-
-```tsx
-// Good — thin component, styles in globals.css
-<button className={`li-btn li-btn--primary li-btn--md ${className}`} {...props} />
-
-// Bad — inline styles or ad-hoc Tailwind for LinkedIn primitives
-<button style={{ background: "#0A66C2" }} />
-```
-
-Add new `.li-*` rules to `globals.css` when extending the design system. Keep component files as markup + props only.
-
-### Typography
-
-System stack only (no custom webfonts):
+### Typography (system stack)
 
 ```css
 font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -92,106 +81,73 @@ font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Hel
 
 | Role | Size | Weight | Color |
 |------|------|--------|-------|
-| Page title | 20–24px | 600 | `--li-black` / `--li-text-primary` |
-| Card title | 16–18px | 600 | `--li-gray-dark` |
-| Body | 14–16px | 400 | `--li-gray-dark` |
-| Metadata | 12–14px | 400 | `--li-gray-medium` |
+| Person name | 16px | 600 | `--li-text-primary` |
+| Headline | 14px | 400 | `--li-placeholder` |
+| Meta / past events | 12px | 400 | `--li-placeholder` |
 | Links | inherit | 600 | `--li-blue-interactive` |
 
-## Component organization
+## Key patterns (copied from live site)
+
+### Person row (`.li-person-row`)
+
+Used in attendee modal — matches Connections page:
 
 ```
-components/
-├── linkedin/     # Reusable primitives ONLY (Avatar, Button, Card, Modal, …)
-└── *.tsx         # Feature components — one file per major UI block
+[Avatar 48px] [Name → Headline → meta lines] [Outlined pill button]
 ```
 
-| Need | Action |
-|------|--------|
-| Button, card, avatar, modal, chips | Import from `components/linkedin/` |
-| Event feed, attendee modal, calendar | Create at `components/` root |
-| New primitive used in 2+ places | Add to `components/linkedin/` + styles in `globals.css` |
-| One-off styling | Extend nearest existing primitive; avoid new folders |
+Classes: `li-person-row`, `li-person-row__content`, `li-person-row__name`, `li-person-row__headline`, `li-person-row__meta-list`, `li-person-row__action`
 
-Existing primitives: `Avatar`, `AvatarStack`, `Button`, `Card`, `ConnectionBadge`, `FilterChips`, `Modal`, `SearchInput`, `TextInput`, `TextArea`.
-
-## Pages vs overlays
-
-| Type | Mechanism | Examples |
-|------|-----------|----------|
-| **Page** | Next.js route (URL changes) | `/`, `/events/[eventId]`, `/messages/[connectionId]` |
-| **Overlay** | React state on current page | `CalendarOverlay`, `AttendeeModal` |
-
-Overlays must use `linkedin/Modal.tsx` (backdrop click + Escape to close, focus trap, `aria-modal`).
-
-## Interaction patterns
+**No connection degree badges** in the attendee list.
 
 ### Buttons (`Button.tsx`)
 
-| Variant | Use |
-|---------|-----|
-| `primary` | RSVP, Send, main CTA |
-| `secondary` | Cancel, alternate actions |
-| `ghost` | Low-emphasis actions |
-| `success` | "Nudged ✓" confirmed state |
+| Variant | Live LinkedIn equivalent |
+|---------|--------------------------|
+| `secondary` + `sm` | Connections **Message** / attendee **Nudge** (outlined blue pill, no icon) |
+| `primary` | Filled blue CTA (RSVP, Send) |
+| `success` | **Nudged ✓** confirmed state |
+| `filter` | Filter dropdown pills |
 
-### Nudge flow
+### Past events in attendee rows
 
-Attendee row → **Nudge** (primary) → navigates to `/messages/[connectionId]` → button becomes **Nudged ✓** (`success` variant, `--li-green`).
+Each shared event on its own line:
 
-### Calendar overlay (Gather)
+```
+Also attended · Event Name
+```
 
-- Trigger: Gather icon in `LinkedInNav`
-- ~80% viewport; month / week / day views
-- Color-coded event blocks by type
-- Click event → navigate to `/events/[eventId]`
-- Close: backdrop, Escape, or explicit close control
+Use `li-person-row__meta` + `TextLink` (blue). Headline always shown separately in `li-person-row__headline`.
 
-### AI connection panel
+### Attendee modal filters
 
-- Collapsible panel above compose on messaging page
-- Sparkle icon; sections: shared themes, mutual events, tappable talking points
-- Must not block compose on smaller viewports
+Location, Company, Industry — filter pills + active tags + **Clear filters** (not "All filters").
 
-## Layout defaults
+## Custom UI (hackathon only)
 
-| Element | Value |
-|---------|-------|
-| Max content width | `1128px` centered (`--li-max-width`) |
-| Nav height | `52px` |
-| Card padding | `sm` 12px · `md` 16–24px · `lg` 24px |
-| Card radius | `8px` |
-| Card surface | White on `--li-bg`; subtle border or shadow |
-| Section gap | 8–16px between stacked cards |
-| Page padding | 24px horizontal on desktop |
+1. Gather nav + calendar overlay  
+2. Enhanced attendee section on event detail  
+3. Attendee modal (filters + Nudge)  
+4. AI connection assistant in messaging  
 
-## Accessibility checklist
-
-- [ ] Interactive elements have visible `:focus-visible` (use `--li-blue-interactive`)
-- [ ] Buttons and links have accessible names (text or `aria-label`)
-- [ ] Modals: `role="dialog"`, `aria-modal`, labelled title, Escape + backdrop close
-- [ ] Images / avatars: meaningful `alt` or `aria-hidden` for decorative
-- [ ] Color is not the only indicator of state (pair with text, e.g. "Nudged ✓")
-- [ ] Keyboard: all actions reachable without mouse
+Everything else uses LinkedIn-copied primitives.
 
 ## Anti-patterns
 
-- Hardcoded colors or magic numbers instead of `--li-*` tokens
-- New button/card/modal implementations when `components/linkedin/` has one
-- Feature subfolders under `components/` unless a file becomes unwieldy
-- Inline styles for reusable LinkedIn patterns
-- Custom UI outside the four hackathon features
-- Routes for content that should be overlays (calendar, attendee list)
+- Green text links (`TextLink` must stay blue)
+- Chat/message icon inside Nudge button
+- Connection degree (1st/2nd/3rd) in attendee modal
+- Duplicate CSS in `linkedin.css` or component-scoped link colors
+- Hardcoded hex in TSX instead of `--li-*` tokens
 
 ## Feature completion gate
 
-Before marking UI work done:
-
-1. Visual check against LinkedIn feed + Figma for the affected area
-2. Primitives reused where possible; new styles added to `globals.css`
-3. Accessibility checklist passed
-4. Unit tests for behavior (not pixel layout) — see [unit-testing](../unit-testing/SKILL.md)
+1. DevTools comparison against the reference linkedin.com page
+2. Styles only in `app/globals.css`
+3. Primitives reused; no one-off button/link implementations
+4. Accessibility checklist (focus, labels, modal behavior)
+5. Unit tests pass — see [unit-testing](../unit-testing/SKILL.md)
 
 ## Additional resources
 
-- Implementation examples: [examples.md](examples.md)
+- [examples.md](examples.md)
