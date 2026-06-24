@@ -7,24 +7,6 @@ import "./CalendarOverlay.css";
 
 type ViewMode = "month" | "week" | "day";
 
-/* ── Mock RSVP data ── */
-const RSVP_IDS = new Set([
-  "event_0006", // Jun 25 – Technology Data Scientist Networking Night
-  "event_0043", // Jun 25 – Technology Software Engineer Networking Night
-  "event_0072", // Jun 27 – Meet Customer Service Managers in Retail
-  "event_0003", // Jun 29 – Breaking Into Sales Representative Roles
-  "event_0053", // Jun 22 – Meet Sales Representatives in Finance
-  "event_0027", // Jun 17 – Meet Customer Service Managers in Retail
-  "event_0013", // Jun 9  – Breaking Into HR Coordinator Roles
-  "event_0014", // Jul 15 – Healthcare Marketing Specialist Networking Night
-  "event_0035", // Jul 15 – Technology HR Coordinator Networking Night
-  "event_0042", // Jul 16 – AI Dynamics Career Insights Panel
-  "event_0062", // Jul 20 – Finance Product Manager Networking Night
-  "event_0007", // Aug 2  – Healthcare Professionals Mixer
-  "event_0094", // Jun 25 – Finance Marketing Specialist Networking Night
-  "event_0068", // Jun 22 – Meet HR Coordinators in Technology
-]);
-
 /* ── Industry colours ── */
 const INDUSTRY_COLOR: Record<string, string> = {
   Technology: "#0a66c2",
@@ -112,8 +94,18 @@ function hourLabel(h: number): string {
 
 /* ── Component ── */
 
-export default function CalendarOverlay({ events }: { events: Event[] }) {
-  const rsvpd = events.filter((e) => RSVP_IDS.has(e.id));
+type CalendarOverlayProps = {
+  events: Event[];
+  /** Event ids the main user has RSVP'd to (from their attending_event_ids). */
+  rsvpEventIds: string[];
+};
+
+export default function CalendarOverlay({
+  events,
+  rsvpEventIds,
+}: CalendarOverlayProps) {
+  const rsvpSet = new Set(rsvpEventIds);
+  const rsvpd = events.filter((e) => rsvpSet.has(e.id));
 
   const todayRef = useRef(new Date());
   const today = todayRef.current;

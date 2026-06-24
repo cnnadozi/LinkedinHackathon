@@ -3,11 +3,15 @@
 /**
  * Floating message window opened from a Nudge button — mirrors LinkedIn's
  * docked chat widget. Messages live in local state only; nothing is persisted.
- * Suggested-message blocks are AI-generated (Gemini) on open, scoped to the
- * event both people attended, with a heuristic fallback server-side.
+ * An AI connection panel above the composer analyzes shared activity and offers
+ * tappable talking points (Gemini, with a heuristic fallback server-side).
  */
 import { useEffect, useRef, useState } from "react";
 import { Avatar, ConnectionBadge } from "@/components/linkedin";
+import {
+  AiConnectionPanel,
+  type NudgePanelData,
+} from "@/components/AiConnectionPanel";
 import type { AttendeeRow } from "@/lib/eventTypes";
 
 type NudgeChatProps = {
@@ -30,8 +34,8 @@ export function NudgeChat({
 }: NudgeChatProps) {
   const [draft, setDraft] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [loadingSuggestions, setLoadingSuggestions] = useState(true);
+  const [panel, setPanel] = useState<NudgePanelData | null>(null);
+  const [loadingPanel, setLoadingPanel] = useState(true);
   const nextId = useRef(1);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -40,11 +44,11 @@ export function NudgeChat({
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
   }, [messages]);
 
-  // Fetch AI suggestions when the window opens for this attendee + event.
+  // Fetch the AI connection panel when the window opens for this attendee + event.
   useEffect(() => {
     let cancelled = false;
-    setLoadingSuggestions(true);
-    setSuggestions([]);
+    setLoadingPanel(true);
+    setPanel(null);
 
     fetch(`/api/events/${eventId}/suggestions`, {
       method: "POST",
@@ -52,14 +56,14 @@ export function NudgeChat({
       body: JSON.stringify({ targetUserId: attendee.id, eventName }),
     })
       .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
-      .then((data: { suggestions?: string[] }) => {
-        if (!cancelled) setSuggestions(data.suggestions ?? []);
+      .then((data: NudgePanelData) => {
+        if (!cancelled) setPanel(data);
       })
       .catch(() => {
-        if (!cancelled) setSuggestions([]);
+        if (!cancelled) setPanel(null);
       })
       .finally(() => {
-        if (!cancelled) setLoadingSuggestions(false);
+        if (!cancelled) setLoadingPanel(false);
       });
 
     return () => {
@@ -127,24 +131,7 @@ export function NudgeChat({
         )}
       </div>
 
-      <div className="nudge-chat__suggestions">
-        {loadingSuggestions ? (
-          <p className="nudge-chat__suggestions-loading">
-            Drafting suggestions…
-          </p>
-        ) : (
-          suggestions.map((suggestion) => (
-            <button
-              key={suggestion}
-              type="button"
-              className="nudge-chat__suggestion"
-              onClick={() => setDraft(suggestion)}
-            >
-              {suggestion}
-            </button>
-          ))
-        )}
-      </div>
+      <AiConnectionPanel data={panel} loading={loadingPanel} />
 
       <div className="nudge-chat__composer">
         <textarea

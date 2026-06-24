@@ -68,7 +68,10 @@ export default function EventsPageLayout({
               ✕
             </button>
           </div>
-          <CalendarOverlay events={events} />
+          <CalendarOverlay
+            events={events}
+            rsvpEventIds={mainUserAttendingEventIds}
+          />
           <div className="events-split__cal-footer">
             <button
               type="button"

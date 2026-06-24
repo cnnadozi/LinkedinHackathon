@@ -1073,9 +1073,21 @@
         "courses": [],
         "profile_picture_url": "https://i.pravatar.cc/150?u=user_5736",
         "attending_event_ids": [
-            "event_0002",
-            "event_0034",
-            "event_0050"
+            "event_0003",
+            "event_0006",
+            "event_0013",
+            "event_0020",
+            "event_0026",
+            "event_0027",
+            "event_0043",
+            "event_0050",
+            "event_0053",
+            "event_0055",
+            "event_0057",
+            "event_0058",
+            "event_0060",
+            "event_0068",
+            "event_0071"
         ],
         "connections": [
             "user_1267",

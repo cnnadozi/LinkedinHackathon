@@ -23,6 +23,11 @@ function GatherCalendarIcon() {
 
 export default function GatherPage() {
   const events = eventsData as Event[];
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { getMainUserAttendingEventIds } = require("@/server/lib/data") as {
+    getMainUserAttendingEventIds: () => string[];
+  };
+  const rsvpEventIds = getMainUserAttendingEventIds();
 
   return (
     <div className="gather-page">
@@ -63,7 +68,7 @@ export default function GatherPage() {
       </div>
 
       {/* Calendar */}
-      <CalendarOverlay events={events} />
+      <CalendarOverlay events={events} rsvpEventIds={rsvpEventIds} />
     </div>
   );
 }
