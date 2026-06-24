@@ -1,11 +1,6 @@
+EXTRA
 - meeting imgs
-- connections 
-- show profile for main user
-- move also attedning people to the top of the attendes list
-
-
-- messages 
-- nudges
-- calendar
-- pull from main
-
+- UI clean up
+- organize code
+git fetch origin && git merge origin/main
+git pull origin main --no-rebase 
