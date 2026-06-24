@@ -6,11 +6,17 @@
  */
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Avatar } from "./linkedin/Avatar";
-import { Button } from "./linkedin/Button";
-import { ConnectionBadge } from "./linkedin/ConnectionBadge";
-import { FilterChips, type FilterChip } from "./linkedin/FilterChips";
-import { Modal } from "./linkedin/Modal";
+import {
+  Avatar,
+  Button,
+  ConnectionBadge,
+  FilterBar,
+  FilterChips,
+  MessageIcon,
+  TextLink,
+  type FilterChip,
+} from "@/components/linkedin";
+import { Modal } from "@/components/linkedin/Modal";
 import { recordEventNudge } from "@/lib/eventActions";
 import type { AttendeeRow } from "@/lib/eventTypes";
 
@@ -28,14 +34,6 @@ const DEGREE_CHIPS: FilterChip[] = [
   { id: "2", label: "2nd" },
   { id: "3", label: "3rd+" },
 ];
-
-function MessageIcon() {
-  return (
-    <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden>
-      <path d="M14 2H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2v3l3-3h7a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Zm-1 8H3.41L4 9.59V11h1v-1.59L5.59 9H13V3H3v7h10Z" />
-    </svg>
-  );
-}
 
 export function AttendeeModal({
   open,
@@ -91,25 +89,22 @@ export function AttendeeModal({
   return (
     <Modal open={open} onClose={onClose} title="Attendance List" wide>
       <div className="attendee-modal">
-        <div className="attendee-modal__filters">
-          <span className="attendee-modal__tab">People</span>
-          <button
-            type="button"
-            className={`attendee-modal__connections-toggle${
-              connectionsOnly ? " attendee-modal__connections-toggle--active" : ""
-            }`}
+        <FilterBar className="attendee-modal__filters">
+          <Button variant="pill-active">People</Button>
+          <Button
+            variant={connectionsOnly ? "pill-active" : "filter"}
             aria-pressed={connectionsOnly}
             onClick={() => setConnectionsOnly((value) => !value)}
           >
             Your connections
-          </button>
+          </Button>
           <FilterChips
             chips={DEGREE_CHIPS}
             activeIds={activeDegrees}
             onToggle={toggleDegree}
             onClear={() => setActiveDegrees([])}
           />
-        </div>
+        </FilterBar>
 
         <ul className="attendee-modal__list">
           {filteredAttendees.slice(0, 50).map((attendee) => {
@@ -129,9 +124,7 @@ export function AttendeeModal({
                       {attendee.mutualEvents.map((eventName, index) => (
                         <span key={eventName}>
                           {index > 0 && ", "}
-                          <span className="attendee-modal__mutual-link">
-                            {eventName}
-                          </span>
+                          <TextLink href="#">{eventName}</TextLink>
                         </span>
                       ))}
                     </p>
@@ -142,13 +135,13 @@ export function AttendeeModal({
                   size="sm"
                   disabled={nudged}
                   onClick={() => handleNudge(attendee.id)}
+                  icon={<MessageIcon className="li-btn-icon" />}
                   aria-label={
                     nudged
                       ? `Already nudged ${attendee.name}`
                       : `Nudge ${attendee.name}`
                   }
                 >
-                  <MessageIcon />
                   {nudged ? "Nudged ✓" : "Nudge"}
                 </Button>
               </li>

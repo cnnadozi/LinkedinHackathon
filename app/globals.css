@@ -83,6 +83,15 @@ body {
   object-fit: cover;
 }
 
+.li-avatar__initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--li-surface);
+}
+
 /* ── Avatar stack ── */
 
 .li-avatar-stack {
@@ -908,12 +917,6 @@ p {
 .event-detail__live-badge {
   align-self: flex-start;
   margin-bottom: auto;
-  padding: 4px 10px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.92);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--li-gray-dark);
 }
 
 .event-detail__banner-title {
@@ -942,20 +945,6 @@ p {
   margin-bottom: 8px;
 }
 
-.event-detail__byline-link {
-  border: none;
-  background: none;
-  padding: 0;
-  font: inherit;
-  font-weight: 600;
-  color: var(--li-blue-interactive);
-  cursor: pointer;
-}
-
-.event-detail__byline-link:hover {
-  text-decoration: underline;
-}
-
 .event-detail__schedule,
 .event-detail__location {
   font-size: 14px;
@@ -969,53 +958,11 @@ p {
   color: var(--li-gray-dark);
 }
 
-.event-detail__attendance-link {
-  border: none;
-  background: none;
-  padding: 0;
-  font: inherit;
-  font-weight: 600;
-  color: var(--li-gray-dark);
-  cursor: pointer;
-}
-
-.event-detail__attendance-link:hover {
-  color: var(--li-blue-interactive);
-  text-decoration: underline;
-}
-
-.event-detail__connections-link {
-  border: none;
-  background: none;
-  padding: 0;
-  font: inherit;
-  font-weight: 600;
-  color: #915907;
-  cursor: pointer;
-}
-
-.event-detail__connections-link:hover {
-  text-decoration: underline;
-}
-
 .event-detail__connections-strip {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 12px;
-}
-
-.event-detail__connection-avatar {
-  border: none;
-  background: none;
-  padding: 0;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-.event-detail__connection-avatar:focus-visible {
-  outline: 2px solid var(--li-blue-interactive);
-  outline-offset: 2px;
 }
 
 .event-detail__actions {
@@ -1028,56 +975,8 @@ p {
   border-top: 1px solid var(--li-border-hairline);
 }
 
-.event-detail__more {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--li-gray-light);
-  border-radius: 50%;
-  background: var(--li-surface);
-  color: var(--li-gray-medium);
-  font-size: 14px;
-  letter-spacing: 1px;
-  cursor: pointer;
-}
-
-.event-detail__more:hover {
-  background: rgba(0, 0, 0, 0.04);
-}
-
 .event-detail__tabs {
-  display: flex;
-  gap: 24px;
   margin-top: 20px;
-  border-bottom: 1px solid var(--li-border-hairline);
-}
-
-.event-detail__tab {
-  position: relative;
-  padding: 12px 4px;
-  border: none;
-  background: none;
-  font: inherit;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--li-gray-medium);
-  cursor: pointer;
-}
-
-.event-detail__tab--active {
-  color: var(--li-green-alt);
-}
-
-.event-detail__tab--active::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 2px;
-  background: var(--li-green-alt);
 }
 
 .event-detail__post {
@@ -1297,42 +1196,9 @@ p {
 /* ── Attendee modal ── */
 
 .attendee-modal__filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
   margin-bottom: 16px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--li-border-hairline);
-}
-
-.attendee-modal__tab {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 16px;
-  border-radius: var(--li-radius-pill);
-  border: 1.5px solid var(--li-green-alt);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--li-green-alt);
-}
-
-.attendee-modal__connections-toggle {
-  padding: 6px 16px;
-  border-radius: var(--li-radius-pill);
-  border: 1px solid var(--li-border-hairline);
-  background: var(--li-surface);
-  font-size: 14px;
-  font-weight: 600;
-  font-family: inherit;
-  color: var(--li-gray-medium);
-  cursor: pointer;
-}
-
-.attendee-modal__connections-toggle--active {
-  background: rgba(10, 102, 194, 0.08);
-  border-color: var(--li-blue-interactive);
-  color: var(--li-blue-interactive);
 }
 
 .attendee-modal__list {
@@ -1379,9 +1245,4 @@ p {
   font-size: 12px;
   color: var(--li-gray-medium);
   margin-top: 4px;
-}
-
-.attendee-modal__mutual-link {
-  color: var(--li-blue-interactive);
-  font-weight: 600;
 }
