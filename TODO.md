@@ -1,2 +1,4 @@
-cnnadozi:
+- finish UI and frontend
 - Make necessary skills, hooks, and subagents
+- make a testing system
+- create a UI/UX agent

@@ -153,4 +153,4 @@ components/
 | `server/index.js` | Express API — loads `data/*.json` |
 | `types/*.ts` | TypeScript models (`Event`, `User`, etc.) |
 
-See [docs/DB_DESC.md](./docs/DB_DESC.md) for API endpoints and data linking.
+See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) for API endpoints and data linking.
