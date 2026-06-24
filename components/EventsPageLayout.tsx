@@ -26,8 +26,13 @@ export default function EventsPageLayout({
 }: Props) {
   const [calOpen, setCalOpen] = useState(true);
 
+  const splitClass = [
+    "events-split",
+    calOpen ? "events-split--with-cal" : "",
+  ].filter(Boolean).join(" ");
+
   return (
-    <div className={`events-split${calOpen ? " events-split--with-cal" : ""}`}>
+    <div className={splitClass}>
       {/* ── Events column ── */}
       <div className="events-split__feed">
         <EventsFeedSection
@@ -67,6 +72,15 @@ export default function EventsPageLayout({
             events={events}
             rsvpEventIds={mainUserAttendingEventIds}
           />
+          <div className="events-split__cal-footer">
+            <button
+              type="button"
+              className="events-split__cal-footer-btn events-split__cal-footer-btn--hide"
+              onClick={() => setCalOpen(false)}
+            >
+              ✕ Hide calendar
+            </button>
+          </div>
         </aside>
       )}
 

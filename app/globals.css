@@ -2288,6 +2288,47 @@ p {
   background: rgba(10, 102, 194, 0.12);
 }
 
+/* Calendar footer tab bar */
+.events-split__cal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-top: 1px solid var(--li-border-hairline);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.events-split__cal-footer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border: 1px solid var(--li-gray-light);
+  border-radius: var(--li-radius-pill);
+  background: var(--li-surface);
+  color: var(--li-gray-dark);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+
+.events-split__cal-footer-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: var(--li-gray-medium);
+}
+
+.events-split__cal-footer-btn--hide {
+  color: var(--li-gray-medium);
+}
+
+.events-split__cal-footer-btn--hide:hover {
+  color: #c00;
+  border-color: #c00;
+}
+
 @media (max-width: 860px) {
   .events-split--with-cal {
     grid-template-columns: 1fr;

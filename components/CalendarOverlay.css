@@ -1,9 +1,12 @@
 /* ── Calendar wrapper ── */
 .cal-wrap {
   background: var(--li-surface);
-  border: 1px solid var(--li-border-hairline);
-  border-radius: var(--li-radius);
   overflow: hidden;
+}
+
+.events-split__cal .cal-wrap {
+  border: none;
+  border-radius: 0;
 }
 
 /* ── Header ── */
@@ -68,6 +71,8 @@
   white-space: nowrap;
   flex: 1;
   min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cal-view-toggle {
