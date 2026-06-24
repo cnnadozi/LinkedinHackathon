@@ -17,13 +17,25 @@
 | **Location** | Seattle, WA |
 | **Override** | Set env `MAIN_USER_ID` to swap the demo user without code changes |
 
-**Events Alice is attending** (`attending_event_ids` in `data/user_data.json`):
+**Events Alice is attending** (`attending_event_ids` in `data/user_data.json` — 15 events, all June 2026):
 
-| Event ID | Event name |
-|----------|------------|
-| `event_0002` | Breaking Into HR Coordinator Roles |
-| `event_0034` | Technology Customer Service Manager Networking Night |
-| `event_0050` | Meet DevOps Engineers in Finance |
+| Event ID | Event name | Date |
+|----------|------------|------|
+| `event_0003` | Breaking Into Sales Representative Roles | 2026-06-29 |
+| `event_0006` | Technology Data Scientist Networking Night | 2026-06-25 |
+| `event_0013` | Breaking Into HR Coordinator Roles | 2026-06-09 |
+| `event_0020` | Global Solutions LLC Career Insights Panel | 2026-06-01 |
+| `event_0026` | Breaking Into Financial Analyst Roles | 2026-06-09 |
+| `event_0027` | Meet Customer Service Managers in Retail | 2026-06-17 |
+| `event_0043` | Technology Software Engineer Networking Night | 2026-06-25 |
+| `event_0050` | Meet DevOps Engineers in Finance | 2026-06-17 |
+| `event_0053` | Meet Sales Representatives in Finance | 2026-06-22 |
+| `event_0055` | Meet Financial Analysts in Retail | 2026-06-07 |
+| `event_0057` | Technology Data Scientist Networking Night | 2026-06-10 |
+| `event_0058` | Meet Financial Analysts in Education | 2026-06-07 |
+| `event_0060` | Technology Professionals Mixer | 2026-06-03 |
+| `event_0068` | Meet HR Coordinators in Technology | 2026-06-22 |
+| `event_0071` | Finance Professionals Mixer | 2026-06-13 |
 
 **Where this matters in the UI:**
 

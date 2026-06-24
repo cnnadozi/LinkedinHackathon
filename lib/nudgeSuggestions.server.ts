@@ -73,29 +73,33 @@ export function buildNudgeContext(
 }
 
 /**
- * Deterministic 3-angle suggestions — the fallback and test baseline.
- * Mirrors the prompt's angle order: warm reconnect, ask for advice, next step.
+ * Deterministic talking-point ideas — the fallback and test baseline.
+ * These are cues about what to mention/ask, NOT finished messages.
+ * Mirrors the prompt's angle order: shared event, something in common, about them.
  */
 export function nudgeSuggestionsHeuristic(ctx: NudgeContext): string[] {
   const name = firstName(ctx.recipient.name);
   const event = ctx.event.name;
   const skill = ctx.shared.skills[0];
   const school = ctx.shared.schools[0];
+  const company = ctx.recipient.company;
 
-  // 1. Warm reconnect — references the shared event.
-  const warm = school
-    ? `Hi ${name} — great running into a fellow ${school} grad at ${event}! Would love to stay connected.`
-    : `Hi ${name} — really enjoyed ${event}. Would love to stay in touch!`;
+  // 1. Shared event — suggest mentioning the event both attended.
+  const sharedEvent = `Mention the ${event} event you both attended.`;
 
-  // 2. Ask for advice — leans on a shared skill when available.
-  const advice = skill
-    ? `Hey ${name}, since we both work in ${skill}, I'd love to hear how you approach it. Got a few minutes to chat?`
-    : `Hey ${name}, I'd love to hear more about what you're working on — mind if I ask you a couple of questions?`;
+  // 2. Something in common — strongest shared signal (school → skill → fallback).
+  const inCommon = school
+    ? `Bring up that you both studied at ${school}.`
+    : skill
+      ? `Bring up your shared background in ${skill}.`
+      : `Find common ground from their background and the event you shared.`;
 
-  // 3. Concrete next step.
-  const nextStep = `Hi ${name} — it was great meeting at ${event}. Want to grab a quick coffee or hop on a call to keep the conversation going?`;
+  // 3. About them — ask about their work/role/company.
+  const aboutThem = company
+    ? `Ask ${name} about their work as ${ctx.recipient.headline.split(" at ")[0]} at ${company}.`
+    : `Ask ${name} about what they're working on right now.`;
 
-  return [warm, advice, nextStep];
+  return [sharedEvent, inCommon, aboutThem];
 }
 
 /** Validate a model response into exactly 3 non-empty strings. */
@@ -154,4 +158,59 @@ export async function generateNudgeSuggestions(
   }
 
   return nudgeSuggestionsHeuristic(ctx);
+}
+
+export type MutualEvent = { id: string; name: string };
+
+export type NudgePanel = {
+  recipient: { name: string; headline: string };
+  /** Common interests/industries/topics both people share. */
+  sharedThemes: string[];
+  /** Events both attended in the last 6 months (most recent first). */
+  mutualEvents: MutualEvent[];
+  /** AI conversation starters, each tappable to insert into the composer. */
+  talkingPoints: string[];
+};
+
+/**
+ * Assemble the full AI connection panel for a recipient + shared event:
+ * shared themes, mutual events (last 6 months), and AI talking points.
+ * Factual sections come from the connection engine; talking points come from
+ * Gemini (with the heuristic fallback).
+ */
+export async function getNudgePanel(
+  targetUserId: string,
+  eventName: string,
+): Promise<NudgePanel | null> {
+  const ctx = buildNudgeContext(targetUserId, eventName);
+  if (!ctx) return null;
+
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { getMainUser } = require("../server/lib/data");
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { getConnectionSuggestions } = require("../server/lib/suggestions");
+
+  const suggestions = getConnectionSuggestions(targetUserId, getMainUser()?.id);
+
+  // Shared themes — merge post themes with shared skills (both are "things in
+  // common"), de-duplicated, so the section is populated even when one is empty.
+  const sharedThemes = [
+    ...new Set([
+      ...(suggestions?.sharedThemes ?? []),
+      ...(suggestions?.sharedSkills ?? []),
+    ]),
+  ];
+
+  const mutualEvents: MutualEvent[] = (suggestions?.mutualEvents ?? []).map(
+    (event: { id: string; name: string }) => ({ id: event.id, name: event.name }),
+  );
+
+  const talkingPoints = await generateNudgeSuggestions(targetUserId, eventName);
+
+  return {
+    recipient: { name: ctx.recipient.name, headline: ctx.recipient.headline },
+    sharedThemes,
+    mutualEvents,
+    talkingPoints: talkingPoints ?? [],
+  };
 }
