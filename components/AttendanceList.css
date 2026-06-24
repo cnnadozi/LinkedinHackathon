@@ -1,163 +1,18 @@
 .attendance-list {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  overflow: hidden;
   max-width: 900px;
   margin: 0 auto;
-}
-
-.attendance-list-header {
-  padding: 1.25rem 1.5rem 0.75rem;
-  border-bottom: 1px solid #e8e8e8;
-}
-
-.attendance-list-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #191919;
-}
-
-.attendance-list-filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem 1rem;
-  border-bottom: 1px solid #e8e8e8;
-}
-
-.attendance-list-tab-active {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.35rem 0.85rem;
-  border-radius: 999px;
-  border: 1.5px solid #057642;
-  background: #fff;
-  color: #057642;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: default;
-}
-
-.attendance-list-filter-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 999px;
-  border: 1px solid #666;
-  background: #fff;
-  color: #666;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.attendance-list-filter-button:hover {
-  background: #f3f2ef;
-  border-color: #191919;
-  color: #191919;
-}
-
-.attendance-list-chevron {
-  font-size: 0.65rem;
-  margin-top: 1px;
-}
-
-.attendance-list-connection-group {
-  display: inline-flex;
-  border: 1px solid #666;
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.attendance-list-connection-button {
-  padding: 0.35rem 0.75rem;
-  border: none;
-  background: #fff;
-  color: #666;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.attendance-list-connection-button + .attendance-list-connection-button {
-  border-left: 1px solid #666;
-}
-
-.attendance-list-connection-active {
-  background: #057642;
-  color: #fff;
-}
-
-.attendance-list-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.35rem 0.65rem;
-  border-radius: 999px;
-  border: 1.5px solid #057642;
-  background: #fff;
-  color: #057642;
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
-.attendance-list-tag-remove {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1rem;
-  height: 1rem;
-  border: none;
-  background: transparent;
-  color: #057642;
-  font-size: 1rem;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0;
-}
-
-.attendance-list-all-filters {
-  margin-left: auto;
-  border: none;
-  background: transparent;
-  color: #666;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.attendance-list-all-filters:hover {
-  color: #0a66c2;
-  text-decoration: underline;
-}
-
-.attendance-list-items {
-  list-style: none;
 }
 
 .attendance-list-row {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #e8e8e8;
+  gap: var(--li-space-md);
+  padding: var(--li-space-lg) var(--li-space-xl);
+  border-bottom: 1px solid var(--li-border-light);
 }
 
 .attendance-list-row:last-child {
   border-bottom: none;
-}
-
-.attendance-list-avatar {
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  background: #e8e8e8;
 }
 
 .attendance-list-content {
@@ -174,56 +29,17 @@
 }
 
 .attendance-list-name {
-  font-size: 0.9375rem;
+  font-size: var(--li-font-lg);
   font-weight: 600;
-  color: #191919;
-}
-
-.attendance-list-connection {
-  font-size: 0.8125rem;
-  color: #666;
-  font-weight: 400;
+  color: var(--li-text);
 }
 
 .attendance-list-events {
-  font-size: 0.8125rem;
-  color: #057642;
+  font-size: var(--li-font-sm);
+  color: var(--li-green);
   line-height: 1.45;
 }
 
-.attendance-list-event-link {
-  color: #057642;
-  text-decoration: none;
-}
-
-.attendance-list-event-link:hover {
-  text-decoration: underline;
-  color: #004182;
-}
-
 .attendance-list-nudge {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.4rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid #0a66c2;
-  background: #fff;
-  color: #0a66c2;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
   align-self: center;
-}
-
-.attendance-list-nudge:hover {
-  background: #ebf3f8;
-  border-color: #004182;
-  color: #004182;
-}
-
-.attendance-list-nudge-icon {
-  width: 16px;
-  height: 16px;
 }

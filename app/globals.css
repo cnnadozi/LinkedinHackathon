@@ -5,10 +5,10 @@
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--li-font-family, system-ui, -apple-system, sans-serif);
   line-height: 1.5;
-  color: #1a1a1a;
-  background: #fafafa;
+  color: var(--li-text, #1a1a1a);
+  background: var(--li-page-bg, #fafafa);
 }
 
 main {

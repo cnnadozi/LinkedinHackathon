@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "@/components/linkedin/linkedin.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
