@@ -71,7 +71,7 @@ function mockMutualEvents(attendeeId, eventId) {
     .filter((candidate) => candidate.id !== eventId)
     .filter((_, index) => (hash + index) % 7 === 0)
     .slice(0, 3)
-    .map((candidate) => candidate.name);
+    .map((candidate) => ({ id: candidate.id, name: candidate.name }));
 }
 
 function buildAttendeeRow(attendeeId, event, currentUserId) {

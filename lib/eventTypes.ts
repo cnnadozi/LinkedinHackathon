@@ -19,7 +19,7 @@ export type AttendeeRow = {
   headline: string;
   degree: 1 | 2 | 3;
   isConnection: boolean;
-  mutualEvents: string[];
+  mutualEvents: { id: string; name: string }[];
   nudged: boolean;
 };
 

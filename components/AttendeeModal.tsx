@@ -128,9 +128,11 @@ export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) 
                 {attendee.mutualEvents.length > 0 && (
                   <p className="attendance-list-events">
                     {attendee.mutualEvents.map((event, index) => (
-                      <span key={event}>
+                      <span key={event.id}>
                         {index > 0 && ", "}
-                        <TextLink href="#">{event}</TextLink>
+                        <TextLink href={`/events/${event.id}`}>
+                          {event.name}
+                        </TextLink>
                       </span>
                     ))}
                   </p>

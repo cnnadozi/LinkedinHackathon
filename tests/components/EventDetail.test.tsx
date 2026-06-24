@@ -42,7 +42,7 @@ const mockData: EventDetailPayload = {
       headline: "Engineer at Example Co",
       degree: 1,
       isConnection: true,
-      mutualEvents: ["Tech Mixer"],
+      mutualEvents: [{ id: "event_0009", name: "Tech Mixer" }],
       nudged: false,
     },
   ],
