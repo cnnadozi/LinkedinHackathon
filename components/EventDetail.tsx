@@ -157,7 +157,11 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
         <EventDetailSidebar relatedEvents={relatedEvents} />
       </div>
 
-      <AttendeeModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <AttendeeModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        attendees={data.attendees}
+      />
     </div>
   );
 }
