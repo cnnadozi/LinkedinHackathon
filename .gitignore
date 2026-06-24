@@ -36,3 +36,6 @@ yarn-error.log*
 
 # Just ignore this lol
 TODO.md
+
+# Claude Code
+.claude
