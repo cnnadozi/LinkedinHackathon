@@ -1743,11 +1743,6 @@ p {
   min-width: 0;
 }
 
-/* Filter bar */
-.events-feed-filter-bar {
-  margin-bottom: 16px;
-}
-
 .events-feed-filter-dropdown {
   position: relative;
   display: inline-block;
@@ -1970,5 +1965,185 @@ p {
   .event-feed-card__thumb {
     width: 72px;
     height: 48px;
+  }
+}
+
+/* ── Gather page ── */
+
+.gather-page {
+  max-width: var(--li-max-width);
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.gather-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.gather-page__title-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gather-page__icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--li-blue-interactive);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gather-page__h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--li-black);
+  line-height: 1.2;
+  margin: 0 0 2px;
+}
+
+.gather-page__subtitle {
+  font-size: 13px;
+  color: var(--li-gray-medium);
+  margin: 0;
+}
+
+.gather-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.gather-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--li-gray-medium);
+}
+
+.gather-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Events split layout (feed + calendar panel) ── */
+
+.events-split {
+  display: block;
+}
+
+.events-split--with-cal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.events-split__feed {
+  min-width: 0;
+}
+
+.events-split__cal {
+  position: sticky;
+  top: calc(var(--li-nav-height) + 16px);
+  min-width: 0;
+}
+
+.events-split__cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.events-split__cal-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--li-gray-dark);
+}
+
+.events-split__cal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--li-gray-medium);
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.events-split__cal-close:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--li-gray-dark);
+}
+
+/* Calendar toggle button — sits in the filter bar */
+.events-feed-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.events-split__cal-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: var(--li-radius-pill);
+  border: 1.5px solid var(--li-border-hairline);
+  background: var(--li-surface);
+  color: var(--li-gray-medium);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: background 0.12s, color 0.12s, border-color 0.12s, box-shadow 0.12s;
+}
+
+.events-split__cal-toggle:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--li-gray-dark);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.events-split__cal-toggle--active {
+  border-color: var(--li-blue-interactive);
+  color: var(--li-blue-interactive);
+  background: var(--li-blue-tint);
+  box-shadow: 0 1px 4px rgba(10, 102, 194, 0.18);
+}
+
+.events-split__cal-toggle--active:hover {
+  background: rgba(10, 102, 194, 0.12);
+}
+
+@media (max-width: 860px) {
+  .events-split--with-cal {
+    grid-template-columns: 1fr;
+  }
+
+  .events-split__cal {
+    position: static;
   }
 }
