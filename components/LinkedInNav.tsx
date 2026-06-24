@@ -108,17 +108,17 @@ export function LinkedInNav() {
             );
           })}
 
-          <button
-            type="button"
+          <Link
+            href="/events"
             className={navLinkClass(gatherActive, "li-nav__link--gather")}
-            aria-label="Gather calendar"
+            aria-label="Gather — events hub"
             aria-current={gatherActive ? "page" : undefined}
           >
             <span className="li-nav__icon">
               <CalendarDays size={NAV_ICON_SIZE} aria-hidden />
             </span>
             <span className="li-nav__label">Gather</span>
-          </button>
+          </Link>
         </nav>
 
         <div className="li-nav__end">
