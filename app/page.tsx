@@ -1,52 +1,37 @@
-import AttendanceList from "@/components/AttendanceList";
+/** Home page — featured event detail view. */
+import Link from "next/link";
+import { EventDetail } from "@/components/EventDetail";
+import {
+  loadEventDetailFromDataset,
+  loadRelatedEvents,
+} from "@/lib/eventDetail.server";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
-
-type HealthResponse = {
-  status: string;
-  datasets: {
-    users: number;
-    jobs: number;
-    courses: number;
-  };
-};
-
-async function getHealth(): Promise<HealthResponse | null> {
-  try {
-    const res = await fetch(`${API_BASE}/api/health`, { cache: "no-store" });
-    if (!res.ok) return null;
-    return res.json();
-  } catch {
-    return null;
-  }
-}
+const FEATURED_EVENT_ID = "event_0001";
 
 export default async function Home() {
-  const health = await getHealth();
+  const data = loadEventDetailFromDataset(FEATURED_EVENT_ID);
+  const relatedEvents = loadRelatedEvents(FEATURED_EVENT_ID);
+
+  if (!data) {
+    return (
+      <main className="page page--event-detail">
+        <div className="event-detail__not-found">
+          <h1>Event not found</h1>
+          <p>
+            We couldn&apos;t find an event with id{" "}
+            <code>{FEATURED_EVENT_ID}</code>.
+          </p>
+          <Link href="/" className="event-detail__back">
+            ← Back to events
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   return (
-    <main>
-      <h1>LinkedIn Gather</h1>
-      <p>Events hub — attendance list preview.</p>
-
-      <AttendanceList />
-
-      <section className="status">
-        <strong>API status</strong>
-        {health ? (
-          <ul>
-            <li>Server: {health.status}</li>
-            <li>Users: {health.datasets.users}</li>
-            <li>Jobs: {health.datasets.jobs}</li>
-            <li>Courses: {health.datasets.courses}</li>
-          </ul>
-        ) : (
-          <p className="error">
-            Could not reach the API at {API_BASE}. Run{" "}
-            <code>npm run dev:server</code> in another terminal.
-          </p>
-        )}
-      </section>
+    <main className="page page--event-detail">
+      <EventDetail data={data} relatedEvents={relatedEvents} />
     </main>
   );
 }

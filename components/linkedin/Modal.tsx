@@ -1,3 +1,7 @@
+/**
+ * Accessible modal overlay — Escape to close, locks body scroll while open.
+ * Used by AttendeeModal and CalendarOverlay.
+ */
 "use client";
 
 import {
@@ -41,6 +45,7 @@ export function Modal({
     if (!open) return;
 
     document.addEventListener("keydown", handleKeyDown);
+    // Prevent background scroll while the overlay is visible.
     document.body.style.overflow = "hidden";
 
     return () => {
@@ -71,6 +76,7 @@ export function Modal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
+        // Clicks inside the dialog should not bubble to the backdrop.
         onClick={(event) => event.stopPropagation()}
       >
         <header className="li-modal__header">

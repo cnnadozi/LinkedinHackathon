@@ -1,25 +1,52 @@
-import type { ButtonHTMLAttributes } from "react";
+/** LinkedIn-style button — variants map to li-btn--* classes in globals.css. */
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 
-type ButtonVariant = "primary" | "secondary" | "ghost" | "success";
+type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "ghost"
+  | "success"
+  | "filter"
+  | "pill-active"
+  | "segment";
+
 type ButtonSize = "sm" | "md";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  active?: boolean;
+  icon?: ReactNode;
+  showChevron?: boolean;
+};
+
+const variantClass: Record<ButtonVariant, string> = {
+  primary: "li-btn--primary",
+  secondary: "li-btn--secondary",
+  ghost: "li-btn--ghost",
+  success: "li-btn--success",
+  filter: "li-btn-filter",
+  "pill-active": "li-btn-pill-active",
+  segment: "li-btn-segment",
 };
 
 export function Button({
   variant = "primary",
   size = "md",
+  active = false,
+  icon,
+  showChevron = false,
   className = "",
   type = "button",
   children,
   ...props
 }: ButtonProps) {
+  const isLegacyVariant = variant === "filter" || variant === "pill-active" || variant === "segment";
   const classes = [
     "li-btn",
-    `li-btn--${variant}`,
-    `li-btn--${size}`,
+    variantClass[variant],
+    !isLegacyVariant ? `li-btn--${size}` : "",
+    variant === "segment" && active ? "li-btn-segment-active" : "",
     className,
   ]
     .filter(Boolean)
@@ -27,7 +54,9 @@ export function Button({
 
   return (
     <button type={type} className={classes} {...props}>
+      {icon}
       {children}
+      {showChevron && <span className="li-btn-chevron">▾</span>}
     </button>
   );
 }

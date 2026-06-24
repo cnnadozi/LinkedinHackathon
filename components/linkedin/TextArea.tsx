@@ -1,3 +1,4 @@
+/** Labeled multiline field for message compose and event descriptions. */
 import type { TextareaHTMLAttributes } from "react";
 
 export type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {

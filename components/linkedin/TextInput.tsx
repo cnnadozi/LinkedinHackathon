@@ -1,3 +1,4 @@
+/** Labeled text field — auto-generates id from label when none is passed. */
 import type { InputHTMLAttributes } from "react";
 
 export type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
