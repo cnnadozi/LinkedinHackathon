@@ -129,6 +129,3 @@ export function ClearFiltersLink({ onClick }: { onClick?: () => void }) {
     </button>
   );
 }
-
-/** @deprecated Use ClearFiltersLink */
-export const AllFiltersLink = ClearFiltersLink;

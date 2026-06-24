@@ -13,8 +13,13 @@ function loadMainUserProfile(): MainUserProfile {
     getMainUser: () => {
       name: string;
       profile_picture_url: string;
+      job_history: string[];
+      current_location: string;
     } | null;
-    memberHeadline: (member: { job_history: string[]; current_location: string }) => string;
+    memberHeadline: (member: {
+      job_history: string[];
+      current_location: string;
+    }) => string;
   };
 
   const user = getMainUser();

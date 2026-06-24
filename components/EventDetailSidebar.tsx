@@ -1,10 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { RelativeEventTime } from "@/components/RelativeEventTime";
 import { Card } from "@/components/linkedin";
-import {
-  eventBannerClass,
-  formatSidebarEventStatus,
-} from "@/lib/formatEventDate";
+import { eventBannerClass } from "@/lib/formatEventDate";
 import type { Event } from "@/types/event";
 
 type EventDetailSidebarProps = {
@@ -24,7 +22,6 @@ export function EventDetailSidebar({ relatedEvents }: EventDetailSidebarProps) {
 
         <ul className="event-sidebar__list">
           {relatedEvents.map((event) => {
-            const status = formatSidebarEventStatus(event.time);
             const bannerClass = eventBannerClass(event.industry);
 
             return (
@@ -44,15 +41,12 @@ export function EventDetailSidebar({ relatedEvents }: EventDetailSidebarProps) {
                     />
                   </div>
                   <div className="event-sidebar__item-body">
-                    <p
-                      className={
-                        status.isLive
-                          ? "event-sidebar__item-time event-sidebar__item-time--live"
-                          : "event-sidebar__item-time"
-                      }
-                    >
-                      {status.label}
-                    </p>
+                    <RelativeEventTime
+                      iso={event.time}
+                      mode="sidebar"
+                      className="event-sidebar__item-time"
+                      liveClassName="event-sidebar__item-time--live"
+                    />
                     <p className="event-sidebar__item-title">{event.name}</p>
                     <p className="event-sidebar__item-host">{event.company}</p>
                   </div>

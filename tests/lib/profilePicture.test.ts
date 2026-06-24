@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  DEMO_USER_ID,
+  MAIN_USER_ID,
   DEMO_USER_PROFILE_PICTURE_URL,
   getProfilePictureUrl,
 } from "@/lib/profilePicture";
@@ -26,7 +26,7 @@ describe("getProfilePictureUrl", () => {
 
   it("exposes demo user profile picture constant", () => {
     expect(DEMO_USER_PROFILE_PICTURE_URL).toBe(
-      getProfilePictureUrl(DEMO_USER_ID),
+      getProfilePictureUrl(MAIN_USER_ID),
     );
   });
 });

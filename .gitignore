@@ -27,6 +27,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+firebase-debug.log
+*-debug.log*
 
 # env files
 .env*.local
@@ -36,9 +38,6 @@ yarn-error.log*
 
 # demo runtime state (RSVP / nudge — shared by Express and Next.js)
 /server/.demo-state.json
-
-# Just ignore this lol
-TODO.md
 
 # Claude Code
 .claude

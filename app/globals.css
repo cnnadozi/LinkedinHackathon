@@ -1067,69 +1067,6 @@ body {
   border-color: transparent;
 }
 
-/* ── Dev showcase layout ── */
-
-.dev-showcase {
-  max-width: var(--li-max-width);
-  margin: 0 auto;
-  padding: 24px;
-}
-
-.dev-showcase__title {
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--li-black);
-  margin-bottom: 8px;
-}
-
-.dev-showcase__subtitle {
-  font-size: 14px;
-  color: var(--li-gray-medium);
-  margin-bottom: 32px;
-}
-
-.dev-showcase__section {
-  margin-bottom: 32px;
-}
-
-.dev-showcase__section-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--li-gray-dark);
-  margin-bottom: 12px;
-}
-
-.dev-showcase__row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-}
-
-.dev-showcase__attendee-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--li-gray-light);
-}
-
-.dev-showcase__attendee-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.dev-showcase__attendee-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--li-gray-dark);
-}
-
-.dev-showcase__attendee-meta {
-  font-size: 12px;
-  color: var(--li-gray-medium);
-}
-
 /* ── Page layout ── */
 
 main {

@@ -6,11 +6,9 @@ Make sure to update these documents regularly with new information.
 
 | Doc | Purpose |
 |-----|---------|
-| [README.md](./README.md) | Project vision, hackathon context, and key features (1-click access, attendee insights, integrated calendar) for the LinkedIn Events Hub |
-| [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Tech stack, folder layout, data layer, schemas, Next.js API routes, and `server/lib/` |
-| [docs/TECHNICAL_DECISIONS.md](./docs/TECHNICAL_DECISIONS.md) | Implementation decisions and rationale (not duplicated from ARCHITECTURE) |
+| [README.md](./README.md) | Brief project overview and getting started |
+| [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Tech stack, folder layout, and main architecture for the project|
 | [docs/UI_DESIGN.md](./docs/UI_DESIGN.md) | Color tokens, typography, layout, and UI patterns. Read this before doing anything UI related |
-| [docs/APP_MAP.md](./docs/APP_MAP.md) | **Start here** — all pages, overlays, components, and **main user** (`user_5736`) |
 
 ## Agent skills
 

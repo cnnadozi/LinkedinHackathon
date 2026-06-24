@@ -1,5 +1,17 @@
 /** Format ISO event timestamps for the event detail page. */
 
+/** Stable label for SSR — avoids timezone/"now" hydration mismatches. */
+export function formatStaticEventTime(iso: string): string {
+  const date = new Date(iso);
+  return date.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
 export type FormattedEventDate = {
   dateLabel: string;
   timeLabel: string;
@@ -42,6 +54,32 @@ export function formatEventDate(iso: string, durationMinutes = 45): FormattedEve
 export function eventBannerClass(industry: string): string {
   const key = industry.toLowerCase().replace(/\s+/g, "-");
   return `event-detail__banner--${key}`;
+}
+
+/** Relative time label for event feed cards (client-resolved after mount). */
+export function formatRelativeFeedTime(iso: string): string {
+  const date = new Date(iso);
+  const now = new Date();
+  const sameDay = date.toDateString() === now.toDateString();
+  const tomorrow = new Date(now);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const isTomorrow = date.toDateString() === tomorrow.toDateString();
+
+  const time = date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  if (sameDay) return `Today, ${time} (your local time)`;
+  if (isTomorrow) return `Tomorrow, ${time} (your local time)`;
+
+  return (
+    date.toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    }) + `, ${time} (your local time)`
+  );
 }
 
 export function isEventLive(iso: string, durationMinutes = 45): boolean {

@@ -1,6 +1,6 @@
 # UI Design System
 
-Design direction for the LinkedIn Events Hub hackathon. **The live LinkedIn website is the source of truth** — copy computed styles from DevTools into `app/globals.css`.
+Design direction for LinkedIn Gather. **The live LinkedIn website is the source of truth** — copy computed styles from DevTools into `app/globals.css`.
 
 ---
 
@@ -15,7 +15,7 @@ Design direction for the LinkedIn Events Hub hackathon. **The live LinkedIn webs
 | [linkedin.com/messaging](https://www.linkedin.com/messaging/) | Thread layout, compose box |
 | [Figma board](https://www.figma.com/design/7317KbaaqvI7tnXJeSUGRd/LinkedIn-Hackathon?node-id=0-1) | Hackathon-only features (Gather, AI panel) |
 
-**Styles live in one file:** `app/globals.css`. Do not add `components/linkedin/*.css`.
+**Styles:** Most styles live in `app/globals.css`. Feature-specific layout also uses `CalendarOverlay.css` and `AttendanceList.css` where needed.
 
 ---
 
@@ -74,7 +74,7 @@ Class prefix: `.li-person-row`
 
 - Row padding: `12px 0`, hairline bottom border
 - Action button: `Button variant="secondary" size="sm"` — no icon
-- **No** 1st/2nd/3rd connection badges in attendee modal
+- `ConnectionBadge` shows 1st/2nd/3rd degree per attendee row
 
 ### Message / Nudge button
 
@@ -108,8 +108,7 @@ Lists with more than **10 items** use `Pagination` + `LIST_PAGE_SIZE` (10). Foot
 | Text link | `TextLink` | Event names, inline links |
 | Filter pills | `FilterBar`, `FilterDropdown` | Attendee modal |
 | List pagination | `Pagination`, `LIST_PAGE_SIZE` | Events feed, attendee modal |
-| Avatar stack | `AvatarStack` | Event detail |
-| Modal shell | `Modal` | Attendee modal, calendar |
+| Modal shell | `Modal` | Attendee modal |
 
 ### Hackathon-only (Figma)
 
@@ -118,7 +117,7 @@ Lists with more than **10 items** use `Pagination` + `LIST_PAGE_SIZE` (10). Foot
 | Gather nav + calendar overlay | App shell |
 | Enhanced attendee section | Event detail |
 | Nudge / Nudged ✓ flow | Attendee rows |
-| AI connection panel | Messaging |
+| AI connection panel | `NudgeChat` overlay (talking points) |
 
 ---
 

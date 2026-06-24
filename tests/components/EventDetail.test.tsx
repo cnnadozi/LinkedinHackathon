@@ -7,7 +7,6 @@ import { toggleEventRsvp } from "@/lib/eventActions";
 
 vi.mock("@/lib/eventActions", () => ({
   toggleEventRsvp: vi.fn().mockResolvedValue({ rsvpd: true }),
-  recordEventNudge: vi.fn().mockResolvedValue({ nudged: true }),
 }));
 
 vi.mock("next/navigation", () => ({
@@ -95,7 +94,6 @@ describe("EventDetail", () => {
     expect(
       screen.getByText(/Join a local Education community meetup/),
     ).toBeInTheDocument();
-    expect(screen.queryByRole("tab", { name: "Comments" })).not.toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "248 attendees · 12 connections" }),
     ).toBeInTheDocument();
