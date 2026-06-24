@@ -1,3 +1,5 @@
+import AttendanceList from "@/components/AttendanceList";
+
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
 type HealthResponse = {
@@ -24,8 +26,10 @@ export default async function Home() {
 
   return (
     <main>
-      <h1>LinkedIn Hackathon</h1>
-      <p>Bare-bones Next.js frontend + Express API.</p>
+      <h1>LinkedIn Gather</h1>
+      <p>Events hub — attendance list preview.</p>
+
+      <AttendanceList />
 
       <section className="status">
         <strong>API status</strong>
