@@ -1,5 +1,5 @@
-import { EventsFeedSection } from "@/components/EventsFeedSection";
 import type { Event } from "@/types/event";
+import EventsPageLayout from "@/components/EventsPageLayout";
 
 export default function EventsPage() {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -10,15 +10,10 @@ export default function EventsPage() {
 
   return (
     <main className="page events-feed-page">
-      <EventsPageLayout events={events}/>
-      <div className="events-feed-layout">
-        <div className="events-feed-main">
-          <EventsFeedSection
-            events={events}
-            mainUserAttendingEventIds={getMainUserAttendingEventIds()}
-          />
-        </div>
-      </div>
+      <EventsPageLayout
+        events={events}
+        mainUserAttendingEventIds={getMainUserAttendingEventIds()}
+      />
     </main>
   );
 }

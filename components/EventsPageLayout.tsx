@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { EventsFeed } from "./EventsFeed";
+import { EventsFeedSection } from "./EventsFeedSection";
 import CalendarOverlay from "./CalendarOverlay";
 import type { Event } from "@/types/event";
 
@@ -15,36 +15,32 @@ function CalendarPanelIcon() {
 
 type Props = {
   events: Event[];
+  mainUserAttendingEventIds: string[];
 };
 
-export default function EventsPageLayout({ events }: Props) {
+export default function EventsPageLayout({ events, mainUserAttendingEventIds }: Props) {
   const [calOpen, setCalOpen] = useState(true);
 
   return (
     <div className={`events-split${calOpen ? " events-split--with-cal" : ""}`}>
       {/* ── Events column ── */}
       <div className="events-split__feed">
-        <div className="events-feed-filter-bar">
-          <button type="button" className="events-feed-filter-pill events-feed-filter-pill--active">
-            Events
-            <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden className="events-feed-filter-pill__caret">
-              <path fill="currentColor" d="M8 10.94L2.06 5l1.41-1.41L8 8.12l4.53-4.53L13.94 5z" />
-            </svg>
-          </button>
-
-          <button
-            type="button"
-            className={`events-split__cal-toggle${calOpen ? " events-split__cal-toggle--active" : ""}`}
-            onClick={() => setCalOpen((o) => !o)}
-            aria-pressed={calOpen}
-            aria-label={calOpen ? "Hide calendar" : "Show calendar"}
-          >
-            <CalendarPanelIcon />
-            {calOpen ? "Hide calendar" : "Show calendar"}
-          </button>
-        </div>
-
-        <EventsFeed events={events} />
+        <EventsFeedSection
+          events={events}
+          mainUserAttendingEventIds={mainUserAttendingEventIds}
+          calendarToggle={
+            <button
+              type="button"
+              className={`events-split__cal-toggle${calOpen ? " events-split__cal-toggle--active" : ""}`}
+              onClick={() => setCalOpen((o) => !o)}
+              aria-pressed={calOpen}
+              aria-label={calOpen ? "Hide calendar" : "Show calendar"}
+            >
+              <CalendarPanelIcon />
+              {calOpen ? "Hide calendar" : "Show calendar"}
+            </button>
+          }
+        />
       </div>
 
       {/* ── Calendar panel ── */}
@@ -64,6 +60,7 @@ export default function EventsPageLayout({ events }: Props) {
           <CalendarOverlay events={events} />
         </aside>
       )}
+
     </div>
   );
 }
