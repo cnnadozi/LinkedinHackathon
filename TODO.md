@@ -7,5 +7,6 @@
 - messages 
 - nudges
 - calendar
-- pull from main
 
+
+]

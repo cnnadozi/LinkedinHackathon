@@ -13,6 +13,8 @@ const attendees: AttendeeRow[] = [
     location: "Boston, MA",
     company: "Example Co",
     industry: "Education",
+    school: "Example University",
+    skills: ["Teaching"],
     degree: 1,
     isConnection: true,
     mutualEvents: [
@@ -29,6 +31,8 @@ const attendees: AttendeeRow[] = [
     location: "Seattle, WA",
     company: "DesignHub",
     industry: "Healthcare",
+    school: "Design Institute",
+    skills: ["Design"],
     degree: 2,
     isConnection: false,
     mutualEvents: [],
@@ -37,20 +41,21 @@ const attendees: AttendeeRow[] = [
 ];
 
 describe("AttendeeModal", () => {
-  it("shows location, company, and industry filters instead of connection tabs", () => {
-    render(<AttendeeModal open attendees={attendees} onClose={() => {}} />);
+  it("shows degree pills plus location, company, industry, school, and skills filters", () => {
+    render(<AttendeeModal open attendees={attendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />);
 
     expect(screen.getByLabelText("Filter by Location")).toBeInTheDocument();
-    expect(screen.getByLabelText("Filter by Company")).toBeInTheDocument();
+    expect(screen.getByLabelText("Filter by Current company")).toBeInTheDocument();
     expect(screen.getByLabelText("Filter by Industry")).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "1st" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "2nd" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "3rd+" })).not.toBeInTheDocument();
-    expect(screen.queryByLabelText(/degree connection/i)).not.toBeInTheDocument();
+    expect(screen.getByLabelText("Filter by School")).toBeInTheDocument();
+    expect(screen.getByLabelText("Filter by Skills")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "1st" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "2nd" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "3rd+" })).toBeInTheDocument();
   });
 
   it("shows headline and location without connection badges", () => {
-    render(<AttendeeModal open attendees={attendees} onClose={() => {}} />);
+    render(<AttendeeModal open attendees={attendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />);
 
     expect(screen.getByText("Engineer at Example Co")).toBeInTheDocument();
 
@@ -71,7 +76,7 @@ describe("AttendeeModal", () => {
     ];
 
     render(
-      <AttendeeModal open attendees={singleEventAttendees} onClose={() => {}} />,
+      <AttendeeModal open attendees={singleEventAttendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />,
     );
 
     const label = screen.getByText("Also attending");
@@ -80,7 +85,7 @@ describe("AttendeeModal", () => {
   });
 
   it("hides also-attending when there is no overlap", () => {
-    render(<AttendeeModal open attendees={attendees} onClose={() => {}} />);
+    render(<AttendeeModal open attendees={attendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />);
 
     const benRow = screen.getByText("Ben Builder").closest(".li-person-row");
     expect(benRow).not.toBeNull();
@@ -89,7 +94,7 @@ describe("AttendeeModal", () => {
 
   it("shows multiple also-attending events in an expandable dropdown", async () => {
     const user = userEvent.setup();
-    render(<AttendeeModal open attendees={attendees} onClose={() => {}} />);
+    render(<AttendeeModal open attendees={attendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />);
 
     expect(
       screen.getByRole("button", { name: "Also attending 2 events" }),
@@ -113,7 +118,7 @@ describe("AttendeeModal", () => {
 
   it("filters attendees by the selected location", async () => {
     const user = userEvent.setup();
-    render(<AttendeeModal open attendees={attendees} onClose={() => {}} />);
+    render(<AttendeeModal open attendees={attendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />);
 
     await user.selectOptions(
       screen.getByLabelText("Filter by Location"),
@@ -126,15 +131,15 @@ describe("AttendeeModal", () => {
       screen.getByRole("button", { name: "Remove Seattle, WA filter" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Clear filters" }),
+      screen.getByRole("button", { name: "Clear all" }),
     ).toBeInTheDocument();
   });
 
   it("hides Clear filters when no filters are applied", () => {
-    render(<AttendeeModal open attendees={attendees} onClose={() => {}} />);
+    render(<AttendeeModal open attendees={attendees} onClose={() => {}} eventId="event_0002" eventName="Test Event" />);
 
     expect(
-      screen.queryByRole("button", { name: "Clear filters" }),
+      screen.queryByRole("button", { name: "Clear all" }),
     ).not.toBeInTheDocument();
   });
 });
