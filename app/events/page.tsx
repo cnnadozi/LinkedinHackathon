@@ -7,6 +7,7 @@ export default function EventsPage() {
     events: Event[];
     getMainUserAttendingEventIds: () => string[];
   };
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { getEventAttendeeCounts } = require("@/server/lib/events") as {
     getEventAttendeeCounts: (eventList: Event[]) => Record<string, number>;
   };

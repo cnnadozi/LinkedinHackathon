@@ -94,6 +94,10 @@ function buildAttendeeRow(attendeeId, event, currentUserId) {
 
   const job = latestJob(user);
 
+  const schools = (user.school_history ?? [])
+    .sort((a, b) => b.graduation_year - a.graduation_year)
+    .map((s) => s.school_name);
+
   return {
     id: user.id,
     name: user.name,
@@ -102,6 +106,8 @@ function buildAttendeeRow(attendeeId, event, currentUserId) {
     location: user.current_location,
     company: job?.company ?? null,
     industry: job?.industry ?? null,
+    school: schools[0] ?? null,
+    skills: user.skills ?? [],
     degree,
     isConnection: connected,
     mutualEvents: otherAttendingEvents(attendeeId, event.id, currentUserId),
