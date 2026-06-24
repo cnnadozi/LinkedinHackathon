@@ -2940,6 +2940,21 @@
         "level": "Medium"
     },
     {
+        "id": "course_9000",
+        "name": "Advanced Excel Techniques",
+        "category": "Business",
+        "skills": [
+            "Excel",
+            "Financial Modeling",
+            "Strategic Planning"
+        ],
+        "length": {
+            "value": 6,
+            "unit": "hours"
+        },
+        "level": "Easy"
+    },
+    {
         "id": "course_9575",
         "name": "Talent Acquisition",
         "category": "Human Resources",
@@ -3885,6 +3900,21 @@
         "level": "Hard"
     },
     {
+        "id": "course_7056",
+        "name": "Scrum Master Certification",
+        "category": "Project Management",
+        "skills": [
+            "Project Planning",
+            "Agile",
+            "Scrum"
+        ],
+        "length": {
+            "value": 7,
+            "unit": "hours"
+        },
+        "level": "Easy"
+    },
+    {
         "id": "course_6522",
         "name": "Graphic Design for Beginners",
         "category": "Design",
@@ -4770,6 +4800,21 @@
         "level": "Easy"
     },
     {
+        "id": "course_6598",
+        "name": "Introduction to DevOps",
+        "category": "Technology",
+        "skills": [
+            "AWS",
+            "DevOps",
+            "Blockchain"
+        ],
+        "length": {
+            "value": 8,
+            "unit": "hours"
+        },
+        "level": "Hard"
+    },
+    {
         "id": "course_4701",
         "name": "Negotiation Techniques",
         "category": "Communication",
@@ -5340,6 +5385,21 @@
         "level": "Hard"
     },
     {
+        "id": "course_2410",
+        "name": "Investment Strategies",
+        "category": "Finance",
+        "skills": [
+            "Financial Modeling",
+            "Corporate Finance",
+            "Investing"
+        ],
+        "length": {
+            "value": 3,
+            "unit": "hours"
+        },
+        "level": "Medium"
+    },
+    {
         "id": "course_2828",
         "name": "Agile Project Management",
         "category": "Project Management",
@@ -5512,6 +5572,21 @@
             "HR Policies",
             "Employee Relations",
             "Recruiting"
+        ],
+        "length": {
+            "value": 8,
+            "unit": "hours"
+        },
+        "level": "Easy"
+    },
+    {
+        "id": "course_3771",
+        "name": "Financial Analysis and Modeling",
+        "category": "Business",
+        "skills": [
+            "Excel",
+            "Financial Modeling",
+            "Strategic Planning"
         ],
         "length": {
             "value": 8,
@@ -5745,6 +5820,21 @@
         "level": "Hard"
     },
     {
+        "id": "course_6282",
+        "name": "Financial Analysis and Modeling",
+        "category": "Finance",
+        "skills": [
+            "Financial Modeling",
+            "Corporate Finance",
+            "Investing"
+        ],
+        "length": {
+            "value": 2,
+            "unit": "hours"
+        },
+        "level": "Hard"
+    },
+    {
         "id": "course_5328",
         "name": "Employee Relations",
         "category": "Human Resources",
@@ -5755,6 +5845,21 @@
         ],
         "length": {
             "value": 6,
+            "unit": "hours"
+        },
+        "level": "Medium"
+    },
+    {
+        "id": "course_6659",
+        "name": "Employee Relations",
+        "category": "Human Resources",
+        "skills": [
+            "HR Policies",
+            "Employee Relations",
+            "Recruiting"
+        ],
+        "length": {
+            "value": 7,
             "unit": "hours"
         },
         "level": "Medium"
@@ -6990,6 +7095,21 @@
         "level": "Easy"
     },
     {
+        "id": "course_5872",
+        "name": "Talent Acquisition",
+        "category": "Human Resources",
+        "skills": [
+            "HR Policies",
+            "Employee Relations",
+            "Recruiting"
+        ],
+        "length": {
+            "value": 7,
+            "unit": "hours"
+        },
+        "level": "Easy"
+    },
+    {
         "id": "course_3109",
         "name": "Business Strategy",
         "category": "Business",
@@ -7033,6 +7153,21 @@
             "unit": "hours"
         },
         "level": "Hard"
+    },
+    {
+        "id": "course_4134",
+        "name": "Writing for the Web",
+        "category": "Writing",
+        "skills": [
+            "Creative Writing",
+            "Technical Writing",
+            "Content Creation"
+        ],
+        "length": {
+            "value": 6,
+            "unit": "hours"
+        },
+        "level": "Easy"
     },
     {
         "id": "course_8646",
@@ -7125,6 +7260,21 @@
         "level": "Medium"
     },
     {
+        "id": "course_4562",
+        "name": "Negotiation Techniques",
+        "category": "Communication",
+        "skills": [
+            "Public Speaking",
+            "Communication",
+            "Negotiation"
+        ],
+        "length": {
+            "value": 5,
+            "unit": "hours"
+        },
+        "level": "Hard"
+    },
+    {
         "id": "course_9759",
         "name": "Human Resource Management",
         "category": "Human Resources",
@@ -7183,6 +7333,21 @@
             "unit": "hours"
         },
         "level": "Hard"
+    },
+    {
+        "id": "course_8664",
+        "name": "Scrum Master Certification",
+        "category": "Project Management",
+        "skills": [
+            "Project Planning",
+            "Agile",
+            "Scrum"
+        ],
+        "length": {
+            "value": 4,
+            "unit": "hours"
+        },
+        "level": "Medium"
     },
     {
         "id": "course_8299",
@@ -7543,6 +7708,21 @@
             "unit": "hours"
         },
         "level": "Medium"
+    },
+    {
+        "id": "course_6929",
+        "name": "Writing for the Web",
+        "category": "Writing",
+        "skills": [
+            "Creative Writing",
+            "Technical Writing",
+            "Content Creation"
+        ],
+        "length": {
+            "value": 8,
+            "unit": "hours"
+        },
+        "level": "Easy"
     },
     {
         "id": "course_4336",
@@ -7950,6 +8130,21 @@
         "level": "Medium"
     },
     {
+        "id": "course_5213",
+        "name": "Digital Marketing Strategy",
+        "category": "Marketing",
+        "skills": [
+            "Marketing Strategies",
+            "SEO",
+            "Content Creation"
+        ],
+        "length": {
+            "value": 5,
+            "unit": "hours"
+        },
+        "level": "Medium"
+    },
+    {
         "id": "course_3921",
         "name": "Introduction to DevOps",
         "category": "Technology",
@@ -8100,6 +8295,21 @@
         "level": "Easy"
     },
     {
+        "id": "course_3685",
+        "name": "Talent Acquisition",
+        "category": "Human Resources",
+        "skills": [
+            "HR Policies",
+            "Employee Relations",
+            "Recruiting"
+        ],
+        "length": {
+            "value": 2,
+            "unit": "hours"
+        },
+        "level": "Medium"
+    },
+    {
         "id": "course_5370",
         "name": "Photography Editing",
         "category": "Photography",
@@ -8158,6 +8368,21 @@
             "unit": "hours"
         },
         "level": "Easy"
+    },
+    {
+        "id": "course_4843",
+        "name": "Scrum Master Certification",
+        "category": "Project Management",
+        "skills": [
+            "Project Planning",
+            "Agile",
+            "Scrum"
+        ],
+        "length": {
+            "value": 2,
+            "unit": "hours"
+        },
+        "level": "Medium"
     },
     {
         "id": "course_2143",
@@ -8355,6 +8580,21 @@
         "level": "Easy"
     },
     {
+        "id": "course_5948",
+        "name": "Introduction to Marketing",
+        "category": "Marketing",
+        "skills": [
+            "Marketing Strategies",
+            "SEO",
+            "Content Creation"
+        ],
+        "length": {
+            "value": 7,
+            "unit": "hours"
+        },
+        "level": "Medium"
+    },
+    {
         "id": "course_1425",
         "name": "Investment Strategies",
         "category": "Finance",
@@ -8383,6 +8623,21 @@
             "unit": "hours"
         },
         "level": "Hard"
+    },
+    {
+        "id": "course_6579",
+        "name": "Project Management Basics",
+        "category": "Project Management",
+        "skills": [
+            "Project Planning",
+            "Agile",
+            "Scrum"
+        ],
+        "length": {
+            "value": 4,
+            "unit": "hours"
+        },
+        "level": "Medium"
     },
     {
         "id": "course_1194",
@@ -8535,6 +8790,21 @@
         "level": "Medium"
     },
     {
+        "id": "course_9388",
+        "name": "Effective Communication Skills",
+        "category": "Communication",
+        "skills": [
+            "Public Speaking",
+            "Communication",
+            "Negotiation"
+        ],
+        "length": {
+            "value": 8,
+            "unit": "hours"
+        },
+        "level": "Medium"
+    },
+    {
         "id": "course_8782",
         "name": "Machine Learning Fundamentals",
         "category": "Artificial Intelligence",
@@ -8590,6 +8860,21 @@
         ],
         "length": {
             "value": 2,
+            "unit": "hours"
+        },
+        "level": "Medium"
+    },
+    {
+        "id": "course_9536",
+        "name": "Portrait Photography",
+        "category": "Photography",
+        "skills": [
+            "Photography",
+            "Photo Editing",
+            "Lighting"
+        ],
+        "length": {
+            "value": 8,
             "unit": "hours"
         },
         "level": "Medium"
@@ -8665,6 +8950,21 @@
         ],
         "length": {
             "value": 7,
+            "unit": "hours"
+        },
+        "level": "Hard"
+    },
+    {
+        "id": "course_8925",
+        "name": "Scrum Master Certification",
+        "category": "Project Management",
+        "skills": [
+            "Project Planning",
+            "Agile",
+            "Scrum"
+        ],
+        "length": {
+            "value": 5,
             "unit": "hours"
         },
         "level": "Hard"
