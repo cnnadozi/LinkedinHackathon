@@ -1,7 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Card } from "@/components/linkedin";
 import {
-  eventThumbnailUrl,
+  eventBannerClass,
   formatSidebarEventStatus,
 } from "@/lib/formatEventDate";
 import type { Event } from "@/types/event";
@@ -24,19 +25,24 @@ export function EventDetailSidebar({ relatedEvents }: EventDetailSidebarProps) {
         <ul className="event-sidebar__list">
           {relatedEvents.map((event) => {
             const status = formatSidebarEventStatus(event.time);
+            const bannerClass = eventBannerClass(event.industry);
 
             return (
               <li key={event.id}>
                 <Link href={`/events/${event.id}`} className="event-sidebar__item">
-                  <img
-                    src={eventThumbnailUrl(event.id)}
-                    alt=""
-                    className="event-sidebar__thumb"
-                    width={80}
-                    height={48}
-                    loading="lazy"
+                  <div
+                    className={`event-sidebar__thumb ${bannerClass}`}
+                    role="presentation"
                     aria-hidden
-                  />
+                  >
+                    <Image
+                      src={event.image}
+                      alt=""
+                      fill
+                      sizes="80px"
+                      className="event-sidebar__thumb-img"
+                    />
+                  </div>
                   <div className="event-sidebar__item-body">
                     <p
                       className={

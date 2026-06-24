@@ -1460,6 +1460,10 @@ p {
   background: linear-gradient(135deg, var(--li-blue) 0%, var(--li-cyan) 100%);
 }
 
+.event-detail__banner-img {
+  object-fit: cover;
+}
+
 .event-detail__banner--technology {
   background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
 }
@@ -1807,12 +1811,17 @@ p {
 }
 
 .event-sidebar__thumb {
+  position: relative;
   width: 80px;
   height: 48px;
   border-radius: 8px;
+  overflow: hidden;
   flex-shrink: 0;
+  background: linear-gradient(135deg, var(--li-blue) 0%, var(--li-cyan) 100%);
+}
+
+.event-sidebar__thumb-img {
   object-fit: cover;
-  background: var(--li-bg);
 }
 
 .event-sidebar__item-body {
@@ -2026,10 +2035,18 @@ p {
 }
 
 .event-feed-card__thumb {
+  position: relative;
+  display: block;
   width: 100px;
   height: 66px;
   border-radius: 4px;
+  overflow: hidden;
   flex-shrink: 0;
+  background: linear-gradient(135deg, var(--li-blue) 0%, var(--li-cyan) 100%);
+}
+
+.event-feed-card__thumb-img {
+  object-fit: cover;
 }
 
 .event-feed-card__body {

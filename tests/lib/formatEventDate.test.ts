@@ -1,7 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   eventBannerClass,
-  eventThumbnailUrl,
   formatEventDate,
   formatSidebarEventStatus,
   isEventLive,
@@ -25,14 +24,6 @@ describe("eventBannerClass", () => {
     );
     expect(eventBannerClass("Health Care")).toBe(
       "event-detail__banner--health-care",
-    );
-  });
-});
-
-describe("eventThumbnailUrl", () => {
-  it("returns a stable picsum URL seeded by event id", () => {
-    expect(eventThumbnailUrl("event_0001")).toBe(
-      "https://picsum.photos/seed/event_0001/160/96",
     );
   });
 });

@@ -1,13 +1,13 @@
 /**
  * Shared Gemini client with retries for transient 503/500 errors.
- * Uses flash-lite — the model most reliably available on the free tier.
+ * Falls back through current Gemini 3.x flash models (see ai.google.dev/gemini-api/docs/models).
  */
 import type { ResponseSchema } from "@google/generative-ai";
 
 const GEMINI_MODELS = [
-  "gemini-2.5-flash-lite",
-  "gemini-2.0-flash",
-  "gemini-1.5-flash",
+  "gemini-3.5-flash",
+  "gemini-3-flash",
+  "gemini-3.1-flash-lite",
 ] as const;
 const MAX_RETRIES = 3;
 const RETRY_BASE_MS = 1500;
