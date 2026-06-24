@@ -1283,10 +1283,107 @@ p {
   min-width: 0;
 }
 
-/* Filter bar */
+/* ── Events split layout (feed + calendar panel) ── */
+
+.events-split {
+  display: block;
+}
+
+.events-split--with-cal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.events-split__feed {
+  min-width: 0;
+}
+
+.events-split__cal {
+  position: sticky;
+  top: calc(var(--li-nav-height) + 16px);
+  min-width: 0;
+}
+
+.events-split__cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.events-split__cal-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--li-gray-dark);
+}
+
+.events-split__cal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--li-gray-medium);
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.events-split__cal-close:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--li-gray-dark);
+}
+
 .events-feed-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 16px;
 }
+
+.events-split__cal-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--li-radius-pill);
+  border: 1px solid var(--li-border-hairline);
+  background: var(--li-surface);
+  color: var(--li-gray-medium);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+
+.events-split__cal-toggle:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--li-gray-dark);
+}
+
+.events-split__cal-toggle--active {
+  border-color: var(--li-blue-interactive);
+  color: var(--li-blue-interactive);
+  background: rgba(10, 102, 194, 0.06);
+}
+
+@media (max-width: 860px) {
+  .events-split--with-cal {
+    grid-template-columns: 1fr;
+  }
+
+  .events-split__cal {
+    position: static;
+  }
+}
+
 
 .events-feed-filter-pill {
   display: inline-flex;
