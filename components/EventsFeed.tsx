@@ -6,20 +6,9 @@ import type { Event } from "@/types/event";
 
 const PER_PAGE = 10;
 
-function simpleHash(value: string): number {
-  let hash = 0;
-  for (let i = 0; i < value.length; i++) {
-    hash = ((hash * 31) + value.charCodeAt(i)) >>> 0;
-  }
-  return hash;
-}
-
-function attendeeCount(eventId: string): number {
-  return 180 + (simpleHash(eventId) % 120);
-}
-
 type EventsFeedProps = {
   events: Event[];
+  attendeeCounts: Record<string, number>;
 };
 
 function pageRange(current: number, total: number): (number | "…")[] {
@@ -35,7 +24,7 @@ function pageRange(current: number, total: number): (number | "…")[] {
   return [1, "…", current - 1, current, current + 1, "…", total];
 }
 
-export function EventsFeed({ events }: EventsFeedProps) {
+export function EventsFeed({ events, attendeeCounts }: EventsFeedProps) {
   const [page, setPage] = useState(1);
   const totalPages = Math.ceil(events.length / PER_PAGE);
   const visible = events.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -54,7 +43,10 @@ export function EventsFeed({ events }: EventsFeedProps) {
         <ul className="events-feed-list">
           {visible.map((event) => (
             <li key={event.id} className="events-feed-list__item">
-              <EventCard event={event} attendeeCount={attendeeCount(event.id)} />
+              <EventCard
+                event={event}
+                attendeeCount={attendeeCounts[event.id] ?? 0}
+              />
             </li>
           ))}
         </ul>

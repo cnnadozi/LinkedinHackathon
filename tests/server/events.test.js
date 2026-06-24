@@ -40,7 +40,7 @@ describe("events API helpers", () => {
   });
 
   it("derives attendee count from user attending_event_ids in the dataset", () => {
-    const { getEventDetail, deriveAttendeeIds } = require("../../server/lib/events");
+    const { getEventDetail, deriveAttendeeIds, getEventAttendeeCounts } = require("../../server/lib/events");
     const { users } = require("../../server/lib/data");
     const eventId = "event_0001";
 
@@ -56,6 +56,9 @@ describe("events API helpers", () => {
     const detail = getEventDetail(eventId);
     expect(detail?.attendance.total).toBe(fromData);
     expect(detail?.attendees.length).toBe(fromData);
+    expect(getEventAttendeeCounts([{ id: eventId, host_user_id: "user_4579" }])[eventId]).toBe(
+      fromData,
+    );
   });
 
   it("returns only events the main user also attends for each attendee row", () => {

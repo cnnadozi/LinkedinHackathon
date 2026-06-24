@@ -16,9 +16,14 @@ function CalendarPanelIcon() {
 type Props = {
   events: Event[];
   mainUserAttendingEventIds: string[];
+  attendeeCounts: Record<string, number>;
 };
 
-export default function EventsPageLayout({ events, mainUserAttendingEventIds }: Props) {
+export default function EventsPageLayout({
+  events,
+  mainUserAttendingEventIds,
+  attendeeCounts,
+}: Props) {
   const [calOpen, setCalOpen] = useState(true);
 
   return (
@@ -28,6 +33,7 @@ export default function EventsPageLayout({ events, mainUserAttendingEventIds }: 
         <EventsFeedSection
           events={events}
           mainUserAttendingEventIds={mainUserAttendingEventIds}
+          attendeeCounts={attendeeCounts}
           calendarToggle={
             <button
               type="button"
