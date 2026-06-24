@@ -62,18 +62,28 @@ function uniqueSorted(values: (string | null | undefined)[]): string[] {
   );
 }
 
-function AlsoAttendingEvents({ events }: { events: string[] }) {
+function AlsoAttendingEvents({
+  events,
+}: {
+  events: Array<string | { id: string; name: string }>;
+}) {
   const [expanded, setExpanded] = useState(false);
+  const normalizedEvents = events.map((event) =>
+    typeof event === "string"
+      ? { id: event, name: event, href: "#" }
+      : { id: event.id, name: event.name, href: `/events/${event.id}` },
+  );
 
-  if (events.length === 0) return null;
+  if (normalizedEvents.length === 0) return null;
 
-  if (events.length === 1) {
+  if (normalizedEvents.length === 1) {
+    const event = normalizedEvents[0];
     return (
       <p className="li-person-row__meta">
         <span className="li-person-row__meta-label li-person-row__meta-label--mutual">
           Also attending
         </span>
-        <TextLink href="#">{events[0]}</TextLink>
+        <TextLink href={event.href}>{event.name}</TextLink>
       </p>
     );
   }
@@ -84,14 +94,14 @@ function AlsoAttendingEvents({ events }: { events: string[] }) {
         type="button"
         className="li-person-row__also-attending-trigger"
         aria-expanded={expanded}
-        aria-label={`Also attending ${events.length} events`}
+        aria-label={`Also attending ${normalizedEvents.length} events`}
         onClick={() => setExpanded((open) => !open)}
       >
         <span className="li-person-row__meta-label li-person-row__meta-label--mutual">
           Also attending
         </span>
         <span className="li-person-row__also-attending-count">
-          {events.length} events
+          {normalizedEvents.length} events
         </span>
         <span className="li-person-row__also-attending-chevron" aria-hidden>
           ▾
@@ -99,9 +109,9 @@ function AlsoAttendingEvents({ events }: { events: string[] }) {
       </button>
       {expanded && (
         <ul className="li-person-row__also-attending-menu">
-          {events.map((event) => (
-            <li key={event}>
-              <TextLink href="#">{event}</TextLink>
+          {normalizedEvents.map((event) => (
+            <li key={event.id}>
+              <TextLink href={event.href}>{event.name}</TextLink>
             </li>
           ))}
         </ul>

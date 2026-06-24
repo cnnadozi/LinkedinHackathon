@@ -81,7 +81,7 @@ function otherAttendingEvents(attendeeId, eventId, currentUserId = MAIN_USER_ID)
         mainUserEventIds.has(candidate.id),
     )
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map((candidate) => candidate.name);
+    .map((candidate) => ({ id: candidate.id, name: candidate.name }));
 }
 
 function buildAttendeeRow(attendeeId, event, currentUserId) {

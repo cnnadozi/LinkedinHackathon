@@ -86,8 +86,8 @@ describe("events API helpers", () => {
           user.attending_event_ids?.includes(candidate.id) &&
           mainUserEventIds.has(candidate.id),
       )
-      .map((candidate) => candidate.name)
-      .sort((a, b) => a.localeCompare(b));
+      .map((candidate) => ({ id: candidate.id, name: candidate.name }))
+      .sort((a, b) => a.name.localeCompare(b.name));
 
     expect(attendeeWithOverlap.mutualEvents).toEqual(expected);
   });
