@@ -15,7 +15,10 @@ const attendees: AttendeeRow[] = [
     industry: "Education",
     degree: 1,
     isConnection: true,
-    mutualEvents: ["Tech Mixer", "Product Leaders Summit"],
+    mutualEvents: [
+      { id: "event_0009", name: "Tech Mixer" },
+      { id: "event_0010", name: "Product Leaders Summit" },
+    ],
     nudged: false,
   },
   {
@@ -63,7 +66,7 @@ describe("AttendeeModal", () => {
     const singleEventAttendees: AttendeeRow[] = [
       {
         ...attendees[0],
-        mutualEvents: ["Tech Mixer"],
+        mutualEvents: [{ id: "event_0009", name: "Tech Mixer" }],
       },
     ];
 
