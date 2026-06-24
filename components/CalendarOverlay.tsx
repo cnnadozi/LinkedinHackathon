@@ -7,18 +7,7 @@ import "./CalendarOverlay.css";
 
 type ViewMode = "month" | "week" | "day";
 
-/* ── Industry colours ── */
-const INDUSTRY_COLOR: Record<string, string> = {
-  Technology: "#0a66c2",
-  Education:  "#057642",
-  Healthcare: "#7b5ea7",
-  Finance:    "#c47b0e",
-  Retail:     "#0891b2",
-};
-
-function eventColor(e: Event): string {
-  return INDUSTRY_COLOR[e.industry] ?? "#666";
-}
+import { industryColor } from "@/lib/industryColors";
 
 /* ── Date helpers ── */
 
@@ -195,7 +184,7 @@ export default function CalendarOverlay({
                     key={e.id}
                     href={`/events/${e.id}`}
                     className="cal-event-pill"
-                    style={{ background: eventColor(e) }}
+                    style={{ background: industryColor(e.industry) }}
                     title={e.name}
                   >
                     <span className="cal-event-pill__time">{formatTime(e.time)}</span>
@@ -267,7 +256,7 @@ export default function CalendarOverlay({
                         href={`/events/${e.id}`}
                         className="cal-week__event"
                         style={{
-                          background: eventColor(e),
+                          background: industryColor(e.industry),
                           top: top,
                           height: 55,
                           left: `${2 + ei * 3}px`,
@@ -332,7 +321,7 @@ export default function CalendarOverlay({
                     key={e.id}
                     href={`/events/${e.id}`}
                     className="cal-day__event"
-                    style={{ background: eventColor(e), top, height: 56 + (i % 2) * 4 }}
+                    style={{ background: industryColor(e.industry), top, height: 56 + (i % 2) * 4 }}
                   >
                     <div className="cal-day__event-time">{formatTime(e.time)}</div>
                     <div className="cal-day__event-name">{e.name}</div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { RelativeEventTime } from "@/components/RelativeEventTime";
 import { eventBannerClass } from "@/lib/formatEventDate";
 import type { Event } from "@/types/event";
 
@@ -8,34 +9,8 @@ type EventCardProps = {
   attendeeCount: number;
 };
 
-function formatFeedTime(iso: string): string {
-  const date = new Date(iso);
-  const now = new Date();
-  const sameDay = date.toDateString() === now.toDateString();
-  const tomorrow = new Date(now);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  const isTomorrow = date.toDateString() === tomorrow.toDateString();
-
-  const time = date.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-  });
-
-  if (sameDay) return `Today, ${time} (your local time)`;
-  if (isTomorrow) return `Tomorrow, ${time} (your local time)`;
-
-  return (
-    date.toLocaleDateString("en-US", {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-    }) + `, ${time} (your local time)`
-  );
-}
-
 export function EventCard({ event, attendeeCount }: EventCardProps) {
   const bannerClass = eventBannerClass(event.industry);
-  const timeLabel = formatFeedTime(event.time);
   const isOnline = !event.location.match(/,\s*[A-Z]{2}$/);
 
   return (
@@ -57,7 +32,9 @@ export function EventCard({ event, attendeeCount }: EventCardProps) {
           <h3 className="event-feed-card__title">{event.name}</h3>
         </Link>
 
-        <p className="event-feed-card__time">{timeLabel}</p>
+        <p className="event-feed-card__time">
+          <RelativeEventTime iso={event.time} mode="feed" />
+        </p>
 
         <p className="event-feed-card__meta">
           {isOnline ? "Online" : event.location}

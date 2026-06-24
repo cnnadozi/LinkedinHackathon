@@ -1,6 +1,6 @@
 # Architecture
 
-Overview of the tech stack, project layout, and data layer for this hackathon project. Everything runs **locally** — no deployment planned for the hackathon.
+Overview of the tech stack, project layout, and data layer for LinkedIn Gather. Everything runs **locally** — no deployment planned for the hackathon.
 
 ## Tech stack
 
@@ -51,38 +51,27 @@ Server Components read from `server/lib/` without HTTP. Browser `fetch()` calls 
 LinkedinHackathon/
 ├── app/                    # Next.js App Router (pages, layout, API routes)
 │   ├── layout.tsx          # Root layout
-│   ├── page.tsx            # Home page
+│   ├── page.tsx            # Redirects to /events
+│   ├── events/             # Events feed and detail pages
+│   ├── gather/             # Full-page calendar view
 │   ├── api/                # Route handlers (/api/*)
 │   │   ├── health/
-│   │   ├── users/[id]/
-│   │   ├── jobs/[id]/
-│   │   ├── courses/[id]/
-│   │   └── events/[id]/
-│   ├── events/[eventId]/   # Event detail page
-│   ├── messages/[connectionId]/
+│   │   └── events/[id]/    # RSVP + AI suggestions
 │   └── globals.css         # Global CSS
 ├── components/             # Shared React components
+│   └── linkedin/           # Reusable LinkedIn-style UI primitives
 ├── data/                   # Local JSON datasets
-│   ├── events_data.json    # Professional networking events
-│   ├── user_data.json      # Member profiles
-│   ├── jobs_data.json      # Job postings
-│   └── course_data.json    # Learning courses
 ├── docs/                   # Project documentation
-│   ├── APP_MAP.md          # Start here — pages, overlays, components, main user
-│   ├── ARCHITECTURE.md     # This file — tech stack, layout, data layer, API
-│   ├── TECHNICAL_DECISIONS.md
-│   └── UI_DESIGN.md        # Color tokens and UI system
-├── server/                 # Backend logic (reads data/*.json)
-│   └── lib/                # Data loaders, events, RSVP state, suggestions
-├── types/                  # TypeScript types (one file per domain)
-│   ├── user.ts             # User, SchoolHistory
-│   ├── job.ts              # Job, SalaryRange
-│   ├── course.ts           # Course, CourseLength
-│   └── index.ts            # Barrel re-exports
-├── next.config.ts          # Next.js configuration
-├── tsconfig.json           # TypeScript configuration
-├── eslint.config.mjs       # ESLint configuration
-└── package.json            # Scripts and dependencies
+├── lib/                    # Client helpers + .server.ts (Gemini, ranking, dates)
+├── prompts/                # Gemini prompt templates
+├── public/events/          # Event cover images
+├── scripts/                # One-off data prep (add-user-connections.js)
+├── server/lib/             # Data loaders, events, RSVP state, suggestions
+├── tests/                  # Vitest unit tests (mirrors source paths)
+├── types/                  # TypeScript types (event.ts + JSON schema mirrors)
+├── next.config.ts
+├── tsconfig.json
+└── package.json
 ```
 
 ### Folder responsibilities
@@ -92,7 +81,8 @@ LinkedinHackathon/
 | `app/` | Next.js routes, pages, and `/api/*` route handlers. |
 | `components/` | Reusable React components shared across pages. |
 | `data/` | Static JSON datasets loaded by `server/lib/` at startup. |
-| `docs/` | Architecture, UI design, and other project docs. |
+| `docs/` | Architecture and UI design docs (`ARCHITECTURE.md`, `UI_DESIGN.md`). |
+| `lib/` | Shared helpers — date formatting, Gemini client, event ranking, client API fetch. |
 | `server/lib/` | Backend business logic shared by route handlers and Server Components. |
 | `types/` | TypeScript models mirroring the JSON schemas. Import from `@/types` or specific files like `@/types/user`. |
 
@@ -100,7 +90,7 @@ LinkedinHackathon/
 
 ## Data layer
 
-How data is stored, linked, and served for the LinkedIn Events Hub hackathon build.
+How data is stored, linked, and served for LinkedIn Gather.
 
 There is **no hosted database**. The “DB” is flat JSON in `data/`, loaded into memory at startup. Server Components import `server/lib/` directly; client code uses same-origin `/api/*` route handlers.
 
@@ -122,10 +112,10 @@ app/api/                       ← Next.js route handlers (/api/*)
 types/*.ts                     ← shared TypeScript types
 ```
 
-| File | Records | Role in Events Hub |
-|------|---------|-------------------|
+| File | Records | Role in Gather |
+|------|---------|----------------|
 | `events_data.json` | 100 | **Primary** — event feed, calendar, detail pages |
-| `user_data.json` | 2,000 | Attendees, hosts, connections, AI panel context |
+| `user_data.json` | ~1,800 | Attendees, hosts, connections, AI panel context |
 | `jobs_data.json` | 1,000 | Resolve member headlines, company, industry, title filters |
 | `course_data.json` | 600 | Optional — skills / learning context |
 
@@ -166,7 +156,7 @@ Events do **not** include attendee lists in `events_data.json`. Attendee counts 
 | `posts_activity` | string[] | AI **Shared Themes** / talking points |
 | `skills` | string[] | Attendee filters, AI themes |
 | `courses` | string[] | Course IDs → `course_data.json` |
-| `attending_event_ids` | string[] | Events this member attends (max 5). Assigned in data — edit directly or run `node scripts/populate-attending-event-ids.js` |
+| `attending_event_ids` | string[] | Events this member attends. Edit in data or run `node scripts/add-user-connections.js` |
 
 #### Jobs (`jobs_data.json`)
 
@@ -227,14 +217,10 @@ The hackathon demo simulates a single logged-in LinkedIn member. **All “curren
 |--|--|
 | **ID** | `user_5736` |
 | **Name** | Alice Johnson |
-| **Constants** | `MAIN_USER_ID` in `lib/mainUser.ts` and `server/lib/data.js`; `DEMO_USER_ID` is a deprecated alias for the same value |
+| **Constants** | `MAIN_USER_ID` in `lib/mainUser.ts` and `server/lib/data.js` |
 | **Env override** | `MAIN_USER_ID=user_XXXX` |
 
-Alice’s `attending_event_ids` in `user_data.json` (source of truth for guest lists and overlap):
-
-- `event_0002` — Breaking Into HR Coordinator Roles
-- `event_0034` — Technology Customer Service Manager Networking Night
-- `event_0050` — Meet DevOps Engineers in Finance
+Alice’s `attending_event_ids` in `user_data.json` are the source of truth for guest lists, the **Attending** feed filter, and **Also attending** overlap. See `user_5736` in that file for the current list.
 
 **Server helpers:** `getMainUser()`, `getMainUserAttendingEventIds()` in `server/lib/data.js`.
 
@@ -250,12 +236,12 @@ The UI needs data that does not exist in the starter files. The backend layer **
 |---------|---------|-------------------|
 | **Main user** | Fixed logged-in member for the whole demo | **`user_5736` (Alice Johnson)** — see [Main user](#main-user). Export `MAIN_USER_ID`; optional env override |
 | **Event attendees** | Guest list modal | Users whose `attending_event_ids` includes the event; always include `host_user_id` |
-| **Connection subset** | “Your connections”, “, X connections” | Deterministic subset of attendees (e.g. hash of `userId + eventId`) relative to main user |
-| **Connection degree** | 1st / 2nd / 3rd badge | Mock: 1st = connection subset; others = remaining attendees |
+| **Connection subset** | “Your connections”, “, X connections” | Derived from `connections` arrays in `user_data.json` relative to main user |
+| **Connection degree** | 1st / 2nd / 3rd badge | Computed via `getConnectionDegree()` in `server/lib/data.js` |
 | **RSVPs** | Calendar + “going” state | Persisted in `server/.demo-state.json` for main user |
 | **Nudge state** | “Nudged ✓” | Persisted in `server/.demo-state.json` |
-| **Mutual events** | Attendee modal **Also attending** + AI panel | Other events both main user and attendee share via `attending_event_ids` (exclude current event) |
-| **AI suggestions** | Talking points | Rule-based from `posts_activity`, `skills`, `school_history`, mutual events |
+| **Mutual events** | Attendee modal **Also attending** + AI panel | Overlap of `attending_event_ids` between main user and attendee |
+| **AI suggestions** | Talking points in Nudge chat | Gemini API with heuristic fallback (`lib/nudgeSuggestions.server.ts`) |
 
 Keep derived logic in `server/lib/` so the frontend stays thin. RSVP and nudge state are written to `server/.demo-state.json`.
 
@@ -266,8 +252,8 @@ Keep derived logic in `server/lib/` so the frontend stays thin. RSVP and nudge s
 | Events feed (`/events`) | `events_data.json` — **Attending** filter uses main user’s `attending_event_ids` |
 | Event detail | Event + host user + resolved host job; RSVP/nudge relative to main user |
 | Attendee modal | Users in `attending_event_ids` for the event; **Also attending** = overlap with main user’s events |
-| Calendar overlay | `GET /api/users/:id/rsvps` — RSVP’d events for main user (`user_5736` by default) |
-| AI connection panel | `GET /api/users/:id/suggestions` — shared themes, schools, mutual events, talking points |
+| Calendar overlay | `server/lib/data.js` + `server/lib/events.js` — main user’s RSVP’d events |
+| AI connection panel | `POST /api/events/:id/suggestions` — talking points via Gemini + heuristic fallback |
 
 ### Loading data
 
@@ -296,24 +282,13 @@ curl https://pit.najera.cc/course_data.json -o data/course_data.json
 
 ## API (Next.js Route Handlers)
 
-All endpoints live under `app/api/`. Server Components can also import `server/lib/` directly and skip HTTP for reads.
+All endpoints live under `app/api/`. Server Components import `server/lib/` directly for reads; client code calls the mutation routes below.
 
-| Method | Path | Returns |
+| Method | Path | Purpose |
 |--------|------|---------|
 | GET | `/api/health` | Status + record counts (users, jobs, courses, events) |
-| GET | `/api/users` | All members |
-| GET | `/api/users/:id` | Single member |
-| GET | `/api/users/:id/rsvps` | Events the user RSVP’d to (calendar overlay) |
-| GET | `/api/users/:id/suggestions` | AI connection panel payload vs demo user |
-| GET | `/api/jobs` | All jobs |
-| GET | `/api/jobs/:id` | Single job |
-| GET | `/api/courses` | All courses |
-| GET | `/api/courses/:id` | Single course |
-| GET | `/api/events` | All events; query: `?location=`, `?industry=` |
-| GET | `/api/events/:id` | Event + resolved host + derived attendees |
-| GET | `/api/events/:id/attendees` | Attendee rows; query: `?filter=connections`, `?degree=1\|2\|3` |
-| POST | `/api/events/:id/rsvp` | Toggle RSVP for demo user |
-| POST | `/api/events/:id/nudge` | Record nudge to target user |
+| POST | `/api/events/:id/rsvp` | Toggle RSVP for main user |
+| POST | `/api/events/:id/suggestions` | AI talking points for nudge chat |
 
 ---
 

@@ -20,17 +20,3 @@ export function loadRelatedEvents(
     .filter((event: Event) => event.id !== currentEventId)
     .slice(0, limit);
 }
-
-export function loadDatasetHealth() {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { users, jobs, courses, events } = require("../server/lib/data");
-  return {
-    status: "ok" as const,
-    datasets: {
-      users: users.length,
-      jobs: jobs.length,
-      courses: courses.length,
-      events: events.length,
-    },
-  };
-}

@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { AttendeeModal } from "./AttendeeModal";
 import { EventDetailSidebar } from "./EventDetailSidebar";
 import { LeaveEventModal } from "./LeaveEventModal";
+import { RelativeEventTime } from "./RelativeEventTime";
 import {
   Avatar,
   AvatarButton,
@@ -19,7 +20,7 @@ import {
   IconButton,
   TextButton,
 } from "@/components/linkedin";
-import { eventBannerClass, formatEventDate } from "@/lib/formatEventDate";
+import { eventBannerClass } from "@/lib/formatEventDate";
 import { toggleEventRsvp } from "@/lib/eventActions";
 import type { EventDetailPayload } from "@/lib/eventTypes";
 import type { Event } from "@/types/event";
@@ -89,7 +90,6 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
   const [activeTab, setActiveTab] = useState<Tab>("details");
 
   const { event, host, attendance } = data;
-  const { scheduleLabel } = formatEventDate(event.time);
   const bannerClass = eventBannerClass(event.industry);
   const organizerName = host?.name ?? event.company;
 
@@ -172,7 +172,9 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
                 <TextButton variant="primary">{organizerName}</TextButton>
               </p>
 
-              <p className="event-detail__schedule">{scheduleLabel}</p>
+              <p className="event-detail__schedule">
+                <RelativeEventTime iso={event.time} mode="detail" />
+              </p>
               <p className="event-detail__location">{event.location}</p>
 
               <p className="event-detail__attendance-line">

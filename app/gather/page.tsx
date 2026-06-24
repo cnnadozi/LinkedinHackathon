@@ -3,13 +3,7 @@ import eventsData from "@/data/events_data.json";
 import CalendarOverlay from "@/components/CalendarOverlay";
 import Link from "next/link";
 
-const INDUSTRY_COLOR: Record<string, string> = {
-  Technology: "#0a66c2",
-  Education:  "#057642",
-  Healthcare: "#7b5ea7",
-  Finance:    "#c47b0e",
-  Retail:     "#0891b2",
-};
+import { INDUSTRY_COLOR } from "@/lib/industryColors";
 
 const INDUSTRIES = Object.keys(INDUSTRY_COLOR);
 

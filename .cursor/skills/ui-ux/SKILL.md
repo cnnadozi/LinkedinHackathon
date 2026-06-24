@@ -1,7 +1,7 @@
 ---
 name: ui-ux
 description: >-
-  Build and refine UI for the LinkedIn Events Hub hackathon — pages, overlays,
+  Build and refine UI for LinkedIn Gather — pages, overlays,
   components, styling, layout, and interaction patterns. Use when implementing
   or changing any UI, UX, styling, components, pages, modals, navigation,
   accessibility, or visual design. Read before any frontend work.
@@ -17,7 +17,7 @@ description: >-
 UI work:
 - [ ] Open the matching linkedin.com page in Chrome DevTools
 - [ ] Inspect target element → copy computed CSS (color, size, padding, border, radius)
-- [ ] Read docs/UI_DESIGN.md + docs/APP_MAP.md
+- [ ] Read docs/UI_DESIGN.md
 - [ ] Reuse components/linkedin/* primitives; add styles to app/globals.css
 - [ ] Mirror DOM structure (avatar + content + action button for person rows)
 - [ ] Long lists (>10 items): use `Pagination` + `LIST_PAGE_SIZE`, not full render
@@ -49,9 +49,9 @@ UI work:
 
 | Doc | Why |
 |-----|-----|
-| [docs/APP_MAP.md](../../../docs/APP_MAP.md) | Routes, overlays, component map |
 | [docs/UI_DESIGN.md](../../../docs/UI_DESIGN.md) | Tokens, page references, patterns |
-| [app/globals.css](../../../app/globals.css) | **Only** stylesheet for `.li-*` classes |
+| [docs/ARCHITECTURE.md](../../../docs/ARCHITECTURE.md) | Routes, data layer, API |
+| [app/globals.css](../../../app/globals.css) | Primary stylesheet for `.li-*` classes |
 
 ## Styling conventions
 
