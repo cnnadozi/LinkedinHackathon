@@ -28,18 +28,30 @@ const mockData: EventDetailPayload = {
     id: "user_4579",
     name: "Bob Smith",
     headline: "DevOps Engineer at Global Solutions LLC",
+    profile_picture_url: "https://i.pravatar.cc/150?u=user_4579",
   },
   attendance: {
     total: 248,
     connectionsCount: 12,
-    previewAvatars: [{ alt: "Alice" }, { alt: "Ben" }, { alt: "Carol" }],
-    connectionPreview: [{ id: "user_1", alt: "Alice" }],
+    previewAvatars: [
+      { alt: "Alice", src: "https://i.pravatar.cc/150?u=user_1" },
+      { alt: "Ben", src: "https://i.pravatar.cc/150?u=user_2" },
+      { alt: "Carol", src: "https://i.pravatar.cc/150?u=user_3" },
+    ],
+    connectionPreview: [
+      {
+        id: "user_1",
+        alt: "Alice",
+        src: "https://i.pravatar.cc/150?u=user_1",
+      },
+    ],
   },
   attendees: [
     {
       id: "user_1",
       name: "Alice Example",
       headline: "Engineer at Example Co",
+      profile_picture_url: "https://i.pravatar.cc/150?u=user_1",
       degree: 1,
       isConnection: true,
       mutualEvents: ["Tech Mixer"],
@@ -75,10 +87,7 @@ describe("EventDetail", () => {
       screen.getByText(/Join a local Education community meetup/),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "248 attendees" }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "12 connections" }),
+      screen.getByRole("button", { name: "248 attendees · 12 connections" }),
     ).toBeInTheDocument();
   });
 
@@ -86,7 +95,9 @@ describe("EventDetail", () => {
     const user = userEvent.setup();
     render(<EventDetail data={mockData} relatedEvents={mockRelatedEvents} />);
 
-    await user.click(screen.getByRole("button", { name: "248 attendees" }));
+    await user.click(
+      screen.getByRole("button", { name: "248 attendees · 12 connections" }),
+    );
 
     expect(
       screen.getByRole("dialog", { name: "Attendance List" }),

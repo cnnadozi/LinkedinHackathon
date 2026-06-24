@@ -1,2 +1,3 @@
 - make one main MOCK profile
-- add img directory with web scrapper
+- meeting imgs
+- update filters in attendacne list (location, company, industry)

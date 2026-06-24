@@ -119,29 +119,36 @@ export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) 
         <ul>
           {visibleAttendees.map((attendee) => (
             <li key={attendee.id} className="attendance-list-row">
-              <Avatar alt={attendee.name} color={avatarColor(attendee.id)} />
+              <Avatar
+                alt={attendee.name}
+                src={attendee.profile_picture_url}
+                color={avatarColor(attendee.id)}
+              />
               <div className="attendance-list-content">
                 <div className="attendance-list-name-row">
                   <span className="attendance-list-name">{attendee.name}</span>
                   <ConnectionBadge degree={attendee.degree} />
                 </div>
-                {attendee.mutualEvents.length > 0 && (
-                  <p className="attendance-list-events">
-                    {attendee.mutualEvents.map((event, index) => (
+                <p className="attendance-list-events">
+                  {attendee.mutualEvents.length > 0 ? (
+                    attendee.mutualEvents.map((event, index) => (
                       <span key={event}>
                         {index > 0 && ", "}
                         <TextLink href="#">{event}</TextLink>
                       </span>
-                    ))}
-                  </p>
-                )}
+                    ))
+                  ) : (
+                    <span>{attendee.headline}</span>
+                  )}
+                </p>
               </div>
               <Button
-                variant="primary"
+                variant={attendee.nudged ? "success" : "primary"}
                 className="attendance-list-nudge"
                 icon={<MessageIcon className="li-btn-icon" />}
+                disabled={attendee.nudged}
               >
-                Nudge
+                {attendee.nudged ? "Nudged ✓" : "Nudge"}
               </Button>
             </li>
           ))}
