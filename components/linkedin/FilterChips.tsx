@@ -1,89 +1,66 @@
-import type { ReactNode } from "react";
-import Button from "./Button";
+/** Toggleable filter pills — used in AttendeeModal and event detail filters. */
+"use client";
 
-type FilterBarProps = {
-  children: ReactNode;
+export type FilterChip = {
+  id: string;
+  label: string;
+};
+
+type FilterChipsProps = {
+  chips: FilterChip[];
+  activeIds?: string[];
+  onToggle?: (id: string) => void;
+  onClear?: () => void;
   className?: string;
 };
 
-export function FilterBar({ children, className = "" }: FilterBarProps) {
+export function FilterChips({
+  chips,
+  activeIds = [],
+  onToggle,
+  onClear,
+  className = "",
+}: FilterChipsProps) {
+  const hasActive = activeIds.length > 0;
+
   return (
-    <div className={`li-filter-bar ${className}`.trim()}>{children}</div>
-  );
-}
+    <div className={`li-filter-chips ${className}`.trim()} role="group">
+      {chips.map((chip) => {
+        const isActive = activeIds.includes(chip.id);
 
-type FilterDropdownProps = {
-  label: string;
-  onClick?: () => void;
-};
-
-export function FilterDropdown({ label, onClick }: FilterDropdownProps) {
-  return (
-    <Button variant="filter" showChevron onClick={onClick}>
-      {label}
-    </Button>
-  );
-}
-
-type ActiveFilterTagProps = {
-  label: string;
-  onRemove?: () => void;
-};
-
-export function ActiveFilterTag({ label, onRemove }: ActiveFilterTagProps) {
-  return (
-    <span className="li-active-tag">
-      {label}
-      <button
-        type="button"
-        className="li-active-tag-remove"
-        aria-label={`Remove ${label} filter`}
-        onClick={onRemove}
-      >
-        ×
-      </button>
-    </span>
-  );
-}
-
-type SegmentOption<T extends string> = {
-  value: T;
-  label: string;
-};
-
-type SegmentGroupProps<T extends string> = {
-  options: SegmentOption<T>[];
-  value: T;
-  onChange?: (value: T) => void;
-};
-
-export function SegmentGroup<T extends string>({
-  options,
-  value,
-  onChange,
-}: SegmentGroupProps<T>) {
-  return (
-    <div className="li-segment-group">
-      {options.map((option) => (
-        <Button
-          key={option.value}
-          variant="segment"
-          active={value === option.value}
-          onClick={() => onChange?.(option.value)}
+        return (
+          <button
+            key={chip.id}
+            type="button"
+            className={`li-filter-chips__chip${isActive ? " li-filter-chips__chip--active" : ""}`}
+            aria-pressed={isActive}
+            onClick={() => onToggle?.(chip.id)}
+          >
+            {chip.label}
+            {isActive && (
+              <span
+                className="li-filter-chips__chip-remove"
+                aria-hidden="true"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onToggle?.(chip.id);
+                }}
+              >
+                ×
+              </span>
+            )}
+          </button>
+        );
+      })}
+      {hasActive && onClear && (
+        <button
+          type="button"
+          className="li-filter-chips__clear"
+          onClick={onClear}
         >
-          {option.label}
-        </Button>
-      ))}
+          Clear all
+        </button>
+      )}
     </div>
-  );
-}
-
-export function AllFiltersLink({ onClick }: { onClick?: () => void }) {
-  return (
-    <span className="li-filter-bar-end">
-      <Button variant="ghost" onClick={onClick}>
-        All filters
-      </Button>
-    </span>
   );
 }

@@ -36,6 +36,27 @@ flowchart TD
 | `app/events/[eventId]/page.tsx` | `/events/[eventId]` | **Page** | **Event detail** — banner, description, RSVP; attendee section; opens `AttendeeModal` |
 | `app/messages/[connectionId]/page.tsx` | `/messages/[connectionId]` | **Page** | **Messaging** — thread + compose; `AiConnectionPanel` above compose (after Nudge) |
 
+### API routes (`app/api/`)
+
+Next.js Route Handlers — same-origin `/api/*` for client `fetch()`; Server Components can import `server/lib/` directly instead.
+
+| File | Path | Purpose |
+|------|------|---------|
+| `app/api/health/route.ts` | `GET /api/health` | Dataset record counts |
+| `app/api/users/route.ts` | `GET /api/users` | All members |
+| `app/api/users/[id]/route.ts` | `GET /api/users/:id` | Single member |
+| `app/api/users/[id]/rsvps/route.ts` | `GET /api/users/:id/rsvps` | Calendar — RSVP'd events |
+| `app/api/users/[id]/suggestions/route.ts` | `GET /api/users/:id/suggestions` | AI connection panel payload |
+| `app/api/jobs/route.ts` | `GET /api/jobs` | All jobs |
+| `app/api/jobs/[id]/route.ts` | `GET /api/jobs/:id` | Single job |
+| `app/api/courses/route.ts` | `GET /api/courses` | All courses |
+| `app/api/courses/[id]/route.ts` | `GET /api/courses/:id` | Single course |
+| `app/api/events/route.ts` | `GET /api/events` | Event list (`?location=`, `?industry=`) |
+| `app/api/events/[id]/route.ts` | `GET /api/events/:id` | Event detail + attendees |
+| `app/api/events/[id]/attendees/route.ts` | `GET /api/events/:id/attendees` | Filtered attendee rows |
+| `app/api/events/[id]/rsvp/route.ts` | `POST /api/events/:id/rsvp` | Toggle RSVP |
+| `app/api/events/[id]/nudge/route.ts` | `POST /api/events/:id/nudge` | Record nudge |
+
 ### Pages summary
 
 | # | Route | Name | Purpose |
@@ -146,11 +167,10 @@ components/
 
 | Path | Purpose |
 |------|---------|
-| `lib/api.ts` | Fetch helpers → Express (`localhost:3001`) |
-| `lib/events.ts` | Event list, detail, RSVP helpers |
-| `lib/attendees.ts` | Attendee list + filter helpers |
-| `lib/ai-suggestions.ts` | Mock AI panel payload |
-| `server/index.js` | Express API — loads `data/*.json` |
+| `lib/api.ts` | Fetch helpers for `/api/*` routes |
+| `lib/events.ts` | Event detail, RSVP, calendar, and AI suggestion helpers |
+| `lib/eventDetail.server.ts` | Server-side data loaders (event detail, health, related events) |
+| `server/lib/` | Backend logic — loads `data/*.json`, RSVP state in `.demo-state.json` |
 | `types/*.ts` | TypeScript models (`Event`, `User`, etc.) |
 
-See [docs/DB_DESC.md](./docs/DB_DESC.md) for API endpoints and data linking.
+See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) for API endpoints and data linking.

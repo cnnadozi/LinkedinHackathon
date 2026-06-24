@@ -1,51 +1,43 @@
+/** Home page — events feed preview with attendance list and dataset status. */
+import Link from "next/link";
 import AttendanceList from "@/components/AttendanceList";
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
-
-type HealthResponse = {
-  status: string;
-  datasets: {
-    users: number;
-    jobs: number;
-    courses: number;
-  };
-};
-
-async function getHealth(): Promise<HealthResponse | null> {
-  try {
-    const res = await fetch(`${API_BASE}/api/health`, { cache: "no-store" });
-    if (!res.ok) return null;
-    return res.json();
-  } catch {
-    return null;
-  }
-}
+import {
+  loadDatasetHealth,
+  loadEventDetailFromDataset,
+} from "@/lib/eventDetail.server";
 
 export default async function Home() {
-  const health = await getHealth();
+  const health = loadDatasetHealth();
+  const featuredEvent = loadEventDetailFromDataset("event_0001");
 
   return (
     <main>
       <h1>LinkedIn Gather</h1>
       <p>Events hub — attendance list preview.</p>
 
+      {featuredEvent && (
+        <section className="status">
+          <strong>Featured event</strong>
+          <p>
+            <Link href={`/events/${featuredEvent.event.id}`}>
+              {featuredEvent.event.name}
+            </Link>{" "}
+            · {featuredEvent.event.location}
+          </p>
+        </section>
+      )}
+
       <AttendanceList />
 
       <section className="status">
-        <strong>API status</strong>
-        {health ? (
-          <ul>
-            <li>Server: {health.status}</li>
-            <li>Users: {health.datasets.users}</li>
-            <li>Jobs: {health.datasets.jobs}</li>
-            <li>Courses: {health.datasets.courses}</li>
-          </ul>
-        ) : (
-          <p className="error">
-            Could not reach the API at {API_BASE}. Run{" "}
-            <code>npm run dev:server</code> in another terminal.
-          </p>
-        )}
+        <strong>Dataset status</strong>
+        <ul>
+          <li>Server: {health.status}</li>
+          <li>Users: {health.datasets.users}</li>
+          <li>Jobs: {health.datasets.jobs}</li>
+          <li>Courses: {health.datasets.courses}</li>
+          <li>Events: {health.datasets.events}</li>
+        </ul>
       </section>
     </main>
   );

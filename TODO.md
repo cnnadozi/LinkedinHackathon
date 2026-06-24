@@ -1,2 +1,2 @@
-cnnadozi:
-- Make necessary skills, hooks, and subagents
+- fix the bad looking icons
+- add img directory with web scrapper

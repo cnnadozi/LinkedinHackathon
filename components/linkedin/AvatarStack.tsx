@@ -1,38 +1,41 @@
-import Avatar from "./Avatar";
-
-type StackAvatar = {
-  id: string;
-  name: string;
-  src?: string;
-  color?: string;
-};
+/** Overlapping attendee avatars with "+N" overflow (e.g. "248 attending" preview). */
+import { Avatar, type AvatarProps } from "./Avatar";
 
 type AvatarStackProps = {
-  avatars: StackAvatar[];
+  avatars: Pick<AvatarProps, "src" | "alt" | "color">[];
   max?: number;
-  size?: "sm" | "md" | "lg";
+  size?: AvatarProps["size"];
   className?: string;
 };
 
-export default function AvatarStack({
+export function AvatarStack({
   avatars,
   max = 3,
   size = "sm",
   className = "",
 }: AvatarStackProps) {
-  const visible = avatars.slice(0, max);
+  const shown = avatars.slice(0, max);
+  const remaining = avatars.length - max;
 
   return (
-    <div className={`li-avatar-stack ${className}`.trim()}>
-      {visible.map((avatar) => (
-        <Avatar
-          key={avatar.id}
-          name={avatar.name}
-          src={avatar.src}
-          color={avatar.color}
-          size={size}
-        />
+    <div
+      className={["li-avatar-stack", className].filter(Boolean).join(" ")}
+      aria-label={`${avatars.length} attendees`}
+    >
+      {shown.map((avatar, index) => (
+        <div
+          key={`${avatar.alt}-${index}`}
+          className="li-avatar-stack__item"
+          style={{ zIndex: max - index }}
+        >
+          <Avatar {...avatar} size={size} />
+        </div>
       ))}
+      {remaining > 0 && (
+        <span className="li-avatar-stack__overflow" aria-hidden="true">
+          +{remaining}
+        </span>
+      )}
     </div>
   );
 }

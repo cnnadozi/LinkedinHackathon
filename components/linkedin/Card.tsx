@@ -1,12 +1,29 @@
+/** White surface container with configurable padding (event cards, modals, etc.). */
 import type { HTMLAttributes, ReactNode } from "react";
 
-type CardProps = HTMLAttributes<HTMLElement> & {
+type CardPadding = "sm" | "md" | "lg";
+
+export type CardProps = HTMLAttributes<HTMLElement> & {
   children: ReactNode;
+  padding?: CardPadding;
 };
 
-export function Card({ children, className = "", ...props }: CardProps) {
+export function Card({
+  children,
+  className = "",
+  padding = "md",
+  ...props
+}: CardProps) {
+  const classes = [
+    "li-card",
+    `li-card--padding-${padding}`,
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <section className={`li-card ${className}`.trim()} {...props}>
+    <section className={classes} {...props}>
       {children}
     </section>
   );

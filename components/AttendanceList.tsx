@@ -1,3 +1,7 @@
+/**
+ * Attendance list panel — LinkedIn-style guest list with filters and Nudge actions.
+ * Uses mock data for now; will wire to /api/users and event attendance later.
+ */
 "use client";
 
 import "@/components/AttendanceList.css";
@@ -29,6 +33,7 @@ type Attendee = {
   events: string[];
 };
 
+// Applied filter tags shown as removable chips below the connection-degree tabs.
 const ACTIVE_FILTERS = [
   "Abingdon",
   "Computer Games",
@@ -46,7 +51,7 @@ const ATTENDEES: Attendee[] = [
   {
     id: "1",
     name: "Cedric Wilson, LPC, NCC",
-    connectionDegree: "3rd+",
+    connectionDegree: 3,
     avatarColor: "#6b4c9a",
     events: [
       "Software Engineering Internship Information Session",
@@ -59,21 +64,21 @@ const ATTENDEES: Attendee[] = [
   {
     id: "2",
     name: "Ben Ashton",
-    connectionDegree: "3rd+",
+    connectionDegree: 3,
     avatarColor: "#5b7f95",
     events: ["Data Science Networking Night", "Resume & LinkedIn Review Clinic"],
   },
   {
     id: "3",
     name: "Garrett Louthen",
-    connectionDegree: "3rd+",
+    connectionDegree: 3,
     avatarColor: "#8b6914",
     events: ["Product Management Career Workshop"],
   },
   {
     id: "4",
     name: "Cody A. J.",
-    connectionDegree: "3rd+",
+    connectionDegree: 3,
     avatarColor: "#4a7c59",
     events: [
       "Resume & LinkedIn Review Clinic",
@@ -83,7 +88,7 @@ const ATTENDEES: Attendee[] = [
   {
     id: "5",
     name: "Kevin R. Stovall",
-    connectionDegree: "3rd+",
+    connectionDegree: 3,
     avatarColor: "#7a5c4f",
     events: ["Data Science Networking Night"],
   },
@@ -104,10 +109,7 @@ export default function AttendanceList() {
           <FilterDropdown label="Locations" />
           <FilterDropdown label="Current companies" />
 
-          <SegmentGroup
-            options={CONNECTION_OPTIONS}
-            value="3rd+"
-          />
+          <SegmentGroup options={CONNECTION_OPTIONS} value="3rd+" />
 
           {ACTIVE_FILTERS.map((filter) => (
             <ActiveFilterTag key={filter} label={filter} />
@@ -121,7 +123,7 @@ export default function AttendanceList() {
         {ATTENDEES.map((attendee) => (
           <li key={attendee.id} className="attendance-list-row">
             <Avatar
-              name={attendee.name}
+              alt={attendee.name}
               src={attendee.avatarUrl}
               color={attendee.avatarColor}
             />

@@ -1,51 +1,50 @@
+/** Profile photo or initials fallback — sizes match LinkedIn avatar scale. */
 type AvatarSize = "sm" | "md" | "lg";
 
-type AvatarProps = {
-  name: string;
+export type AvatarProps = {
   src?: string;
+  alt: string;
+  /** Background for initials when no photo is available. */
   color?: string;
   size?: AvatarSize;
   className?: string;
-};
-
-const sizeClass: Record<AvatarSize, string> = {
-  sm: "li-avatar-sm",
-  md: "li-avatar-md",
-  lg: "li-avatar-lg",
 };
 
 function getInitials(name: string): string {
   return name
     .split(/[\s,]+/)
     .filter(Boolean)
+    .map((part) => part[0])
+    .join("")
     .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join("");
+    .toUpperCase();
 }
 
-export default function Avatar({
-  name,
+export function Avatar({
   src,
-  color = "#ccc",
+  alt,
+  color,
   size = "md",
   className = "",
 }: AvatarProps) {
-  const classes = `li-avatar ${sizeClass[size]} ${className}`.trim();
-
-  if (src) {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img src={src} alt="" className={classes} />
-    );
-  }
+  const classes = ["li-avatar", `li-avatar--${size}`, className]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <div
-      className={`${classes} li-avatar-initials`}
-      style={{ background: color }}
-      aria-hidden
-    >
-      {getInitials(name)}
+    <div className={classes} title={alt} role="img" aria-label={alt}>
+      {src ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={src} alt={alt} className="li-avatar__img" />
+      ) : (
+        <span
+          className="li-avatar__initials"
+          aria-hidden="true"
+          style={color ? { background: color } : undefined}
+        >
+          {getInitials(alt)}
+        </span>
+      )}
     </div>
   );
 }
