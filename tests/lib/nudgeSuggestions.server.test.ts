@@ -4,12 +4,52 @@ import {
   generateNudgeSuggestions,
   getNudgePanel,
   nudgeSuggestionsHeuristic,
+  parseNudgeSuggestionsResponse,
   type NudgeContext,
 } from "@/lib/nudgeSuggestions.server";
 
 const EVENT_NAME = "Breaking Into HR Coordinator Roles";
 // Real attendee of Alice's event_0002 (see server/lib data).
 const REAL_ATTENDEE = "user_3397";
+
+describe("parseNudgeSuggestionsResponse", () => {
+  it("parses a standard suggestions array", () => {
+    const out = parseNudgeSuggestionsResponse(
+      JSON.stringify({
+        suggestions: ["Mention the event.", "Bring up Python.", "Ask Ben about Acme."],
+      }),
+    );
+    expect(out).toEqual(["Mention the event.", "Bring up Python.", "Ask Ben about Acme."]);
+  });
+
+  it("strips markdown fences and alternate keys", () => {
+    const out = parseNudgeSuggestionsResponse(`\`\`\`json
+{
+  "talking_points": ["One", "Two", "Three"]
+}
+\`\`\``);
+    expect(out).toEqual(["One", "Two", "Three"]);
+  });
+
+  it("coerces object-shaped suggestions", () => {
+    const out = parseNudgeSuggestionsResponse(
+      JSON.stringify({
+        suggestions: [
+          { text: "Mention the event." },
+          { suggestion: "Bring up Python." },
+          { idea: "Ask Ben about Acme." },
+        ],
+      }),
+    );
+    expect(out).toHaveLength(3);
+  });
+
+  it("throws when fewer than 3 suggestions are present", () => {
+    expect(() =>
+      parseNudgeSuggestionsResponse(JSON.stringify({ suggestions: ["Only one"] })),
+    ).toThrow("Gemini response missing 3 valid suggestions");
+  });
+});
 
 describe("buildNudgeContext", () => {
   it("assembles sender, recipient, the shared event, and shared signals", () => {

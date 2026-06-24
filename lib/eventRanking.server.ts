@@ -9,6 +9,7 @@
  */
 import fs from "fs";
 import path from "path";
+import { generateGeminiJson } from "@/lib/gemini.server";
 import type { Event } from "@/types/event";
 
 export type MemberProfile = {
@@ -18,7 +19,6 @@ export type MemberProfile = {
   courses: string[];
 };
 
-const GEMINI_MODEL = "gemini-1.5-flash";
 const PROMPT_PATH = path.join(process.cwd(), "prompts", "event-ranking.md");
 
 /** Build the ranking profile for the main user (Alice Johnson, user_5736). */
@@ -120,8 +120,6 @@ async function rankEventsWithGemini(
   member: MemberProfile,
   apiKey: string,
 ): Promise<Event[]> {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { GoogleGenerativeAI } = require("@google/generative-ai");
   const instructions = fs.readFileSync(PROMPT_PATH, "utf-8");
 
   const payload = {
@@ -135,15 +133,7 @@ async function rankEventsWithGemini(
     })),
   };
 
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({
-    model: GEMINI_MODEL,
-    systemInstruction: instructions,
-    generationConfig: { responseMimeType: "application/json" },
-  });
-
-  const result = await model.generateContent(JSON.stringify(payload));
-  const text = result.response.text();
+  const text = await generateGeminiJson(apiKey, instructions, payload);
   const parsed = JSON.parse(text) as { ranked_event_ids?: string[] };
 
   if (!Array.isArray(parsed.ranked_event_ids)) {
