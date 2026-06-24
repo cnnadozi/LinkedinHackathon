@@ -27,8 +27,6 @@ type EventDetailProps = {
   relatedEvents: Event[];
 };
 
-type ModalFilter = "all" | "connections";
-
 const EVENT_TABS = [
   { value: "details" as const, label: "Details" },
   { value: "comments" as const, label: "Comments" },
@@ -38,7 +36,6 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
   const [rsvpd, setRsvpd] = useState(data.rsvpd);
   const [rsvpLoading, setRsvpLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalFilter, setModalFilter] = useState<ModalFilter>("all");
   const [activeTab, setActiveTab] = useState<(typeof EVENT_TABS)[number]["value"]>(
     "details",
   );
@@ -55,8 +52,7 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
     setRsvpLoading(false);
   }
 
-  function openAttendeeModal(filter: ModalFilter) {
-    setModalFilter(filter);
+  function openAttendeeModal() {
     setModalOpen(true);
   }
 
@@ -86,23 +82,11 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
               <p className="event-detail__location">{event.location}</p>
 
               <p className="event-detail__attendance-line">
-                <TextButton
-                  variant="default"
-                  onClick={() => openAttendeeModal("all")}
-                >
+                <TextButton variant="default" onClick={openAttendeeModal}>
                   {attendance.total.toLocaleString()} attendees
+                  {attendance.connectionsCount > 0 &&
+                    ` · ${attendance.connectionsCount} connections`}
                 </TextButton>
-                {attendance.connectionsCount > 0 && (
-                  <>
-                    ,{" "}
-                    <TextButton
-                      variant="connections"
-                      onClick={() => openAttendeeModal("connections")}
-                    >
-                      {attendance.connectionsCount} connections
-                    </TextButton>
-                  </>
-                )}
               </p>
 
               {attendance.connectionPreview.length > 0 && (
@@ -111,7 +95,7 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
                     <AvatarButton
                       key={connection.id}
                       aria-label={`View ${connection.alt} in attendee list`}
-                      onClick={() => openAttendeeModal("connections")}
+                      onClick={openAttendeeModal}
                     >
                       <Avatar alt={connection.alt} size="sm" />
                     </AvatarButton>
@@ -173,13 +157,7 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
         <EventDetailSidebar relatedEvents={relatedEvents} />
       </div>
 
-      <AttendeeModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        eventId={event.id}
-        attendees={data.attendees}
-        initialFilter={modalFilter}
-      />
+      <AttendeeModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
 }
