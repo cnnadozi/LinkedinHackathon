@@ -14,11 +14,15 @@ const FILTER_LABELS: Record<FeedFilter, string> = {
 type EventsFeedSectionProps = {
   events: Event[];
   mainUserAttendingEventIds: string[];
+  attendeeCounts: Record<string, number>;
+  calendarToggle?: React.ReactNode;
 };
 
 export function EventsFeedSection({
   events,
   mainUserAttendingEventIds,
+  attendeeCounts,
+  calendarToggle,
 }: EventsFeedSectionProps) {
   const [filter, setFilter] = useState<FeedFilter>("all");
 
@@ -31,6 +35,7 @@ export function EventsFeedSection({
   return (
     <>
       <div className="events-feed-filter-bar">
+        {calendarToggle}
         <div className="events-feed-filter-dropdown">
           <span className="events-feed-filter-pill events-feed-filter-pill--active">
             {FILTER_LABELS[filter]}
@@ -59,7 +64,7 @@ export function EventsFeedSection({
         </div>
       </div>
 
-      <EventsFeed events={filteredEvents} />
+      <EventsFeed events={filteredEvents} attendeeCounts={attendeeCounts} />
     </>
   );
 }

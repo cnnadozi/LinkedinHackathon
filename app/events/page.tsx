@@ -1,12 +1,16 @@
-import { EventsFeedSection } from "@/components/EventsFeedSection";
 import { rankEventsForMainUser } from "@/lib/eventRanking.server";
 import type { Event } from "@/types/event";
+import EventsPageLayout from "@/components/EventsPageLayout";
 
 export default async function EventsPage() {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { events, getMainUserAttendingEventIds } = require("@/server/lib/data") as {
     events: Event[];
     getMainUserAttendingEventIds: () => string[];
+  };
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { getEventAttendeeCounts } = require("@/server/lib/events") as {
+    getEventAttendeeCounts: (eventList: Event[]) => Record<string, number>;
   };
 
   // Order events for the main user (Alice Johnson) by location, industry,
@@ -15,14 +19,11 @@ export default async function EventsPage() {
 
   return (
     <main className="page events-feed-page">
-      <div className="events-feed-layout">
-        <div className="events-feed-main">
-          <EventsFeedSection
-            events={rankedEvents}
-            mainUserAttendingEventIds={getMainUserAttendingEventIds()}
-          />
-        </div>
-      </div>
+      <EventsPageLayout
+        events={rankedEvents}
+        mainUserAttendingEventIds={getMainUserAttendingEventIds()}
+        attendeeCounts={getEventAttendeeCounts(rankedEvents)}
+      />
     </main>
   );
 }

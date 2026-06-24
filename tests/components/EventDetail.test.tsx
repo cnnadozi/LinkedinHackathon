@@ -55,6 +55,8 @@ const mockData: EventDetailPayload = {
       location: "Boston, MA",
       company: "Example Co",
       industry: "Education",
+      school: "Example University",
+      skills: ["Teaching"],
       degree: 1,
       isConnection: true,
       mutualEvents: [{ id: "event_0009", name: "Tech Mixer" }],
