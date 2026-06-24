@@ -1,4 +1,4 @@
-import { EventsFeedSection } from "@/components/EventsFeedSection";
+import EventsPageLayout from "@/components/EventsPageLayout";
 import type { Event } from "@/types/event";
 
 export default function EventsPage() {
@@ -10,15 +10,7 @@ export default function EventsPage() {
 
   return (
     <main className="page events-feed-page">
-      <EventsPageLayout events={events}/>
-      <div className="events-feed-layout">
-        <div className="events-feed-main">
-          <EventsFeedSection
-            events={events}
-            mainUserAttendingEventIds={getMainUserAttendingEventIds()}
-          />
-        </div>
-      </div>
+      <EventsPageLayout events={events} mainUserAttendingEventIds={getMainUserAttendingEventIds()} />
     </main>
   );
 }
