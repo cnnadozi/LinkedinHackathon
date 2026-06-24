@@ -24,6 +24,7 @@ const mockData: EventDetailPayload = {
     host_user_id: "user_4579",
     industry: "Education",
     company: "Global Solutions LLC",
+    image: "/events/cover_1.png",
   },
   host: {
     id: "user_4579",
@@ -77,6 +78,7 @@ const mockRelatedEvents = [
     host_user_id: "user_5736",
     industry: "Education",
     company: "AI Dynamics",
+    image: "/events/cover_2.png",
   },
 ];
 

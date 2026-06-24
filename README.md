@@ -6,7 +6,7 @@ Elevating and expanding LinkedIn's event experience for seamless discovery and c
 LinkedIn Gather is a reimagined LinkedIn events experience. Built with Next.js (App Router), React, and TypeScript, our solution turns event discovery into a proactive networking tool. It helps professionals seamlessly track their schedules, discover opportunities, and leverage mutual connections to make meaningful real-world interactions.
 
 ## AI Features (Powered by Google Gemini)
-We use the Google Gemini API (`gemini-1.5-flash`) to power intelligent event discovery and networking suggestions. Each AI feature has a markdown prompt stored in `prompts/` and a deterministic heuristic fallback, ensuring the app functions perfectly even without an API key.
+We use the Google Gemini API (`gemini-3.5-flash`, with fallbacks to `gemini-3-flash` and `gemini-3.1-flash-lite`) to power intelligent event discovery and networking suggestions. Each AI feature has a markdown prompt stored in `prompts/` and a deterministic heuristic fallback, ensuring the app functions perfectly even without an API key.
 
 *   **Personalized Event Ranking:** (`lib/eventRanking.server.ts`) Orders the main events feed based on the user's location, industry, skills, and courses. 
 *   **AI-Powered Nudge Follow-Ups:** (`lib/nudgeSuggestions.server.ts`) Generates insights for the AI connection panel, pulling shared themes and mutual events from real data, and offering three suggested talking points to help users craft a personalized message in their own voice.

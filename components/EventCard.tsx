@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { eventBannerClass } from "@/lib/formatEventDate";
 import type { Event } from "@/types/event";
@@ -40,7 +41,15 @@ export function EventCard({ event, attendeeCount }: EventCardProps) {
   return (
     <article className="event-feed-card">
       <Link href={`/events/${event.id}`} className="event-feed-card__thumb-link" tabIndex={-1} aria-hidden>
-        <div className={`event-feed-card__thumb ${bannerClass}`} />
+        <div className={`event-feed-card__thumb ${bannerClass}`} role="presentation">
+          <Image
+            src={event.image}
+            alt=""
+            fill
+            sizes="100px"
+            className="event-feed-card__thumb-img"
+          />
+        </div>
       </Link>
 
       <div className="event-feed-card__body">

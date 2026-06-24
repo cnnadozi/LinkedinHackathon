@@ -24,6 +24,7 @@ function makeEvent(overrides: Partial<Event>): Event {
     host_user_id: "user_1",
     industry: "Technology",
     company: "Acme",
+    image: "/events/cover_1.png",
     ...overrides,
   };
 }

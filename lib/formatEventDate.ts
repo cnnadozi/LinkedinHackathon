@@ -44,11 +44,6 @@ export function eventBannerClass(industry: string): string {
   return `event-detail__banner--${key}`;
 }
 
-/** Stable cover image for sidebar / feed thumbnails (no image field in dataset). */
-export function eventThumbnailUrl(eventId: string): string {
-  return `https://picsum.photos/seed/${encodeURIComponent(eventId)}/160/96`;
-}
-
 export function isEventLive(iso: string, durationMinutes = 45): boolean {
   const start = new Date(iso);
   const end = new Date(start.getTime() + durationMinutes * 60_000);

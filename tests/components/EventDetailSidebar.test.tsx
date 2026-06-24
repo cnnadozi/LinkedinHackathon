@@ -13,6 +13,7 @@ const mockRelatedEvents: Event[] = [
     host_user_id: "user_5736",
     industry: "Education",
     company: "AI Dynamics",
+    image: "/events/cover_2.png",
   },
   {
     id: "event_0003",
@@ -23,6 +24,7 @@ const mockRelatedEvents: Event[] = [
     host_user_id: "user_8816",
     industry: "Technology",
     company: "Tech Innovators Inc.",
+    image: "/events/cover_3.png",
   },
 ];
 

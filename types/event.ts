@@ -10,4 +10,6 @@ export type Event = {
   host_user_id: string;
   industry: string;
   company: string;
+  /** Public path to the event cover image, e.g. "/events/cover_3.png" */
+  image: string;
 };

@@ -14,6 +14,7 @@ const events: Event[] = [
     host_user_id: "user_1",
     industry: "Education",
     company: "Acme",
+    image: "/events/cover_1.png",
   },
   {
     id: "event_0002",
@@ -24,6 +25,7 @@ const events: Event[] = [
     host_user_id: "user_2",
     industry: "Technology",
     company: "Beta Co",
+    image: "/events/cover_2.png",
   },
   {
     id: "event_0003",
@@ -34,6 +36,7 @@ const events: Event[] = [
     host_user_id: "user_3",
     industry: "Healthcare",
     company: "Gamma LLC",
+    image: "/events/cover_3.png",
   },
 ];
 

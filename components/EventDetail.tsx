@@ -5,6 +5,7 @@
  * Layout mirrors linkedin.com/events/* with hackathon attendee enhancements.
  */
 import { LogOut } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { AttendeeModal } from "./AttendeeModal";
 import { EventDetailSidebar } from "./EventDetailSidebar";
@@ -147,6 +148,14 @@ export function EventDetail({ data, relatedEvents }: EventDetailProps) {
         <div className="event-page__main">
           <Card padding="sm" className="event-detail-card">
             <div className={`event-detail__banner ${bannerClass}`}>
+              <Image
+                src={event.image}
+                alt=""
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 640px"
+                className="event-detail__banner-img"
+              />
               <div className="event-detail__banner-overlay">
                 <Badge variant="live" className="event-detail__live-badge">
                   Upcoming event
