@@ -1,2 +1,3 @@
-- fix the bad looking icons
-- add img directory with web scrapper
+- make one main MOCK profile
+- meeting imgs
+- update filters in attendacne list (location, company, industry)

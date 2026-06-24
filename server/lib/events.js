@@ -86,6 +86,7 @@ function buildAttendeeRow(attendeeId, event, currentUserId) {
     id: user.id,
     name: user.name,
     headline: memberHeadline(user),
+    profile_picture_url: user.profile_picture_url,
     degree,
     isConnection: connected,
     mutualEvents: mockMutualEvents(attendeeId, event.id),
@@ -106,10 +107,12 @@ function getEventDetail(eventId, currentUserId = DEMO_USER_ID) {
   const connections = attendeeRows.filter((row) => row.isConnection);
   const previewAvatars = attendeeRows.slice(0, 3).map((row) => ({
     alt: row.name,
+    src: row.profile_picture_url,
   }));
   const connectionPreview = connections.slice(0, 5).map((row) => ({
     id: row.id,
     alt: row.name,
+    src: row.profile_picture_url,
   }));
 
   return {
@@ -119,6 +122,7 @@ function getEventDetail(eventId, currentUserId = DEMO_USER_ID) {
           id: host.id,
           name: host.name,
           headline: memberHeadline(host),
+          profile_picture_url: host.profile_picture_url,
         }
       : null,
     attendance: {

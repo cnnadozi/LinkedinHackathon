@@ -7,6 +7,9 @@ describe("connection suggestions", () => {
 
     expect(suggestions).not.toBeNull();
     expect(suggestions.targetUser.id).toBe("user_4579");
+    expect(suggestions.targetUser.profile_picture_url).toMatch(
+      /^https:\/\/i\.pravatar\.cc\/150\?u=user_4579$/,
+    );
     expect(Array.isArray(suggestions.sharedThemes)).toBe(true);
     expect(Array.isArray(suggestions.sharedSkills)).toBe(true);
     expect(Array.isArray(suggestions.sharedSchools)).toBe(true);

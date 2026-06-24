@@ -106,6 +106,7 @@ function getConnectionSuggestions(targetUserId, currentUserId = DEMO_USER_ID) {
       id: targetUser.id,
       name: targetUser.name,
       headline: memberHeadline(targetUser),
+      profile_picture_url: targetUser.profile_picture_url,
     },
     sharedThemes,
     sharedSkills,

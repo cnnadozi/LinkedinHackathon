@@ -26,8 +26,14 @@ describe("events API helpers", () => {
     expect(detail).not.toBeNull();
     expect(detail.event.id).toBe("event_0001");
     expect(detail.host?.id).toBe("user_4579");
+    expect(detail.host?.profile_picture_url).toMatch(
+      /^https:\/\/i\.pravatar\.cc\/150\?u=user_4579$/,
+    );
     expect(detail.attendance.total).toBeGreaterThan(0);
     expect(detail.attendees.length).toBe(detail.attendance.total);
+    expect(detail.attendees[0].profile_picture_url).toMatch(
+      /^https:\/\/i\.pravatar\.cc\/150\?u=/,
+    );
   });
 
   it("returns null for unknown events", () => {
