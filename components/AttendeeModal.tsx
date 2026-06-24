@@ -15,6 +15,8 @@ type AttendeeModalProps = {
   open: boolean;
   onClose: () => void;
   attendees: AttendeeRow[];
+  eventId: string;
+  eventName: string;
 };
 
 type DegreeFilter = 1 | 2 | 3 | null;
@@ -154,7 +156,13 @@ function ActiveTag({ label, onRemove }: { label: string; onRemove: () => void })
   );
 }
 
-export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) {
+export function AttendeeModal({
+  open,
+  onClose,
+  attendees,
+  eventId,
+  eventName,
+}: AttendeeModalProps) {
   const [filters, setFilters] = useState<AttendeeFilters>(EMPTY_FILTERS);
   const [chatAttendee, setChatAttendee] = useState<AttendeeRow | null>(null);
 
@@ -279,7 +287,12 @@ export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) 
       </div>
 
       {chatAttendee && (
-        <NudgeChat attendee={chatAttendee} onClose={() => setChatAttendee(null)} />
+        <NudgeChat
+          attendee={chatAttendee}
+          eventId={eventId}
+          eventName={eventName}
+          onClose={() => setChatAttendee(null)}
+        />
       )}
     </Modal>
   );
