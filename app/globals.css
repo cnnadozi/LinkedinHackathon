@@ -692,6 +692,7 @@ p {
 
 .app-shell__content {
   min-height: calc(100vh - var(--li-nav-height));
+  background: var(--li-bg);
 }
 
 .li-nav {
@@ -1245,4 +1246,233 @@ p {
   font-size: 12px;
   color: var(--li-gray-medium);
   margin-top: 4px;
+}
+
+/* ── Events feed page (/events) ── */
+
+.events-feed-page {
+  padding-top: 20px;
+}
+
+.events-feed-layout {
+  display: block;
+}
+
+.events-feed-main {
+  min-width: 0;
+}
+
+/* Filter bar */
+.events-feed-filter-bar {
+  margin-bottom: 16px;
+}
+
+.events-feed-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border-radius: var(--li-radius-pill);
+  background: #057642;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+.events-feed-filter-pill:hover {
+  background: #045c37;
+}
+
+.events-feed-filter-pill__caret {
+  flex-shrink: 0;
+}
+
+/* Result count */
+.events-feed-count {
+  font-size: 14px;
+  color: var(--li-gray-medium);
+  margin-bottom: 12px;
+}
+
+/* White card that wraps the event rows + pagination */
+.events-feed-card {
+  background: var(--li-surface);
+  border-radius: var(--li-radius);
+  border: 1px solid var(--li-border-hairline);
+  overflow: hidden;
+}
+
+/* List */
+.events-feed-list {
+  list-style: none;
+}
+
+.events-feed-list__item {
+  border-bottom: 1px solid var(--li-border-hairline);
+  padding: 0 16px;
+}
+
+.events-feed-list__item:last-child {
+  border-bottom: none;
+}
+
+/* Event card in the feed */
+.event-feed-card {
+  display: flex;
+  gap: 16px;
+  padding: 14px 0;
+}
+
+.event-feed-card__thumb-link {
+  flex-shrink: 0;
+}
+
+.event-feed-card__thumb {
+  width: 100px;
+  height: 66px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.event-feed-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-feed-card__title-link {
+  text-decoration: none;
+}
+
+.event-feed-card__title-link:hover .event-feed-card__title {
+  color: var(--li-blue-interactive);
+  text-decoration: underline;
+}
+
+.event-feed-card__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--li-gray-dark);
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+
+.event-feed-card__time {
+  font-size: 13px;
+  color: var(--li-gray-dark);
+  margin-bottom: 1px;
+}
+
+.event-feed-card__meta {
+  font-size: 13px;
+  color: var(--li-gray-medium);
+  margin-bottom: 6px;
+}
+
+.event-feed-card__description {
+  font-size: 13px;
+  color: var(--li-gray-medium);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.event-feed-card__attendees {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--li-gray-medium);
+}
+
+.event-feed-card__attendees-icon {
+  flex-shrink: 0;
+  color: var(--li-gray-medium);
+}
+
+
+/* ── Pagination bar ── */
+
+.events-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--li-border-hairline);
+  background: var(--li-surface);
+}
+
+.events-pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--li-gray-dark);
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.events-pagination__btn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.events-pagination__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.events-pagination__prev,
+.events-pagination__next {
+  color: var(--li-blue-interactive);
+  font-weight: 600;
+  padding: 0 14px;
+}
+
+.events-pagination__page--active {
+  background: var(--li-blue-interactive);
+  color: #fff;
+  font-weight: 600;
+}
+
+.events-pagination__page--active:hover {
+  background: var(--li-blue-interactive) !important;
+}
+
+.events-pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  font-size: 14px;
+  color: var(--li-gray-medium);
+}
+
+@media (max-width: 768px) {
+  .events-feed-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .events-feed-sidebar {
+    display: none;
+  }
+
+  .event-feed-card__thumb {
+    width: 72px;
+    height: 48px;
+  }
 }

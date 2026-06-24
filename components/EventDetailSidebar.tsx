@@ -81,13 +81,6 @@ export function EventDetailSidebar({ relatedEvents }: EventDetailSidebarProps) {
         </ul>
       </Card>
 
-      <footer className="event-sidebar__footer">
-        <span>About</span>
-        <span>Accessibility</span>
-        <span>Help Center</span>
-        <span>Privacy &amp; Terms</span>
-        <p>LinkedIn Corporation © 2026</p>
-      </footer>
     </aside>
   );
 }
