@@ -13,9 +13,24 @@
  */
 import fs from "fs";
 import path from "path";
-
-const GEMINI_MODEL = "gemini-1.5-flash";
+import { SchemaType, type ResponseSchema } from "@google/generative-ai";
+import { generateGeminiJson } from "@/lib/gemini.server";
 const PROMPT_PATH = path.join(process.cwd(), "prompts", "nudge-suggestions.md");
+
+const NUDGE_RESPONSE_SCHEMA: ResponseSchema = {
+  type: SchemaType.OBJECT,
+  properties: {
+    suggestions: {
+      type: SchemaType.ARRAY,
+      items: { type: SchemaType.STRING },
+      minItems: 3,
+      maxItems: 3,
+    },
+  },
+  required: ["suggestions"],
+};
+
+const MAX_GEMINI_PARSE_ATTEMPTS = 2;
 
 export type NudgeContext = {
   sender: { name: string };
@@ -102,18 +117,45 @@ export function nudgeSuggestionsHeuristic(ctx: NudgeContext): string[] {
   return [sharedEvent, inCommon, aboutThem];
 }
 
+function extractJsonObject(text: string): unknown {
+  const trimmed = text.trim();
+  const fenceMatch = trimmed.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i);
+  const jsonText = fenceMatch ? fenceMatch[1].trim() : trimmed;
+  return JSON.parse(jsonText);
+}
+
+function coerceSuggestion(item: unknown): string | null {
+  if (typeof item === "string" && item.trim().length > 0) return item.trim();
+  if (item && typeof item === "object") {
+    const record = item as Record<string, unknown>;
+    for (const key of ["text", "suggestion", "idea", "talking_point"]) {
+      const value = record[key];
+      if (typeof value === "string" && value.trim().length > 0) {
+        return value.trim();
+      }
+    }
+  }
+  return null;
+}
+
 /** Validate a model response into exactly 3 non-empty strings. */
-function parseSuggestions(text: string): string[] {
-  const parsed = JSON.parse(text) as { suggestions?: unknown };
-  const list = parsed.suggestions;
-  if (
-    !Array.isArray(list) ||
-    list.length !== 3 ||
-    !list.every((s) => typeof s === "string" && s.trim().length > 0)
-  ) {
+export function parseNudgeSuggestionsResponse(text: string): string[] {
+  const parsed = extractJsonObject(text) as Record<string, unknown>;
+  const raw =
+    parsed.suggestions ??
+    parsed.talking_points ??
+    parsed.talkingPoints ??
+    parsed.ideas;
+
+  if (!Array.isArray(raw)) {
+    throw new Error("Gemini response missing suggestions array");
+  }
+
+  const list = raw.map(coerceSuggestion).filter((item): item is string => item !== null);
+  if (list.length !== 3) {
     throw new Error("Gemini response missing 3 valid suggestions");
   }
-  return list as string[];
+  return list;
 }
 
 /** Call Gemini for nudge suggestions; throws on any failure so callers fall back. */
@@ -121,19 +163,21 @@ async function nudgeSuggestionsWithGemini(
   ctx: NudgeContext,
   apiKey: string,
 ): Promise<string[]> {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { GoogleGenerativeAI } = require("@google/generative-ai");
   const instructions = fs.readFileSync(PROMPT_PATH, "utf-8");
+  let lastError: unknown;
 
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({
-    model: GEMINI_MODEL,
-    systemInstruction: instructions,
-    generationConfig: { responseMimeType: "application/json" },
-  });
+  for (let attempt = 0; attempt < MAX_GEMINI_PARSE_ATTEMPTS; attempt++) {
+    try {
+      const text = await generateGeminiJson(apiKey, instructions, ctx, {
+        responseSchema: NUDGE_RESPONSE_SCHEMA,
+      });
+      return parseNudgeSuggestionsResponse(text);
+    } catch (error) {
+      lastError = error;
+    }
+  }
 
-  const result = await model.generateContent(JSON.stringify(ctx));
-  return parseSuggestions(result.response.text());
+  throw lastError;
 }
 
 /**
