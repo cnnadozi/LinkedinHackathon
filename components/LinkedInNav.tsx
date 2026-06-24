@@ -2,21 +2,18 @@
 "use client";
 
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Avatar } from "./linkedin/Avatar";
+import { CalendarDays, ChevronDown, LayoutGrid, MonitorPlay, Search } from "lucide-react";
 import {
-  NavIconGather,
-  NavIconHome,
-  NavIconJobs,
-  NavIconLearning,
-  NavIconMessaging,
-  NavIconNetwork,
-  NavIconNotifications,
-  NavIconSearch,
-  NavIconWorkplace,
-  NavIconCaret,
-} from "./linkedin/NavIcons";
+  BellIcon,
+  BriefcaseIcon,
+  ChatBubbleOvalLeftIcon,
+  HomeIcon,
+  UsersIcon,
+} from "@heroicons/react/24/solid";
+import { Avatar } from "./linkedin/Avatar";
 
 type NavLinkItem = {
   label: string;
@@ -25,32 +22,33 @@ type NavLinkItem = {
   isActive?: (pathname: string) => boolean;
 };
 
+const NAV_ICON_SIZE = 24;
+
 const NAV_ITEMS: NavLinkItem[] = [
   {
     label: "Home",
     href: "/",
-    icon: <NavIconHome />,
-    isActive: (pathname) => pathname === "/",
+    icon: <HomeIcon className="li-nav__glyph" aria-hidden />,
   },
   {
     label: "My Network",
     href: "#",
-    icon: <NavIconNetwork />,
+    icon: <UsersIcon className="li-nav__glyph" aria-hidden />,
   },
   {
     label: "Jobs",
     href: "#",
-    icon: <NavIconJobs />,
+    icon: <BriefcaseIcon className="li-nav__glyph" aria-hidden />,
   },
   {
     label: "Messaging",
     href: "#",
-    icon: <NavIconMessaging />,
+    icon: <ChatBubbleOvalLeftIcon className="li-nav__glyph" aria-hidden />,
   },
   {
     label: "Notifications",
     href: "#",
-    icon: <NavIconNotifications />,
+    icon: <BellIcon className="li-nav__glyph" aria-hidden />,
   },
 ];
 
@@ -73,20 +71,17 @@ export function LinkedInNav() {
       <div className="li-nav__inner">
         <div className="li-nav__start">
           <Link href="/" className="li-nav__logo" aria-label="LinkedIn home">
-            <svg viewBox="0 0 24 24" width="34" height="34" aria-hidden>
-              <path
-                fill="#0a66c2"
-                d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2z"
-              />
-              <path
-                fill="#fff"
-                d="M7.5 9.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM6.75 18v-7h1.5v7h-1.5zM11.25 18v-4.25c0-1.24 1-2.25 2.25-2.25s2.25 1.01 2.25 2.25V18h1.5v-4.75a3.75 3.75 0 0 0-7.5 0V18h1.5z"
-              />
-            </svg>
+            <Image
+              src="/assets/linkedin-logo.png"
+              alt="LinkedIn"
+              width={34}
+              height={34}
+              priority
+            />
           </Link>
           <label className="li-nav__search">
             <span className="li-nav__search-icon" aria-hidden>
-              <NavIconSearch />
+              <Search size={16} />
             </span>
             <input
               type="search"
@@ -120,7 +115,7 @@ export function LinkedInNav() {
             aria-current={gatherActive ? "page" : undefined}
           >
             <span className="li-nav__icon">
-              <NavIconGather />
+              <CalendarDays size={NAV_ICON_SIZE} aria-hidden />
             </span>
             <span className="li-nav__label">Gather</span>
           </Link>
@@ -133,18 +128,24 @@ export function LinkedInNav() {
             </span>
             <span className="li-nav__label li-nav__label--me">
               Me
-              <NavIconCaret />
+              <ChevronDown className="li-nav__caret" size={14} aria-hidden />
+            </span>
+          </button>
+
+          <span className="li-nav__divider" aria-hidden />
+
+          <button type="button" className="li-nav__link">
+            <span className="li-nav__icon">
+              <LayoutGrid size={NAV_ICON_SIZE} aria-hidden />
+            </span>
+            <span className="li-nav__label li-nav__label--me">
+              For Business
+              <ChevronDown className="li-nav__caret" size={14} aria-hidden />
             </span>
           </button>
           <button type="button" className="li-nav__link">
             <span className="li-nav__icon">
-              <NavIconWorkplace />
-            </span>
-            <span className="li-nav__label">For Business</span>
-          </button>
-          <button type="button" className="li-nav__link">
-            <span className="li-nav__icon">
-              <NavIconLearning />
+              <MonitorPlay size={NAV_ICON_SIZE} aria-hidden />
             </span>
             <span className="li-nav__label">Learning</span>
           </button>
