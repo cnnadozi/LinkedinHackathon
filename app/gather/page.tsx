@@ -1,6 +1,6 @@
 import type { Event } from "@/types/event";
 import eventsData from "@/data/events_data.json";
-import CalendarWidget from "@/components/CalendarWidget";
+import CalendarOverlay from "@/components/CalendarOverlay";
 import Link from "next/link";
 
 const INDUSTRY_COLOR: Record<string, string> = {
@@ -63,7 +63,7 @@ export default function GatherPage() {
       </div>
 
       {/* Calendar */}
-      <CalendarWidget events={events} />
+      <CalendarOverlay events={events} />
     </div>
   );
 }
