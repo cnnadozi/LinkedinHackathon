@@ -1,6 +1,6 @@
 # LinkedIn Gather
 
-A reimagined LinkedIn events experience for the Possibilities in Tech Hackathon 2026. Built with Next.js, React, and TypeScript, it helps professionals discover events, manage their schedule, and connect with attendees before and after they show up.
+LinkedIn Gather helps Gen Z discover events, manage their schedule, and connect with attendees before and after they show up.
 
 ## What it does
 
@@ -10,11 +10,7 @@ A reimagined LinkedIn events experience for the Possibilities in Tech Hackathon 
 - **Nudge chat** — start a conversation from the attendee list with AI-suggested talking points (Gemini API with a heuristic fallback when no key is set)
 
 
-## Tech stack
-
-Next.js (App Router), React, TypeScript, Google Gemini API, Vitest
-
-## Getting started
+## How to run
 
 ```bash
 npm install
@@ -24,7 +20,7 @@ npm test
 
 Optional: set `GEMINI_API_KEY` in `.env.local` for live AI suggestions. Set `MAIN_USER_ID` to swap the demo user.
 
-See `docs/` and `AGENTS.md` for architecture, UI patterns, and agent guidelines.
+See `docs/` and `AGENTS.md` for architecture, UI patterns, and more information
 
 ## Contributors
 
