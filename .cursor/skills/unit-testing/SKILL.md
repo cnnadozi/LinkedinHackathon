@@ -1,7 +1,7 @@
 ---
 name: unit-testing
 description: >-
-  Write and run unit tests for new or changed code in this Next.js + Express
+  Write and run unit tests for new or changed code in this Next.js
   project. Use when implementing features, adding components, API routes,
   utilities, hooks, or bug fixes — and before marking any feature work complete.
 ---
@@ -29,7 +29,6 @@ Feature testing:
 | Runner | [Vitest](https://vitest.dev/) |
 | React | [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/) |
 | DOM | jsdom |
-| API (when needed) | [supertest](https://github.com/ladjs/supertest) |
 
 Commands:
 
@@ -44,8 +43,8 @@ All tests live in the top-level `tests/` directory, mirroring source paths:
 
 ```
 components/linkedin/Button.tsx          → tests/components/linkedin/Button.test.tsx
-lib/formatDate.ts                       → tests/lib/formatDate.test.ts
-server/routes/users.js                  → tests/server/routes/users.test.js
+lib/formatEventDate.ts                  → tests/lib/formatEventDate.test.ts
+server/lib/events.js                    → tests/server/events.test.js
 ```
 
 Import source modules via the `@/` alias (e.g. `@/components/linkedin/Button`).
@@ -88,28 +87,15 @@ it("renders label and calls onClick", async () => {
 });
 ```
 
-### Express API
+### Next.js API routes
 
-Export the Express `app` without calling `listen()` so tests can use supertest:
-
-```js
-const request = require("supertest");
-const { app } = require("./app");
-
-it("GET /api/health returns ok", async () => {
-  const res = await request(app).get("/api/health");
-  expect(res.status).toBe(200);
-  expect(res.body.status).toBe("ok");
-});
-```
-
-If `app` is not yet exported, extract `server/app.js` as part of the feature (minimal refactor).
+Test route handler logic via `server/lib/` modules (same pattern as `tests/server/events.test.js`). For HTTP-level route tests, import the handler from `app/api/.../route.ts` or test the underlying lib directly.
 
 ### Types and mocks
 
 - Use `vi.fn()` / `vi.mock()` for Vitest mocks
 - Reuse types from `types/` — do not duplicate domain shapes in tests
-- Mock fetch for frontend API calls; do not hit the real Express server in component unit tests
+- Mock fetch for frontend API calls in component unit tests
 
 ## Feature completion gate
 

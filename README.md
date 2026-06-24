@@ -24,3 +24,12 @@ While LinkedIn already hosts events, discovering them currently relies heavily o
 
 ## Note
 Visit the docs folder and read **PLEASEREADTHIS.md** and AGENTS.md for more context! You should definitely read TECHNICAL_DECISIONS.md as well.
+
+## Getting started
+
+```bash
+npm install
+npm run dev    # UI + API at http://localhost:3000
+npm test       # run unit tests
+```
+

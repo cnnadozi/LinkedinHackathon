@@ -1,0 +1,7 @@
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { users } = require("@/server/lib/data");
+  return NextResponse.json(users);
+}
