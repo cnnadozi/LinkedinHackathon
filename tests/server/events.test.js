@@ -34,6 +34,62 @@ describe("events API helpers", () => {
     expect(detail.attendees[0].profile_picture_url).toMatch(
       /^https:\/\/i\.pravatar\.cc\/150\?u=/,
     );
+    expect(detail.attendees[0].location).toBeTruthy();
+    expect(detail.attendees[0]).toHaveProperty("company");
+    expect(detail.attendees[0]).toHaveProperty("industry");
+  });
+
+  it("derives attendee count from user attending_event_ids in the dataset", () => {
+    const { getEventDetail, deriveAttendeeIds } = require("../../server/lib/events");
+    const { users } = require("../../server/lib/data");
+    const eventId = "event_0001";
+
+    const fromData = users.filter((user) =>
+      user.attending_event_ids?.includes(eventId),
+    ).length;
+
+    expect(fromData).toBeGreaterThan(0);
+    expect(deriveAttendeeIds({ id: eventId, host_user_id: "user_4579" }).totalAttending).toBe(
+      fromData,
+    );
+
+    const detail = getEventDetail(eventId);
+    expect(detail?.attendance.total).toBe(fromData);
+    expect(detail?.attendees.length).toBe(fromData);
+  });
+
+  it("returns only events the main user also attends for each attendee row", () => {
+    const { getEventDetail } = require("../../server/lib/events");
+    const { users, events, MAIN_USER_ID } = require("../../server/lib/data");
+    const eventId = "event_0001";
+    const detail = getEventDetail(eventId);
+    const mainUser = users.find((member) => member.id === MAIN_USER_ID);
+    const mainUserEventIds = new Set(mainUser?.attending_event_ids ?? []);
+
+    const attendeeWithOverlap = detail?.attendees.find((row) => {
+      const user = users.find((member) => member.id === row.id);
+      const overlap = events.filter(
+        (candidate) =>
+          candidate.id !== eventId &&
+          user?.attending_event_ids?.includes(candidate.id) &&
+          mainUserEventIds.has(candidate.id),
+      );
+      return overlap.length > 0;
+    });
+    expect(attendeeWithOverlap).toBeTruthy();
+
+    const user = users.find((member) => member.id === attendeeWithOverlap.id);
+    const expected = events
+      .filter(
+        (candidate) =>
+          candidate.id !== eventId &&
+          user.attending_event_ids?.includes(candidate.id) &&
+          mainUserEventIds.has(candidate.id),
+      )
+      .map((candidate) => ({ id: candidate.id, name: candidate.name }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    expect(attendeeWithOverlap.mutualEvents).toEqual(expected);
   });
 
   it("returns null for unknown events", () => {

@@ -1,6 +1,43 @@
-# Please Read This
+# App Map
 
 **Start here.** Full map of every page, overlay, and component for the LinkedIn Events Hub.
+
+---
+
+## Main user (logged-in demo member)
+
+**This is the fixed “you” for the entire app.** Every feature that needs a current member — RSVPs, connections, the events **Attending** filter, calendar overlay, nudge state, and **Also attending** overlap in the attendee modal — uses this one user. Do not pick a different user per page or per request.
+
+| Field | Value |
+|-------|-------|
+| **Constant** | `MAIN_USER_ID` (`lib/mainUser.ts`, `server/lib/data.js`) |
+| **Legacy alias** | `DEMO_USER_ID` (same value — kept for older code) |
+| **User ID** | `user_5736` |
+| **Name** | Alice Johnson |
+| **Location** | Seattle, WA |
+| **Override** | Set env `MAIN_USER_ID` to swap the demo user without code changes |
+
+**Events Alice is attending** (`attending_event_ids` in `data/user_data.json`):
+
+| Event ID | Event name |
+|----------|------------|
+| `event_0002` | Breaking Into HR Coordinator Roles |
+| `event_0034` | Technology Customer Service Manager Networking Night |
+| `event_0050` | Meet DevOps Engineers in Finance |
+
+**Where this matters in the UI:**
+
+- **Events feed** (`/events`) — **Attending** filter shows only the three events above.
+- **Event detail** — RSVP / “Attending ✓” is relative to Alice; attendee lists are everyone else in `attending_event_ids` for that event.
+- **Attendee modal** — **Also attending** (green label) appears only when another guest shares at least one of Alice’s attending events (excluding the event you’re viewing).
+- **Calendar overlay** — RSVP’d events for Alice (runtime state in `server/.demo-state.json` is layered on top of her profile).
+- **AI / nudge flows** — Connection suggestions and nudges assume Alice is the actor.
+
+**Code entry points:** `lib/mainUser.ts`, `server/lib/data.js` (`getMainUser()`, `getMainUserAttendingEventIds()`), `server/lib/events.js` (defaults `currentUserId` to `MAIN_USER_ID`).
+
+See [ARCHITECTURE.md](./ARCHITECTURE.md#main-user) and [TECHNICAL_DECISIONS.md](./TECHNICAL_DECISIONS.md) for full rationale.
+
+---
 
 ## How navigation works
 
@@ -167,10 +204,11 @@ components/
 
 | Path | Purpose |
 |------|---------|
+| `lib/mainUser.ts` | **`MAIN_USER_ID`** — fixed demo member (`user_5736`, Alice Johnson); see top of this file |
 | `lib/api.ts` | Fetch helpers for `/api/*` routes |
 | `lib/events.ts` | Event detail, RSVP, calendar, and AI suggestion helpers |
 | `lib/eventDetail.server.ts` | Server-side data loaders (event detail, health, related events) |
 | `server/lib/` | Backend logic — loads `data/*.json`, RSVP state in `.demo-state.json` |
 | `types/*.ts` | TypeScript models (`Event`, `User`, etc.) |
 
-See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) for API endpoints and data linking.
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for API endpoints and data linking.

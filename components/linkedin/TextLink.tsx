@@ -1,3 +1,4 @@
+/** Inline text link — blue per linkedin.com (never green). */
 import type { AnchorHTMLAttributes } from "react";
 
 type TextLinkProps = AnchorHTMLAttributes<HTMLAnchorElement>;

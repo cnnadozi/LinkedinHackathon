@@ -1,4 +1,4 @@
-/** LinkedIn-style button — variants map to li-btn--* classes in globals.css. */
+/** LinkedIn-style button — styles in app/globals.css (live site reference). */
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonVariant =
@@ -20,6 +20,12 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   showChevron?: boolean;
 };
 
+/**
+ * Variant guide (from linkedin.com):
+ * - primary: filled blue CTA (RSVP, Send)
+ * - secondary: outlined pill — Connections "Message" / attendee "Nudge"
+ * - success: confirmed state ("Nudged ✓")
+ */
 const variantClass: Record<ButtonVariant, string> = {
   primary: "li-btn--primary",
   secondary: "li-btn--secondary",
