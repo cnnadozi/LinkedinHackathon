@@ -183,11 +183,18 @@ function getRsvpEventsForUser(userId = MAIN_USER_ID) {
     }));
 }
 
+function getEventAttendeeCounts(eventList) {
+  return Object.fromEntries(
+    eventList.map((event) => [event.id, deriveAttendeeIds(event).totalAttending]),
+  );
+}
+
 module.exports = {
   getEventDetail,
   toggleRsvp,
   recordNudge,
   getRsvpEventsForUser,
   deriveAttendeeIds,
+  getEventAttendeeCounts,
   isConnection,
 };

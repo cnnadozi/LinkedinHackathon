@@ -14,11 +14,13 @@ const FILTER_LABELS: Record<FeedFilter, string> = {
 type EventsFeedSectionProps = {
   events: Event[];
   mainUserAttendingEventIds: string[];
+  attendeeCounts: Record<string, number>;
 };
 
 export function EventsFeedSection({
   events,
   mainUserAttendingEventIds,
+  attendeeCounts,
 }: EventsFeedSectionProps) {
   const [filter, setFilter] = useState<FeedFilter>("all");
 
@@ -59,7 +61,7 @@ export function EventsFeedSection({
         </div>
       </div>
 
-      <EventsFeed events={filteredEvents} />
+      <EventsFeed events={filteredEvents} attendeeCounts={attendeeCounts} />
     </>
   );
 }

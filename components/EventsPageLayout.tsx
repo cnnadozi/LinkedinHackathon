@@ -15,9 +15,10 @@ function CalendarPanelIcon() {
 
 type Props = {
   events: Event[];
+  attendeeCounts: Record<string, number>;
 };
 
-export default function EventsPageLayout({ events }: Props) {
+export default function EventsPageLayout({ events, attendeeCounts }: Props) {
   const [calOpen, setCalOpen] = useState(true);
 
   return (
@@ -44,7 +45,7 @@ export default function EventsPageLayout({ events }: Props) {
           </button>
         </div>
 
-        <EventsFeed events={events} />
+        <EventsFeed events={events} attendeeCounts={attendeeCounts} />
       </div>
 
       {/* ── Calendar panel ── */}
