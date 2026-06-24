@@ -1,45 +1,15 @@
+/* Attendee modal shell — row layout lives in globals.css (.li-person-row) */
 .attendance-list {
   max-width: 900px;
   margin: 0 auto;
 }
 
-.attendance-list-row {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--li-space-md);
-  padding: var(--li-space-lg) var(--li-space-xl);
-  border-bottom: 1px solid var(--li-border-light);
+.attendance-list__filters {
+  margin-bottom: 4px;
 }
 
-.attendance-list-row:last-child {
-  border-bottom: none;
-}
-
-.attendance-list-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.attendance-list-name-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.35rem;
-  margin-bottom: 0.15rem;
-}
-
-.attendance-list-name {
-  font-size: var(--li-font-lg);
-  font-weight: 600;
-  color: var(--li-text);
-}
-
-.attendance-list-events {
-  font-size: var(--li-font-sm);
-  color: var(--li-green);
-  line-height: 1.45;
-}
-
-.attendance-list-nudge {
-  align-self: center;
+.attendance-list__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }

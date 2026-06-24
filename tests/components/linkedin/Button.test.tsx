@@ -16,4 +16,15 @@ describe("Button", () => {
     await user.click(screen.getByRole("button"));
     expect(onClick).toHaveBeenCalledOnce();
   });
+
+  it("maps secondary variant to outlined Message-style button", () => {
+    render(
+      <Button variant="secondary" size="sm">
+        Nudge
+      </Button>,
+    );
+    const button = screen.getByRole("button", { name: "Nudge" });
+    expect(button).toHaveClass("li-btn--secondary");
+    expect(button).toHaveClass("li-btn--sm");
+  });
 });

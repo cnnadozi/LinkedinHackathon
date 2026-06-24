@@ -21,8 +21,18 @@ const userById = Object.fromEntries(users.map((user) => [user.id, user]));
 const jobById = Object.fromEntries(jobs.map((job) => [job.id, job]));
 const eventById = Object.fromEntries(events.map((event) => [event.id, event]));
 
-/** Demo logged-in member for connections, RSVPs, and nudges. */
-const DEMO_USER_ID = process.env.DEMO_USER_ID || "user_5736";
+/** Main logged-in member — Alice Johnson (user_5736). */
+const MAIN_USER_ID = process.env.MAIN_USER_ID || "user_5736";
+/** @deprecated Use MAIN_USER_ID */
+const DEMO_USER_ID = MAIN_USER_ID;
+
+function getMainUser() {
+  return userById[MAIN_USER_ID] ?? null;
+}
+
+function getMainUserAttendingEventIds() {
+  return getMainUser()?.attending_event_ids ?? [];
+}
 
 function resolveMemberJobs(member) {
   return member.job_history.map((id) => jobById[id]).filter(Boolean);
@@ -47,7 +57,10 @@ module.exports = {
   userById,
   jobById,
   eventById,
+  MAIN_USER_ID,
   DEMO_USER_ID,
+  getMainUser,
+  getMainUserAttendingEventIds,
   resolveMemberJobs,
   latestJob,
   memberHeadline,

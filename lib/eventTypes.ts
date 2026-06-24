@@ -19,6 +19,9 @@ export type AttendeeRow = {
   name: string;
   headline: string;
   profile_picture_url: string;
+  location: string;
+  company: string | null;
+  industry: string | null;
   degree: 1 | 2 | 3;
   isConnection: boolean;
   mutualEvents: string[];
@@ -48,4 +51,13 @@ export type ConnectionSuggestions = {
   sharedSchools: string[];
   mutualEvents: RsvpEventSummary[];
   talkingPoints: string[];
+  suggestedMessage: string;
+  aiGenerated: boolean;
+};
+
+export type NudgeResult = {
+  nudged: boolean;
+  suggestedMessage: string | null;
+  talkingPoints: string[];
+  aiGenerated: boolean;
 };

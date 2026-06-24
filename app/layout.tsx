@@ -1,7 +1,6 @@
 /** Root layout — wraps every route with LinkedIn shell (nav + main). */
 import type { Metadata } from "next";
 import { AppShell } from "@/components/AppShell";
-import "@/components/linkedin/linkedin.css";
 import "./globals.css";
 
 export const metadata: Metadata = {

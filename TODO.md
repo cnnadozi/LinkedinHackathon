@@ -1,3 +1,5 @@
-- make one main MOCK profile
 - meeting imgs
-- update filters in attendacne list (location, company, industry)
+- connections 
+- show profile for main user
+
+

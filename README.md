@@ -23,7 +23,9 @@ While LinkedIn already hosts events, discovering them currently relies heavily o
 * **Folashewa Olaniyi**
 
 ## Note
-Visit the docs folder and read **PLEASEREADTHIS.md** and AGENTS.md for more context! You should definitely read TECHNICAL_DECISIONS.md as well.
+Visit the docs folder and read **[docs/APP_MAP.md](./docs/APP_MAP.md)** and AGENTS.md for more context! You should definitely read TECHNICAL_DECISIONS.md as well.
+
+**Important:** The demo’s logged-in member is fixed — **Alice Johnson** (`user_5736`, `MAIN_USER_ID`). See the **Main user** section in [docs/APP_MAP.md](./docs/APP_MAP.md) for her attending events and everywhere that identity is used.
 
 ## Getting started
 

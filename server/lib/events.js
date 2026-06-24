@@ -6,6 +6,7 @@ const {
   events,
   eventById,
   userById,
+  MAIN_USER_ID,
   DEMO_USER_ID,
   latestJob,
   memberHeadline,
@@ -38,13 +39,13 @@ function scoreUserForEvent(user, event) {
 }
 
 function deriveAttendeeIds(event) {
-  const ranked = users
-    .map((user) => ({ user, score: scoreUserForEvent(user, event) }))
-    .filter(({ score }) => score > 0)
-    .sort((a, b) => b.score - a.score || a.user.id.localeCompare(b.user.id));
-
-  const totalAttending = 180 + (simpleHash(event.id) % 120);
-  const ids = ranked.slice(0, totalAttending).map(({ user }) => user.id);
+  const ids = users
+    .filter((user) => user.attending_event_ids?.includes(event.id))
+    .sort((a, b) => {
+      const scoreDiff = scoreUserForEvent(b, event) - scoreUserForEvent(a, event);
+      return scoreDiff || a.id.localeCompare(b.id);
+    })
+    .map((user) => user.id);
 
   if (!ids.includes(event.host_user_id) && userById[event.host_user_id]) {
     ids.unshift(event.host_user_id);
@@ -65,12 +66,21 @@ function connectionDegree(attendeeId, eventId, currentUserId, connected) {
   return hash % 3 === 0 ? 2 : 3;
 }
 
-function mockMutualEvents(attendeeId, eventId) {
-  const hash = simpleHash(`${attendeeId}:${eventId}:mutual`);
+function otherAttendingEvents(attendeeId, eventId, currentUserId = MAIN_USER_ID) {
+  const attendee = userById[attendeeId];
+  const mainUser = userById[currentUserId];
+  if (!attendee || !mainUser) return [];
+
+  const mainUserEventIds = new Set(mainUser.attending_event_ids ?? []);
+
   return events
-    .filter((candidate) => candidate.id !== eventId)
-    .filter((_, index) => (hash + index) % 7 === 0)
-    .slice(0, 3)
+    .filter(
+      (candidate) =>
+        candidate.id !== eventId &&
+        attendee.attending_event_ids?.includes(candidate.id) &&
+        mainUserEventIds.has(candidate.id),
+    )
+    .sort((a, b) => a.name.localeCompare(b.name))
     .map((candidate) => candidate.name);
 }
 
@@ -82,19 +92,24 @@ function buildAttendeeRow(attendeeId, event, currentUserId) {
   const degree = connectionDegree(attendeeId, event.id, currentUserId, connected);
   const nudgeKey = `${event.id}:${attendeeId}`;
 
+  const job = latestJob(user);
+
   return {
     id: user.id,
     name: user.name,
     headline: memberHeadline(user),
     profile_picture_url: user.profile_picture_url,
+    location: user.current_location,
+    company: job?.company ?? null,
+    industry: job?.industry ?? null,
     degree,
     isConnection: connected,
-    mutualEvents: mockMutualEvents(attendeeId, event.id),
+    mutualEvents: otherAttendingEvents(attendeeId, event.id, currentUserId),
     nudged: hasNudge(nudgeKey),
   };
 }
 
-function getEventDetail(eventId, currentUserId = DEMO_USER_ID) {
+function getEventDetail(eventId, currentUserId = MAIN_USER_ID) {
   const event = eventById[eventId];
   if (!event) return null;
 
@@ -136,7 +151,7 @@ function getEventDetail(eventId, currentUserId = DEMO_USER_ID) {
   };
 }
 
-function toggleRsvp(eventId, currentUserId = DEMO_USER_ID) {
+function toggleRsvp(eventId, currentUserId = MAIN_USER_ID) {
   const event = eventById[eventId];
   if (!event) return null;
 
@@ -144,7 +159,7 @@ function toggleRsvp(eventId, currentUserId = DEMO_USER_ID) {
   return { rsvpd };
 }
 
-function recordNudge(eventId, targetUserId, currentUserId = DEMO_USER_ID) {
+function recordNudge(eventId, targetUserId, currentUserId = MAIN_USER_ID) {
   const event = eventById[eventId];
   if (!event || targetUserId === currentUserId) return null;
 
@@ -153,7 +168,7 @@ function recordNudge(eventId, targetUserId, currentUserId = DEMO_USER_ID) {
   return { nudged: true };
 }
 
-function getRsvpEventsForUser(userId = DEMO_USER_ID) {
+function getRsvpEventsForUser(userId = MAIN_USER_ID) {
   const rsvpIds = new Set(getUserRsvpIds(userId));
 
   return events
