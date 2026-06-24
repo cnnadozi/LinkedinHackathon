@@ -15,6 +15,7 @@ import {
   TextLink,
 } from "@/components/linkedin";
 import { Modal } from "@/components/linkedin/Modal";
+import { NudgeChat } from "@/components/NudgeChat";
 import type { AttendeeRow } from "@/lib/eventTypes";
 
 type AttendeeModalProps = {
@@ -122,6 +123,8 @@ function AlsoAttendingEvents({
 
 export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) {
   const [filters, setFilters] = useState<AttendeeFilters>(EMPTY_FILTERS);
+  // The attendee whose Nudge chat window is currently open, if any.
+  const [chatAttendee, setChatAttendee] = useState<AttendeeRow | null>(null);
 
   const filterOptions = useMemo(
     () => ({
@@ -215,17 +218,24 @@ export function AttendeeModal({ open, onClose, attendees }: AttendeeModalProps) 
                 <AlsoAttendingEvents events={attendee.mutualEvents} />
               </div>
               <Button
-                variant={attendee.nudged ? "success" : "secondary"}
+                variant="secondary"
                 size="sm"
                 className="li-person-row__action"
-                disabled={attendee.nudged}
+                onClick={() => setChatAttendee(attendee)}
               >
-                {attendee.nudged ? "Nudged ✓" : "Nudge"}
+                Nudge
               </Button>
             </li>
           ))}
         </ul>
       </div>
+
+      {chatAttendee && (
+        <NudgeChat
+          attendee={chatAttendee}
+          onClose={() => setChatAttendee(null)}
+        />
+      )}
     </Modal>
   );
 }
