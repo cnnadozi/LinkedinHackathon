@@ -18,6 +18,8 @@ npm run dev          # http://localhost:3000
 npm test
 ```
 
+Link to Presentation: https://docs.google.com/presentation/d/1Uy6ECuwyF-4euf1T9L1QFGtF3LqMsb29Ln3drOrJYAQ/edit?usp=sharing
+
 Optional: set `GEMINI_API_KEY` in `.env.local` for live AI suggestions. Set `MAIN_USER_ID` to swap the demo user.
 
 See `docs/` and `AGENTS.md` for architecture, UI patterns, and more information
