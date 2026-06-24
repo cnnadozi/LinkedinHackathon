@@ -660,3 +660,185 @@ p {
 .error {
   color: #b00020;
 }
+
+/* ── LinkedIn Top Nav ── */
+.li-topnav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--li-nav-height);
+  background: var(--li-surface);
+  border-bottom: 1px solid var(--li-border-hairline);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+}
+
+.li-topnav__inner {
+  width: 100%;
+  max-width: var(--li-max-width);
+  margin: 0 auto;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.li-topnav__logo {
+  flex-shrink: 0;
+  margin-right: 4px;
+  color: var(--li-blue-interactive);
+  line-height: 0;
+}
+
+.li-topnav__search-wrap {
+  flex: 0 0 260px;
+}
+
+.li-topnav__nav {
+  display: flex;
+  align-items: stretch;
+  margin-left: auto;
+  height: var(--li-nav-height);
+}
+
+.li-topnav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 0 10px;
+  min-width: 64px;
+  text-decoration: none;
+  color: var(--li-gray-medium);
+  font-size: 12px;
+  font-weight: 400;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  border-bottom: 2px solid transparent;
+  transition: color 0.1s;
+  flex-shrink: 0;
+}
+
+.li-topnav__item:hover {
+  color: var(--li-gray-dark);
+}
+
+.li-topnav__item--active {
+  color: var(--li-black);
+  border-bottom-color: var(--li-black);
+}
+
+.li-topnav__item--gather {
+  color: var(--li-blue-interactive);
+}
+
+.li-topnav__item--gather:hover {
+  color: var(--li-blue-hover);
+}
+
+.li-topnav__item--gather.li-topnav__item--active {
+  color: var(--li-blue-interactive);
+  border-bottom-color: var(--li-blue-interactive);
+}
+
+.li-topnav__icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.li-topnav__label {
+  font-size: 12px;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.li-topnav__divider {
+  width: 1px;
+  height: 32px;
+  background: var(--li-border-hairline);
+  margin: 0 4px;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+/* ── App Shell ── */
+.app-shell__body {
+  padding-top: var(--li-nav-height);
+  min-height: 100vh;
+}
+
+/* ── Gather Page ── */
+.gather-page {
+  max-width: var(--li-max-width);
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.gather-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.gather-page__title-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gather-page__icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--li-blue-interactive);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gather-page__h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--li-black);
+  line-height: 1.2;
+  margin: 0 0 2px;
+}
+
+.gather-page__subtitle {
+  font-size: 13px;
+  color: var(--li-gray-medium);
+  margin: 0;
+}
+
+.gather-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.gather-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--li-gray-medium);
+}
+
+.gather-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}

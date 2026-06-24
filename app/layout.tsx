@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import AppShell from "@/components/AppShell";
 
 export const metadata: Metadata = {
-  title: "LinkedIn Hackathon",
+  title: "LinkedIn Gather",
   description: "Possibilities in Tech Hackathon 2026",
 };
 
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AppShell>{children}</AppShell>
+      </body>
     </html>
   );
 }
