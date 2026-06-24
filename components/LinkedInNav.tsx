@@ -64,7 +64,7 @@ function navLinkClass(isActive: boolean, extra = "") {
 
 export function LinkedInNav() {
   const pathname = usePathname();
-  const gatherActive = pathname.startsWith("/events");
+  const gatherActive = pathname.startsWith("/gather");
 
   return (
     <header className="li-nav">
@@ -109,7 +109,7 @@ export function LinkedInNav() {
           })}
 
           <Link
-            href="/events"
+            href="/gather"
             className={navLinkClass(gatherActive, "li-nav__link--gather")}
             aria-label="Gather — events hub"
             aria-current={gatherActive ? "page" : undefined}
